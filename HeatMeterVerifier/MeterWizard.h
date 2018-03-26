@@ -15,7 +15,7 @@ public:
 	void ChooseMeters();
 	void ReadMeters();
 	void GenerateReports();
-	void AddMeterCodeCom(MeterInfo *meterInfo);
+	void AddMeterAddressCom(MeterInfo *meterInfo);
 	void SetSelectMeterIndex(LPINT rgIndex,int count);
 	vector<MeterInfo*>* GetMeterInfoList(){
 		return &meterInfoList;

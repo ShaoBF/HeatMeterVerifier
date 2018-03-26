@@ -8,18 +8,21 @@ class MeterInfo
 {
 public:
 	MeterInfo();
-	MeterInfo(CString com, CString code=L"");
+	MeterInfo(CString com, UCHAR* code);
 	virtual ~MeterInfo();
-	void setCJ188(CJ188* cj);
+	void SetCJ188(CJ188* cj);
+	CJ188* GetCJ188();
 	CString MeterToString();
 	void SetActive(bool tf);
 	bool IsActive();
-	CString GetCode();
+	CString GetAddressString();
+	UCHAR* GetAddress();
 	CString GetCom();
+	void SetAddress(UCHAR* code);
 
 public:
 	CString com;
-	CString code;
+	UCHAR* address;
 	bool selected = false;
 	bool active = false;
 	CSerial serial;

@@ -1,6 +1,7 @@
 #pragma once
 #include "MeterInfo.h"
 #include "ComDataReciever.h"
+#include <mutex>
 
 enum MeterType {
 	ColdWater = 0x10,
@@ -93,6 +94,8 @@ enum CJ188DI{
 
 #define CJ188_FRAME_PREFIX_BYTE			0xfe
 
+#define MAX_BUFFER						2048
+
 
 struct KeyValue{
 	char* value;
@@ -115,28 +118,42 @@ struct CJ188Frame{
 	UCHAR end;			// 结束字节，一般为16H
 };
 
+struct CJ188FrameInBuffer :public CJ188Frame {
+	//CJ188Frame *frame;
+	DWORD bufferStart;	//该帧的起始字节在buffer中的下标
+	DWORD bufferEnd;	//该帧的结束字节在buffer中的下标
+};
+
 
 class CJ188:public ComDataReciever
 {
 public:
 	CJ188(MeterInfo* info);
 	virtual ~CJ188();
-	CJ188Frame *frame;
 	static UCHAR CreateCS(CJ188Frame &frame);
 	static void ToHexCommand(char* command, CJ188Frame *frame, int &length, int prefixLen = CJ188_FRAME_INIT_LENGTH);
 	void ReadAddress(MeterInfo* meterInfo, CJ188DataReciever* reciever);
+	void ReadMeterData(MeterInfo* meterInfo, CJ188DataReciever* reciever);
 	static CJ188Frame* CreateRequestFrame(UCHAR* addr, UCHAR control, UCHAR* di);
 	static UCHAR* CreateData(UCHAR* di, int dataLength);
 	static UCHAR NextSerial();
-	void OnDataRecieved(char* buf, DWORD bufferLen);
-	static CJ188Frame* RawDataToFrame(char* buf, DWORD bufferLen);
+	void OnDataRecieved(UCHAR* buf, DWORD bufferLen);
+	static CJ188Frame* RawDataToFrame(UCHAR* buf, DWORD bufferLen);
 	static bool IsValidFrame(CJ188Frame *frame);
+	void SendFrame(CJ188Frame* frame);
+	void AppendToBuffer(UCHAR* buf, DWORD bufferLen);
+	void CleanBuffer(DWORD bufferEnd);
+	bool IsBufferEmpty();
 
 //protected:
+	//CJ188FrameInBuffer *frameIB;
 	static UCHAR ser;
+	UCHAR* buffer;
+	DWORD bufferCurrent;
 	CJ188DataReciever* cjReciever;
 	ComDataReciever* cdReciever;
 	MeterInfo* meterInfo;
-	
+	// MFC互斥类对象
+	CMutex* g_clsMutex;
 };
 

@@ -44,6 +44,7 @@ BOOL CMeterChooserDlg::OnInitDialog()
 BEGIN_MESSAGE_MAP(CMeterChooserDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_SELECT_ALL, &CMeterChooserDlg::OnBnClickedSelectAll)
 	ON_BN_CLICKED(IDOK, &CMeterChooserDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDCANCEL, &CMeterChooserDlg::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
 
@@ -102,7 +103,7 @@ void CMeterChooserDlg::GetComList_256(CListBox * list)//获取可用com口支持到256个
 		else
 		{
 			//将表、串口对应信息放入MeterCodeCom列表中
-			wizard.AddMeterCodeCom(new MeterInfo(strCom));
+			wizard.AddMeterAddressCom(new MeterInfo(strCom,nullptr));
 			count++;
 		}
 		CloseHandle(hCom);
@@ -114,16 +115,16 @@ void CMeterChooserDlg::GetComList_256(CListBox * list)//获取可用com口支持到256个
 	}
 	else{
 		//读取表号
-		ReadMetersID(wizard.GetMeterInfoList());
+		ReadMetersAddress(wizard.GetMeterInfoList());
 		//加入字符串
 	}
 
 }
-void CMeterChooserDlg::ReadMetersID(vector<MeterInfo*>* meterInfoList){
+void CMeterChooserDlg::ReadMetersAddress(vector<MeterInfo*>* meterInfoList){
 	vector<MeterInfo*>::iterator it;
 	for (it = meterInfoList->begin(); it != meterInfoList->end(); it++){
-		CJ188 *cj188 = new CJ188(*it);
-		(*it)->setCJ188(cj188);
+		CJ188 *cj188 = (*it)->GetCJ188();
+		//(*it)->SetCJ188(cj188);
 		cj188->ReadAddress((*it),this);
 		
 	}
@@ -147,13 +148,13 @@ int CMeterChooserDlg::GetSelectedMeter(LPINT rgIndex){
 	return selCount;
 }
 
-void CMeterChooserDlg::OnFrameDataRecieved(char* data, DWORD bufferLen, CJ188Frame *frame, CJ188* cj188){
+void CMeterChooserDlg::OnFrameDataRecieved(UCHAR* data, DWORD bufferLen, CJ188Frame *frame, CJ188* cj188){
 	MeterInfo *meterInfo = cj188->meterInfo;
 	switch (frame->controlCode){
 	case CJ188ReadAddress | CJ188_RESPONSE_BIT://是读地址操作的响应
 		if (CJ188::IsValidFrame(frame)){//确认帧有效
 			//将地址值变为字符串存入meterInfo
-			meterInfo->code = Converter::HexToString(frame->address, 7, 0);
+			meterInfo->address = frame->address;
 			//meterInfo->SetActive(true);
 			//将meterInfo信息加入列表
 			AddToMeterList(meterInfo);
@@ -163,6 +164,19 @@ void CMeterChooserDlg::OnFrameDataRecieved(char* data, DWORD bufferLen, CJ188Fra
 }
 
 void CMeterChooserDlg::AddToMeterList(MeterInfo* meterInfo){
-	CString meterStr=meterInfo->code+"("+meterInfo->com+")";
+	CString meterStr = meterInfo->GetAddressString() + "(" + meterInfo->com + ")";
 	meterChooserList.AddString(meterStr);
+}
+
+void CMeterChooserDlg::OnBnClickedCancel()
+{
+	CDialogEx::OnCancel();
+	//遍历关闭所有打开串口
+	vector<MeterInfo*>* meterInfoList=wizard.GetMeterInfoList();
+	vector<MeterInfo*>::iterator it;
+	for (it = meterInfoList->begin(); it != meterInfoList->end(); it++){
+		if ((*it)->active){
+			(*it)->serial.CloseSerialPort();
+		}
+	}
 }

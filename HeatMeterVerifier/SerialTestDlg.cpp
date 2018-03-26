@@ -121,7 +121,7 @@ void CSerialTestDlg::CollectCurrentConfig(){
 	lstrcpy(comID, strText.GetBuffer(iLen));
 }
 
-void ComDataRecievedCB(void* receiver, char* buf,DWORD bufferLen){
+void ComDataRecievedCB(void* receiver, UCHAR* buf,DWORD bufferLen){
 	CSerialTestDlg* dlg = (CSerialTestDlg*)receiver;
 	dlg->OnDataRecieved(buf, bufferLen);
 /*	CEdit* recieveBox = &dlg->recievedDataBox;
@@ -481,7 +481,7 @@ void CSerialTestDlg::OnUpdateMeterSerialSettings(CCmdUI *pCmdUI)
 	}
 }
 
-void CSerialTestDlg::OnDataRecieved(char* buf,DWORD bufferLen){
+void CSerialTestDlg::OnDataRecieved(UCHAR* buf,DWORD bufferLen){
 	//CEdit* recieveBox = &recievedDataBox;
 	CString str;
 	CString rawStr;

@@ -7,6 +7,7 @@ typedef unsigned(__stdcall *PTHREAD_START) (void *);
 CSerial::CSerial(void)
 {
 	m_hComm = INVALID_HANDLE_VALUE;
+	opened = false;
 }
 
 CSerial::~CSerial(void)
@@ -27,7 +28,7 @@ DWORD WINAPI CommProc(LPVOID lpParam) {
 										   //清空串口
 	PurgeComm(pSerial->m_hComm, PURGE_RXCLEAR | PURGE_TXCLEAR);
 
-	char buf[512];
+	UCHAR buf[512];
 	DWORD dwRead;
 	while (pSerial->m_hComm != INVALID_HANDLE_VALUE) {
 		BOOL bReadOK = ReadFile(pSerial->m_hComm, buf, 512, &dwRead, NULL);
@@ -128,7 +129,7 @@ BOOL CSerial::OpenSerialPort(TCHAR* port, UINT baud_rate, BYTE date_bits, BYTE s
 
 	//创建线程，读取数据
 	HANDLE hReadCommThread = (HANDLE)_beginthreadex(NULL, 0, (PTHREAD_START)CommProc, (LPVOID)this, 0, NULL);
-
+	opened = true;
 	return TRUE;
 }
 
@@ -162,6 +163,11 @@ BOOL CSerial::CloseSerialPort(){
 	BOOL result=CloseHandle(m_hComm);
 	if (result = true){
 		m_hComm = INVALID_HANDLE_VALUE;
+		opened = false;
 	}
 	return result;
+}
+
+bool CSerial::IsOpened(){
+	return opened;
 }

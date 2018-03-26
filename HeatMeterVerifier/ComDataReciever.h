@@ -7,12 +7,12 @@ struct CJ188Frame;
 
 class ComDataReciever{
 public:
-	virtual void OnDataRecieved(char* data, DWORD bufferLen) = 0;
+	virtual void OnDataRecieved(UCHAR* data, DWORD bufferLen) = 0;
 };
 
 class CJ188DataReciever{
 public:
-	virtual void OnFrameDataRecieved(char* data, DWORD bufferLen, CJ188Frame* frame, CJ188* cj188) = 0;
+	virtual void OnFrameDataRecieved(UCHAR* data, DWORD bufferLen, CJ188Frame* frame, CJ188* cj188) = 0;
 
 };
 

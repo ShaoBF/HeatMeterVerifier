@@ -174,12 +174,21 @@ CJ188::CJ188(MeterInfo* info)
 {
 	CJ188::ser = rand() % 256;
 	this->meterInfo = info;
+	buffer = new UCHAR[MAX_BUFFER];
+	bufferCurrent = 0;
+	g_clsMutex = new CMutex(FALSE, L"DataBufferMutex", NULL);
 }
 
 
 CJ188::~CJ188()
 {
 	//delete meterInfo;
+	if (buffer != nullptr){
+		delete buffer;
+	}
+	if (g_clsMutex){
+		delete g_clsMutex;
+	}
 }
 
 UCHAR CJ188::CreateCS(CJ188Frame &frame){
@@ -238,6 +247,38 @@ void CJ188::ReadAddress(MeterInfo* meterInfo, CJ188DataReciever* reciever){
 
 	//生成读表地址指令帧
 	CJ188Frame* frame = CreateRequestFrame(addr, ctrl, di);
+	//发送指令帧
+	SendFrame(frame);
+
+	delete frame->data;
+	delete frame;
+}
+
+void CJ188::ReadMeterData(MeterInfo* meterInfo, CJ188DataReciever* reciever){
+	this->cjReciever = reciever;
+	//获取要读的表的地址
+	UCHAR* addr = meterInfo->address;
+	//得到控制字0x03
+	UCHAR ctrl = CJ188ReadData;
+
+	//获得DI——读地址0x810A
+	KeyValue* kvlist;
+	int kvCount;
+	kvlist = &CJ188DIList[CJ188_READ_DATA_DI_OFFSET];
+	kvCount = CJ188_READ_DATA_DI_COUNT;
+	int index = 0;
+	UCHAR* di = (UCHAR*)(&kvlist[index].key);
+
+	//生成指令帧
+	CJ188Frame* frame = CreateRequestFrame(addr, ctrl, di);
+	//发送指令帧
+	SendFrame(frame);
+
+	delete frame->data;
+	delete frame;
+}
+
+void CJ188::SendFrame(CJ188Frame* frame){
 	//指令帧封装为uchar数组
 	//串口发送
 	//整合为16进制指令
@@ -253,17 +294,14 @@ void CJ188::ReadAddress(MeterInfo* meterInfo, CJ188DataReciever* reciever){
 	comID = new TCHAR[iLen];
 	lstrcpy(comID, strText.GetBuffer(iLen));
 	cdReciever = this;
-
-	if (serial->OpenSerialPort(comID, comConfig.baudRate, comConfig.dataBits, comConfig.stopBits, comConfig.parityIndex,
-		//&ComDataRecievedCB, 
-		cdReciever)){  //打开串口后，自动接收数据
-		//comHandle[comBoxIndex] = serial.m_hComm;
-		//comOn[comBoxIndex] = true;
-		serial->SendData(data, length);
+	bool serialAvailable = true;
+	if (!serial->IsOpened()){
+		//打开串口后，自动接收数据
+		serialAvailable = serial->OpenSerialPort(comID, comConfig.baudRate, comConfig.dataBits, comConfig.stopBits, comConfig.parityIndex, cdReciever);
 	}
+	if (serialAvailable)
+		serial->SendData(data, length);
 	delete data;
-	delete frame->data;
-	delete frame;
 }
 
 CJ188Frame* CJ188::CreateRequestFrame(UCHAR* addr, UCHAR control, UCHAR* di){
@@ -276,7 +314,7 @@ CJ188Frame* CJ188::CreateRequestFrame(UCHAR* addr, UCHAR control, UCHAR* di){
 	//获取当前表计地址（0为默认广播地址14个A）
 	UCHAR* address = addr;
 	memcpy(&(frame->address), address, CJ188_ADDRESS_LENGTH);
-	delete address;
+	//delete address;
 	//获取控制码
 	frame->controlCode = control;
 	//根据控制码得到长度
@@ -308,7 +346,39 @@ UCHAR CJ188::NextSerial(){
 	return CJ188::ser;
 }
 
-void CJ188::OnDataRecieved(char* buf, DWORD bufferLen){
+void CJ188::OnDataRecieved(UCHAR* buf, DWORD bufferLen){
+	//接收到的可能为不完整数据帧，需要多次数据的连接，成为一个完整数据帧
+	//1.接收到的数据填入接收Buffer尾部
+	AppendToBuffer(buf, bufferLen);
+	bool hasFrame = false;
+	//2.尝试解析接收buffer中的帧数据
+	CJ188FrameInBuffer *frame;
+	do{
+		hasFrame = false;
+		frame = (CJ188FrameInBuffer*)RawDataToFrame(buffer, bufferCurrent);
+		//3.判断解析结果是否为完整帧,若完整,则
+		if (frame != nullptr){
+			//3.1校验frame的CS是否为有效帧
+			if (this->IsValidFrame(frame)){
+				//3.1.1回调OnFrameDataRecieved带入数据帧与对应部分原始数据
+				size_t rawDataLen = frame->bufferEnd - frame->bufferStart;
+				UCHAR* rawData = new UCHAR[rawDataLen];
+				memcpy(rawData, &(buffer[frame->bufferStart]), rawDataLen);
+				if (cjReciever != nullptr){
+					meterInfo->SetActive(true);
+					cjReciever->OnFrameDataRecieved(rawData, rawDataLen, frame, this);
+				}
+			}
+			//3.2.清空对应buffer部分
+			CleanBuffer(((CJ188FrameInBuffer*)frame)->bufferEnd);
+			hasFrame = true;
+		}
+		//3.3.若仍有剩余数据，则
+		//		3.3.1返回2继续解析帧数据
+	} while ((!IsBufferEmpty())&&hasFrame);
+	/*
+	//等待起始字节0x68开始拼接
+	//到结束字节是0x16为止
 	frame = RawDataToFrame(buf, bufferLen);
 	//回调CJ188DataReciever的OnDataRecieved
 	if (cjReciever != nullptr){
@@ -317,26 +387,41 @@ void CJ188::OnDataRecieved(char* buf, DWORD bufferLen){
 			cjReciever->OnFrameDataRecieved(buf, bufferLen, frame, this);
 		}
 	}
-
+	*/
 }
-CJ188Frame* CJ188::RawDataToFrame(char* buf, DWORD bufferLen){
-	CJ188Frame* frame = new CJ188Frame();
+bool CJ188::IsBufferEmpty(){
+	return bufferCurrent == 0;
+}
+
+CJ188Frame* CJ188::RawDataToFrame(UCHAR* buf, DWORD bufLen){
 	//按字节解析buf成为CJ188Frame格式
 	int cur = 0;
 	//跳过前几个字节的0xFE直接到起始码0x68
-	while (buf[cur] != CJ188_START_BYTE && cur < bufferLen){
+	while (buf[cur] != CJ188_START_BYTE && cur < bufLen){
 		cur++;
 	}
-	if (cur == bufferLen){//全为0xFE，无效帧
+	if (cur == bufLen){//全为0xFE，无效帧
 		return nullptr;
 	}
+	CJ188FrameInBuffer* frame = new CJ188FrameInBuffer();
+	frame->bufferStart = cur;
+	if ((cur + CJ188_FRAME_LENGTH_BEFORE_DATA) >= bufLen){//总长度不到帧数据项之前所需长度，无效帧
+		return nullptr;
+	}
+
 	memcpy(frame, &(buf[cur]), CJ188_FRAME_LENGTH_BEFORE_DATA);
-	frame->data = new UCHAR[frame->dataLength];
 	cur += CJ188_FRAME_LENGTH_BEFORE_DATA;
+	//总长度不到帧所需长度，无效帧
+	if ((cur + frame->dataLength + CJ188_FRAME_LENGTH_AFTER_DATA) > bufLen){
+		return nullptr;
+	}
+	frame->data = new UCHAR[frame->dataLength];
 	memcpy((frame->data), &(buf[cur]), frame->dataLength);
 	cur += frame->dataLength;
 	frame->cs = buf[cur++];
 	frame->end = buf[cur++];
+	frame->bufferEnd = cur;
+
 	return frame;
 }
 
@@ -348,4 +433,22 @@ bool CJ188::IsValidFrame(CJ188Frame *frame){
 	else {
 		return false;
 	}
+}
+
+void CJ188::AppendToBuffer(UCHAR* buf, DWORD bufLen){
+	g_clsMutex->Lock();
+	for (int i = 0; i < bufLen; i++){
+		buffer[bufferCurrent++] = buf[i];
+	}
+	g_clsMutex->Unlock();
+}
+
+void CJ188::CleanBuffer(DWORD bufferEnd){
+	DWORD tempCur=0;
+	g_clsMutex->Lock();
+	for (DWORD i = bufferEnd; i < bufferCurrent; i++){
+		buffer[tempCur++] = buffer[i];
+	}
+	bufferCurrent = tempCur;
+	g_clsMutex->Unlock();
 }

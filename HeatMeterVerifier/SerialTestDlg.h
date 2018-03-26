@@ -19,7 +19,7 @@ public:
 	virtual ~CSerialTestDlg();
 
 	void Init();
-	void OnDataRecieved(char* data, DWORD bufferLen);
+	void OnDataRecieved(UCHAR* data, DWORD bufferLen);
 
 // 对话框数据
 	enum { IDD = IDD_SERIALTEST };

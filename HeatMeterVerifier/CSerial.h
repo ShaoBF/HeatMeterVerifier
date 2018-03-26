@@ -20,8 +20,11 @@ public:
 	//·¢ËÍÊý¾Ý
 	BOOL SendData(char* data, int len);
 	void DataRecieved(char* buf);
+	bool IsOpened();
+
 public:
 	HANDLE m_hComm;
+	bool opened;
 	//DataRecievedCB dataRecievedCallBack;
 	ComDataReciever* reciever;
 	//void* reciever;

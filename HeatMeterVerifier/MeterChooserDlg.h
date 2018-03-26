@@ -29,7 +29,7 @@ protected:
 	void InitMeterSelectList();
 	void GetComList_256(CListBox * CCombox);
 	int GetSelectedMeter(LPINT rgIndex);
-	void ReadMetersID(vector<MeterInfo*>* meterInfoList);
+	void ReadMetersAddress(vector<MeterInfo*>* meterInfoList);
 	void AddToMeterList(MeterInfo* meterInfo);
 
 	DECLARE_MESSAGE_MAP()
@@ -40,5 +40,6 @@ public:
 	CButton SelectAllCheck;
 	afx_msg void OnBnClickedSelectAll();
 	afx_msg void OnBnClickedOk();
-	void OnFrameDataRecieved(char* data, DWORD bufferLen, CJ188Frame *frame, CJ188* cj188);
+	void OnFrameDataRecieved(UCHAR* data, DWORD bufferLen, CJ188Frame *frame, CJ188* cj188);
+	afx_msg void OnBnClickedCancel();
 };

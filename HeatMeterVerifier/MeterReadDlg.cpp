@@ -45,6 +45,9 @@ BOOL CMeterReadDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
+	//读第一次读数
+	ReadMeters();
+	//详细信息列表形式显示读数
 
 	return true;
 }
@@ -68,4 +71,23 @@ void CMeterReadDlg::OnBnClickedCancel()
 {
 	CDialogEx::OnCancel();
 	//wizard.ChooseMeters();
+}
+
+void CMeterReadDlg::ReadMeters(){
+	vector<MeterInfo*>* meterInfoList = wizard.GetMeterInfoList();
+	//遍历有效和被选中的表/Com端口
+	vector<MeterInfo*>::iterator it;
+	for (it = meterInfoList->begin(); it != meterInfoList->end(); it++){
+		//创建CJ188实例并将meterInfo置入
+		CJ188 *cj188 = (*it)->GetCJ188();
+		//发送读数据指令
+		cj188->ReadMeterData(*it, this);
+		
+	}
+	//解析数据（异步）并显示
+}
+
+
+void CMeterReadDlg::OnFrameDataRecieved(UCHAR* data, DWORD bufferLen, CJ188Frame* frame, CJ188* cj188){
+
 }

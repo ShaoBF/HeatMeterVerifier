@@ -40,7 +40,7 @@ void CMeterWizard::ChooseMeters(){
 void CMeterWizard::ReadMeters(){
 	CMeterReadDlg dlg;
 	INT_PTR nResponse = dlg.DoModal();
-
+	
 	if (nResponse == IDOK)
 	{
 		// TODO:  在此放置处理何时用
@@ -82,7 +82,7 @@ void CMeterWizard::GenerateReports(){
 
 }
 
-void CMeterWizard::AddMeterCodeCom(MeterInfo *meterInfo){
+void CMeterWizard::AddMeterAddressCom(MeterInfo *meterInfo){
 	meterInfoList.push_back(meterInfo);
 }
 
