@@ -78,10 +78,28 @@
     <ClInclude Include="MeterUtil.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ComDataReciever.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="ComConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ComBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeterDataTable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataFrame.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyVector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataItem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BinData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ComDataReciever.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -141,6 +159,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ComConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ComBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeterDataTable.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataFrame.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyVector.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataItem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BinData.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

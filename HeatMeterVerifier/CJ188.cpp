@@ -174,21 +174,13 @@ CJ188::CJ188(MeterInfo* info)
 {
 	CJ188::ser = rand() % 256;
 	this->meterInfo = info;
-	buffer = new UCHAR[MAX_BUFFER];
-	bufferCurrent = 0;
-	g_clsMutex = new CMutex(FALSE, L"DataBufferMutex", NULL);
+	buffer = new ComBuffer();
 }
 
 
 CJ188::~CJ188()
 {
 	//delete meterInfo;
-	if (buffer != nullptr){
-		delete buffer;
-	}
-	if (g_clsMutex){
-		delete g_clsMutex;
-	}
 }
 
 UCHAR CJ188::CreateCS(CJ188Frame &frame){
@@ -270,12 +262,12 @@ void CJ188::ReadMeterData(MeterInfo* meterInfo, CJ188DataReciever* reciever){
 	UCHAR* di = (UCHAR*)(&kvlist[index].key);
 
 	//生成指令帧
-	CJ188Frame* frame = CreateRequestFrame(addr, ctrl, di);
+	requestFrame = CreateRequestFrame(addr, ctrl, di);
 	//发送指令帧
-	SendFrame(frame);
+	SendFrame(requestFrame);
 
-	delete frame->data;
-	delete frame;
+	delete requestFrame->data;
+	delete requestFrame;
 }
 
 void CJ188::SendFrame(CJ188Frame* frame){
@@ -349,13 +341,13 @@ UCHAR CJ188::NextSerial(){
 void CJ188::OnDataRecieved(UCHAR* buf, DWORD bufferLen){
 	//接收到的可能为不完整数据帧，需要多次数据的连接，成为一个完整数据帧
 	//1.接收到的数据填入接收Buffer尾部
-	AppendToBuffer(buf, bufferLen);
+	buffer->Append(buf, bufferLen);
 	bool hasFrame = false;
 	//2.尝试解析接收buffer中的帧数据
 	CJ188FrameInBuffer *frame;
 	do{
 		hasFrame = false;
-		frame = (CJ188FrameInBuffer*)RawDataToFrame(buffer, bufferCurrent);
+		frame = (CJ188FrameInBuffer*)RawDataToFrame(buffer->GetData(), buffer->GetCurrentLength());
 		//3.判断解析结果是否为完整帧,若完整,则
 		if (frame != nullptr){
 			//3.1校验frame的CS是否为有效帧
@@ -370,12 +362,12 @@ void CJ188::OnDataRecieved(UCHAR* buf, DWORD bufferLen){
 				}
 			}
 			//3.2.清空对应buffer部分
-			CleanBuffer(((CJ188FrameInBuffer*)frame)->bufferEnd);
+			buffer->Clean(((CJ188FrameInBuffer*)frame)->bufferEnd);
 			hasFrame = true;
 		}
 		//3.3.若仍有剩余数据，则
 		//		3.3.1返回2继续解析帧数据
-	} while ((!IsBufferEmpty())&&hasFrame);
+	} while ((!buffer->IsEmpty())&&hasFrame);
 	/*
 	//等待起始字节0x68开始拼接
 	//到结束字节是0x16为止
@@ -388,9 +380,6 @@ void CJ188::OnDataRecieved(UCHAR* buf, DWORD bufferLen){
 		}
 	}
 	*/
-}
-bool CJ188::IsBufferEmpty(){
-	return bufferCurrent == 0;
 }
 
 CJ188Frame* CJ188::RawDataToFrame(UCHAR* buf, DWORD bufLen){
@@ -435,20 +424,77 @@ bool CJ188::IsValidFrame(CJ188Frame *frame){
 	}
 }
 
-void CJ188::AppendToBuffer(UCHAR* buf, DWORD bufLen){
-	g_clsMutex->Lock();
-	for (int i = 0; i < bufLen; i++){
-		buffer[bufferCurrent++] = buf[i];
+CString CJ188::GetUnit(UCHAR code){
+	CString unit;
+	switch (code){
+		//热量部分
+	case WH:
+		unit = CString("Wh");
+		break;
+	case KWH:
+		unit = CString("kWh");
+		break;
+	case MWH:
+		unit = CString("MWh");
+		break;
+	case MWHx100:
+		unit = CString("MWhx100");
+		break;
+	case J:
+		unit = CString("J");
+		break;
+	case KJ:
+		unit = CString("kj");
+		break;
+	case MJ:
+		unit = CString("Mj");
+		break;
+	case GJ:
+		unit = CString("GJ");
+		break;
+	case GJx100:
+		unit = CString("GJx100");
+		break;
+		//功率部分
+	case W:
+		unit = CString("W");
+		break;
+	case KW:
+		unit = CString("kW");
+		break;
+	case MW:
+		unit = CString("MW");
+		break;
+		//流速部分
+	case LPH:
+		unit = CString("L/h");
+		break;
+	case M3PH:
+		unit = CString("MWh");
+		break;
+		//流量部分
+	case L:
+		unit = CString("L");
+		break;
+	case M3:
+		unit = CString("m^3");
+		break;
+	default:
+		unit = CString("N/A");
+		break;
 	}
-	g_clsMutex->Unlock();
+	return unit;
 }
 
-void CJ188::CleanBuffer(DWORD bufferEnd){
-	DWORD tempCur=0;
-	g_clsMutex->Lock();
-	for (DWORD i = bufferEnd; i < bufferCurrent; i++){
-		buffer[tempCur++] = buffer[i];
+UCHAR* CJ188::GetDI(CJ188Frame* frame){
+	//UCHAR* di = new UCHAR[2];
+	//memcpy(di, frame->data, 2);
+	return frame->data;
+}
+
+bool CJ188::LookUpByteOrder(UCHAR meterType, UCHAR* vandorID){
+	if (vandorID[0] == 0x11 && vandorID[1] == 0x11){
+		return false;
 	}
-	bufferCurrent = tempCur;
-	g_clsMutex->Unlock();
+	return true;
 }

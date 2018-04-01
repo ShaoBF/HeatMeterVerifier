@@ -107,47 +107,59 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BinData.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="CJ188.h" />
     <ClInclude Include="CntrItem.h" />
+    <ClInclude Include="ComBuffer.h" />
     <ClInclude Include="ComConfig.h" />
     <ClInclude Include="ComDataReciever.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="CSerial.h" />
+    <ClInclude Include="DataFrame.h" />
+    <ClInclude Include="DataItem.h" />
     <ClInclude Include="HeatMeterVerifier.h" />
     <ClInclude Include="HeatMeterVerifierDoc.h" />
     <ClInclude Include="HeatMeterVerifierView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MeterChooserDlg.h" />
+    <ClInclude Include="MeterDataTable.h" />
     <ClInclude Include="MeterInfo.h" />
     <ClInclude Include="MeterReadDlg.h" />
     <ClInclude Include="MeterReportDlg.h" />
     <ClInclude Include="MetersReportDlg.h" />
     <ClInclude Include="MeterUtil.h" />
     <ClInclude Include="MeterWizard.h" />
+    <ClInclude Include="MyVector.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SerialTestDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinData.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="CJ188.cpp" />
     <ClCompile Include="CntrItem.cpp" />
+    <ClCompile Include="ComBuffer.cpp" />
     <ClCompile Include="ComConfig.cpp" />
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="CSerial.cpp" />
+    <ClCompile Include="DataFrame.cpp" />
+    <ClCompile Include="DataItem.cpp" />
     <ClCompile Include="HeatMeterVerifier.cpp" />
     <ClCompile Include="HeatMeterVerifierDoc.cpp" />
     <ClCompile Include="HeatMeterVerifierView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MeterChooserDlg.cpp" />
+    <ClCompile Include="MeterDataTable.cpp" />
     <ClCompile Include="MeterInfo.cpp" />
     <ClCompile Include="MeterReadDlg.cpp" />
     <ClCompile Include="MeterReportDlg.cpp" />
     <ClCompile Include="MetersReportDlg.cpp" />
     <ClCompile Include="MeterUtil.cpp" />
     <ClCompile Include="MeterWizard.cpp" />
+    <ClCompile Include="MyVector.cpp" />
     <ClCompile Include="SerialTestDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

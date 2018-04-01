@@ -4,16 +4,21 @@
 
 CMeterWizard::CMeterWizard()
 {
+	//meterInfoList = new MeterInfo*[128];
 }
 
 
 CMeterWizard::~CMeterWizard()
 {
 	//Ê©·ÅMeterInfo
-	vector<MeterInfo*>::iterator it;
+	/*vector<PMeterInfo>::iterator it;
 	for (it = meterInfoList.begin(); it != meterInfoList.end(); it++)
 		delete *it;
-	meterInfoList.clear();
+	meterInfoList.clear();*/
+	for (int i = 0; i < meterInfoList.GetSize(); i++){
+		delete meterInfoList[i];
+	}
+	meterInfoList.Clear();
 }
 
 void CMeterWizard::ChooseMeters(){
@@ -83,17 +88,34 @@ void CMeterWizard::GenerateReports(){
 }
 
 void CMeterWizard::AddMeterAddressCom(MeterInfo *meterInfo){
-	meterInfoList.push_back(meterInfo);
+	meterInfoList.Add(meterInfo);
+	//meterInfoList[meterCount++] = meterInfo;
 }
 
 void CMeterWizard::SetSelectMeterIndex(LPINT rgIndex, int count){
 	selectedMeterIndex = rgIndex;
 	selectedMeterCount = count;
-	vector<MeterInfo*>::iterator it;
+	/*vector<MeterInfo*>::iterator it;
 	for (it = meterInfoList.begin(); it != meterInfoList.end(); it++){
 		(*it)->selected = false;
 	}
 	for (int i = 0; i < count; i++){
 		meterInfoList[rgIndex[i]]->selected = true;
+	}*/
+	for (int i = 0; i < meterInfoList.GetSize(); i++){
+		meterInfoList[i]->selected = false;
+	}
+	for (int i = 0; i < count; i++){
+		meterInfoList[rgIndex[i]]->selected = true;
+	}
+}
+
+void CMeterWizard::CloseAllCom(){
+	//	vector<MeterInfo*>::iterator it;
+	//	for (it = meterInfoList.begin(); it != meterInfoList.end(); it++){
+	for (int i = 0; i<meterInfoList.GetSize(); i++){
+		if (meterInfoList[i]->active){
+			meterInfoList[i]->serial.CloseSerialPort();
+		}
 	}
 }

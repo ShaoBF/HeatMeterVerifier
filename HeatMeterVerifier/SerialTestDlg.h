@@ -1,8 +1,8 @@
 #pragma once
-#include "CSerial.h"
 #include "afxwin.h"
-#include "CJ188.h"
 #include "resource.h"
+#include "CSerial.h"
+#include "CJ188.h"
 
 
 // CSerialTestDlg ¶Ô»°¿ò

@@ -4,7 +4,8 @@
 #include "MetersReportDlg.h"
 #include "MeterReportDlg.h"
 #include "MeterInfo.h"
-#include <vector>
+#include "MyVector.h"
+#include "MyVector.cpp"
 
 using namespace std;
 class CMeterWizard
@@ -15,14 +16,18 @@ public:
 	void ChooseMeters();
 	void ReadMeters();
 	void GenerateReports();
-	void AddMeterAddressCom(MeterInfo *meterInfo);
+	void AddMeterAddressCom(MeterInfo* meterInfo);
 	void SetSelectMeterIndex(LPINT rgIndex,int count);
-	vector<MeterInfo*>* GetMeterInfoList(){
+	MyVector<MeterInfo*>* GetMeterInfoList(){
 		return &meterInfoList;
 	};
+	void CloseAllCom();
 
+public:
+//	MeterInfo** meterInfoList;
+//	int meterCount;
+	MyVector<MeterInfo*> meterInfoList;
 protected:
-	vector<MeterInfo*> meterInfoList;
 	LPINT selectedMeterIndex;
 	int selectedMeterCount = 0;
 };

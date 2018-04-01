@@ -1,7 +1,7 @@
 #pragma once
 #include "MeterInfo.h"
 #include "ComDataReciever.h"
-#include <mutex>
+#include "ComBuffer.h"
 
 enum MeterType {
 	ColdWater = 0x10,
@@ -94,7 +94,43 @@ enum CJ188DI{
 
 #define CJ188_FRAME_PREFIX_BYTE			0xfe
 
-#define MAX_BUFFER						2048
+#define CJ188_STATUS_BATTERY_NORMAL		0
+#define CJ188_STATUS_BATTERY_LOW		1
+#define CJ188_BATTERY_STATUS_BIT		0x04
+
+#define CJ188_TIME_DATA_LENGTH			7
+
+
+//00b
+#define CJ188_STATUS_VALVE_OPENED		0 
+//01b
+#define CJ188_STATUS_VALVE_CLOSED		1 
+//11b
+#define CJ188_STATUS_VALVE_ABNORMAL		3 
+#define CJ188_VALVE_STATUS_BITS			0x03
+
+
+#define WH			0x02
+#define KWH			0x05
+#define MWH			0x08
+#define MWHx100		0x0A
+
+#define J			0x01
+#define	KJ			0x0B
+#define	MJ			0x0E
+#define	GJ			0x11
+#define	GJx100		0x13
+
+#define	W			0x14
+#define	KW			0x17
+#define	MW			0x1A
+
+#define L			0x29
+#define M3			0x2C
+
+#define LPH			0x32
+#define M3PH		0x35
+
 
 
 struct KeyValue{
@@ -141,19 +177,19 @@ public:
 	static CJ188Frame* RawDataToFrame(UCHAR* buf, DWORD bufferLen);
 	static bool IsValidFrame(CJ188Frame *frame);
 	void SendFrame(CJ188Frame* frame);
-	void AppendToBuffer(UCHAR* buf, DWORD bufferLen);
-	void CleanBuffer(DWORD bufferEnd);
-	bool IsBufferEmpty();
+	static CString GetUnit(UCHAR code);
+	static UCHAR* GetDI(CJ188Frame* frame);
+	static bool LookUpByteOrder(UCHAR meterType, UCHAR* vandorID);
 
 //protected:
 	//CJ188FrameInBuffer *frameIB;
 	static UCHAR ser;
-	UCHAR* buffer;
-	DWORD bufferCurrent;
+	ComBuffer* buffer;
+	//UCHAR* buffer;
+	//DWORD bufferCurrent;
 	CJ188DataReciever* cjReciever;
 	ComDataReciever* cdReciever;
 	MeterInfo* meterInfo;
-	// MFCª•≥‚¿‡∂‘œÛ
-	CMutex* g_clsMutex;
+	CJ188Frame* requestFrame;
 };
 

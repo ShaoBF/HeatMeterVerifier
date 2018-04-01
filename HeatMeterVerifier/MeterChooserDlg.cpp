@@ -67,17 +67,18 @@ void CMeterChooserDlg::OnBnClickedSelectAll()
 }
 
 void CMeterChooserDlg::InitMeterSelectList(){
-	vector<MeterInfo*>* meters = wizard.GetMeterInfoList();
-	if (meters->size()==0){
+	MyVector<MeterInfo*>* meters = wizard.GetMeterInfoList();
+	int meterCount = meters->GetSize();
+	if (meterCount == 0){
 		GetComList_256(&meterChooserList);
 	}
 	else{
-		vector<MeterInfo*>::iterator it;
-		for (it = meters->begin(); it != meters->end(); it++){
-			CString meterStr = (*it)->MeterToString();
+		//vector<MeterInfo*>::iterator it;
+		//for (it = meters->begin(); it != meters->end(); it++){
+		for (int i = 0; i < meterCount; i++){
+			CString meterStr = (*meters)[i]->MeterToString();
 			meterChooserList.AddString(meterStr);
 		}
-
 	}
 }
 
@@ -120,13 +121,13 @@ void CMeterChooserDlg::GetComList_256(CListBox * list)//获取可用com口支持到256个
 	}
 
 }
-void CMeterChooserDlg::ReadMetersAddress(vector<MeterInfo*>* meterInfoList){
-	vector<MeterInfo*>::iterator it;
-	for (it = meterInfoList->begin(); it != meterInfoList->end(); it++){
-		CJ188 *cj188 = (*it)->GetCJ188();
-		//(*it)->SetCJ188(cj188);
-		cj188->ReadAddress((*it),this);
-		
+void CMeterChooserDlg::ReadMetersAddress(MyVector<MeterInfo*>* meterInfoList){
+	//vector<MeterInfo*>::iterator it;
+	//for (it = meterInfoList->begin(); it != meterInfoList->end(); it++){
+	for (int i = 0; i < meterInfoList->GetSize(); i++){
+		CJ188 *cj188 = (*meterInfoList)[i]->GetCJ188();
+		(*meterInfoList)[i]->SetCJ188(cj188);
+		cj188->ReadAddress((*meterInfoList)[i], this);
 	}
 }
 
@@ -172,11 +173,13 @@ void CMeterChooserDlg::OnBnClickedCancel()
 {
 	CDialogEx::OnCancel();
 	//遍历关闭所有打开串口
+	wizard.CloseAllCom();
+	/*
 	vector<MeterInfo*>* meterInfoList=wizard.GetMeterInfoList();
 	vector<MeterInfo*>::iterator it;
 	for (it = meterInfoList->begin(); it != meterInfoList->end(); it++){
 		if ((*it)->active){
 			(*it)->serial.CloseSerialPort();
 		}
-	}
+	}*/
 }

@@ -29,3 +29,4 @@ public:
 	CJ188 *cj188;
 };
 
+//typedef MeterInfo* PMeterInfo;

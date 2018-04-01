@@ -1,7 +1,7 @@
 #pragma once
 #include "afxcmn.h"
 #include "ComDataReciever.h"
-
+#include "MeterDataTable.h"
 
 // CMeterReadDlg 对话框
 
@@ -19,6 +19,11 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	BOOL OnInitDialog();
+	void CreateMeterDataTable();
+	void ProcessMeterData(UCHAR* data, DWORD bufferLen, CJ188Frame* frame, CJ188* cj188);
+	void UpdateMeterReadList();
+	CMutex* g_clsMutex;
+
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -29,5 +34,6 @@ public:
 	void ReadMeters();
 
 	// 读表结果列表
-	CListCtrl MeterReadList;
+	CListCtrl meterReadList;
+	MeterDataTable* meterDataTable;
 };

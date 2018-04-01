@@ -1,10 +1,10 @@
 #pragma once
 #include "afxwin.h"
 #include "Resource.h"
-#include <vector>
 #include "MeterInfo.h"
 #include "ComDataReciever.h"
 #include "CJ188.h"
+#include "MyVector.h"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ protected:
 	void InitMeterSelectList();
 	void GetComList_256(CListBox * CCombox);
 	int GetSelectedMeter(LPINT rgIndex);
-	void ReadMetersAddress(vector<MeterInfo*>* meterInfoList);
+	void ReadMetersAddress(MyVector<MeterInfo*>* meterInfoList);
 	void AddToMeterList(MeterInfo* meterInfo);
 
 	DECLARE_MESSAGE_MAP()
