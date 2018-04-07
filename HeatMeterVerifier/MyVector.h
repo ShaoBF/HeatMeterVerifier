@@ -17,6 +17,7 @@ protected:
 
 public:
 	void Add(T obj);
+	bool Insert(T obj, int index);
 	T Get(int index);
 	T Remove(int index);
 	int GetSize();

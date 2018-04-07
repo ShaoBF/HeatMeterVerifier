@@ -119,3 +119,21 @@ void CMeterWizard::CloseAllCom(){
 		}
 	}
 }
+
+MeterInfo* CMeterWizard::GetMeterInfo(int index){
+	return meterInfoList[index];
+}
+
+void CMeterWizard::setRefMeter(int index){
+	refMeterIndex = index;
+}
+
+bool CMeterWizard::IsRefMeter(UCHAR* address){
+	UCHAR* refAddress = meterInfoList[refMeterIndex]->address;
+	for (int i = 0; i < CJ188_ADDRESS_LENGTH; i++){
+		if (address[i] != refAddress[i]){
+			return false;
+		}
+	}
+	return true;
+}

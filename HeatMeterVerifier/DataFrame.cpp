@@ -4,6 +4,7 @@
 
 #define CELSIUS "℃"
 
+
 DataFrame::DataFrame()
 {
 	frame = nullptr;
@@ -63,7 +64,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	//billingDayHeatUnit = GetUnit(dataArea[current++]);
 	billingDayHeatUnit = dataArea[current++];*/
 
-	billingDayHeat.SetData(&(dataArea[current]), 5, true, 2,highByteFirst);
+	billingDayHeat.SetData(&(dataArea[current]), 5, true, 2, highByteFirst, _T(NAME_BILLING_DAY_HEAT));
 	current += 5;
 
 	//5字节当前热量
@@ -75,7 +76,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	//currentHeatUnit = GetUnit(dataArea[current++]);
 	currentHeatUnit = dataArea[current++];*/
 
-	currentHeat.SetData(&(dataArea[current]), 5, true, 2, highByteFirst);
+	currentHeat.SetData(&(dataArea[current]), 5, true, 2, highByteFirst, _T(NAME_CURRENT_HEAT));
 	current += 5;
 
 
@@ -88,7 +89,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	//heatPowerUnit = GetUnit(dataArea[current++]);
 	heatPowerUnit = dataArea[current++];*/
 
-	heatPower.SetData(&(dataArea[current]), 5, true, 2, highByteFirst);
+	heatPower.SetData(&(dataArea[current]), 5, true, 2, highByteFirst, _T(NAME_HEAT_POWER));
 	current += 5;
 
 	//5字节瞬时流速
@@ -100,7 +101,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	//flowRateUnit = GetUnit(dataArea[current++]);
 	flowRateUnit = dataArea[current++];*/
 
-	flowRate.SetData(&(dataArea[current]), 5, true, 4, highByteFirst);
+	flowRate.SetData(&(dataArea[current]), 5, true, 4, highByteFirst, _T(NAME_FLOW_RATE));
 	current += 5;
 
 
@@ -113,7 +114,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	//billingDayCapacityUnit = GetUnit(dataArea[current++]);
 	billingDayCapacityUnit = dataArea[current++];*/
 
-	billingDayCapacity.SetData(&(dataArea[current]), 5, true, 2, highByteFirst);
+	billingDayCapacity.SetData(&(dataArea[current]), 5, true, 2, highByteFirst, _T(NAME_BILLING_DAY_CAPACITY));
 	current += 5;
 
 	//3字节供水温度，BCD码数值，XXXX.XX格式，默认单位℃
@@ -121,7 +122,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	current += 3;
 	temperatureIn /= 100.0;*/
 
-	temperatureIn.SetData(&(dataArea[current]), 3, false, 2, highByteFirst);
+	temperatureIn.SetData(&(dataArea[current]), 3, false, 2, highByteFirst, _T(NAME_TEMPERATURE_IN));
 	current += 3;
 
 
@@ -130,7 +131,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	current += 3;
 	temperatureOut /= 100.0;*/
 
-	temperatureOut.SetData(&(dataArea[current]), 3, false, 2, highByteFirst);
+	temperatureOut.SetData(&(dataArea[current]), 3, false, 2, highByteFirst, _T(NAME_TEMPERATURE_OUT));
 	current += 3;
 
 
@@ -138,31 +139,36 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	/*totalWorkHours = (double)Converter::BcdToNumber(&(dataArea[current]), 3);
 	current += 3;*/
 
-	totalWorkHours.SetData(&(dataArea[current]), 3, false, 0, highByteFirst);
+	totalWorkHours.SetData(&(dataArea[current]), 3, false, 0, highByteFirst, _T(NAME_WORK_HOURS));
 	current += 3;
 
 
 	//7字节当前时间，BCD码，格式为YYYYMMDDhhmmss，无单位字节
+	currentTime.SetData(&(dataArea[current]), CJ188_TIME_DATA_LENGTH, false, -CJ188_TIME_DATA_LENGTH, highByteFirst, _T(NAME_CURRENT_TIME));
 	//currentTime = Converter::HexToString(&(dataArea[current]), 7, 0);
+	//currentTime.value.puc = new UCHAR[CJ188_TIME_DATA_LENGTH];
+	/*
 	if (highByteFirst){
-		memcpy(currentTime, &(dataArea[current]), CJ188_TIME_DATA_LENGTH);
+		memcpy(currentTime.value.puc, &(dataArea[current]), CJ188_TIME_DATA_LENGTH);
 	}
 	else{
 		for (int i = 0; i < CJ188_TIME_DATA_LENGTH; i++){
-			currentTime[CJ188_TIME_DATA_LENGTH - i - 1] = dataArea[current + i];
+			currentTime.value.puc[CJ188_TIME_DATA_LENGTH - i - 1] = dataArea[current + i];
 		}
-	}
+	}*/
 	current += CJ188_TIME_DATA_LENGTH;
 
 	//2字节状态字，第一字节为固定意义，第二字节厂家自定义
-	if (highByteFirst){
-		memcpy(status, &(dataArea[current]), 2);
+	statusData.SetData(&(dataArea[current]), CJ188_STATUS_LENGTH, false, -CJ188_STATUS_LENGTH, highByteFirst, _T(NAME_STATUS));
+	/*if (highByteFirst){
+		memcpy(statusData.value.puc, &(dataArea[current]), CJ188_STATUS_LENGTH);
 	}
 	else{
-		for (int i = 0; i < 2; i++){
-			status[2 - i - 1] = dataArea[current + i];
+		for (int i = 0; i < CJ188_STATUS_LENGTH; i++){
+			statusData.value.puc[CJ188_STATUS_LENGTH - i - 1] = dataArea[current + i];
 		}
 	}
+	statusData.SetName(_T(NAME_STATUS));*/
 	current += 2;
 }
 
@@ -204,9 +210,9 @@ CString DataFrame::GetWorkHoursStr(){
 }
 
 CString DataFrame::GetCurrentTimeStr(){
-	return Converter::HexToString(currentTime, 7, 0);
+	return Converter::HexToString(currentTime.value.puc, CJ188_TIME_DATA_LENGTH, 0);
 }
 
 CString DataFrame::GetStatusStr(){
-	return Converter::HexToString(status, 2, ' ');
+	return Converter::HexToString(statusData.value.puc, CJ188_STATUS_LENGTH, ' ');
 }

@@ -39,8 +39,11 @@ public:
 	DataItem totalWorkHours;			//累计工作时间
 
 	//当前时间
-	UCHAR currentTime[7];
-	UCHAR status[2];
+	//UCHAR currentTime[7];
+	DataItem currentTime;
+
+	DataItem statusData;
+	//UCHAR status[2];
 
 	//tm currentTime;//以后可能考虑用tm结构
 

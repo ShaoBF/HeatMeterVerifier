@@ -31,6 +31,7 @@ void CMeterChooserDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_METER_CHOOSER_LIST, meterChooserList);
 	DDX_Control(pDX, IDC_SELECT_ALL, SelectAllCheck);
+	DDX_Control(pDX, IDC_REF_METER_CHOOSER_LIST, refMeterCombobox);
 }
 BOOL CMeterChooserDlg::OnInitDialog()
 {

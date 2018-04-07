@@ -104,5 +104,6 @@ extern CMeterWizard wizard;
 
 void CChildFrame::OnStartMeterRead()
 {	
-	wizard.ChooseMeters();
+	//wizard.ChooseMeters();
+	wizard.ReadMeters();
 }

@@ -27,6 +27,26 @@ void MyVector<T>::Add(T obj){
 	//加入新元素
 	buffer[current++] = obj;
 }
+
+template<typename T>
+bool MyVector<T>::Insert(T obj, int index){
+	//判断index是否超界
+	if (index<0 || index>current){//超界，加入失败
+		return false;
+	}
+	//判断是否已满
+	if (IsFull()){
+		//若已满则扩容
+		ExtendCapacity();
+	}
+	//插入新元素
+	for (int i = current; i > index; i--){
+		buffer[i] = buffer[i - 1];
+	}
+	buffer[index] = obj;
+
+}
+
 template<typename T>
 T MyVector<T>::Get(int index){
 	return buffer[index];

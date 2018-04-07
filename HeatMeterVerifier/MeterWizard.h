@@ -22,11 +22,16 @@ public:
 		return &meterInfoList;
 	};
 	void CloseAllCom();
+	MeterInfo* GetMeterInfo(int index);
+	void setRefMeter(int index);
+	bool IsRefMeter(UCHAR* address);
 
 public:
 //	MeterInfo** meterInfoList;
 //	int meterCount;
 	MyVector<MeterInfo*> meterInfoList;
+	MeterInfo* refMeter;
+	int refMeterIndex;
 protected:
 	LPINT selectedMeterIndex;
 	int selectedMeterCount = 0;

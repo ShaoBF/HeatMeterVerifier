@@ -14,6 +14,7 @@
 #define IDD_METER_READ                  313
 #define IDD_METERS_REPORT               314
 #define IDD_METER_REPORT                315
+#define IDD_DATA_FRAME_DISPLAY          316
 #define IDC_COM_LIST                    1000
 #define IDC_DATA_TO_SEND                1001
 #define IDC_SEND_DATA                   1002
@@ -36,6 +37,7 @@
 #define IDC_ADDRESS_BOX                 1018
 #define IDC_COMBO1                      1019
 #define IDC_DI_BOX                      1019
+#define IDC_REF_METER_CHOOSER_LIST      1019
 #define IDC_PREVIOUS                    1022
 #define IDC_REREAD                      1023
 #define IDC_READ_AGAIN                  1024
@@ -49,7 +51,10 @@
 #define IDC_METER_NUMBER2               1033
 #define IDC_VERIFY_DATE                 1034
 #define IDC_METER_NUMBER3               1035
+#define IDC_EDIT1                       1035
+#define IDC_RAW_FRAME                   1035
 #define IDC_MANUFATORY                  1036
+#define IDC_DATA_ITEM_LIST              1036
 #define IDC_METER_NUMBER4               1037
 #define IDC_TEST_MEMBER                 1038
 #define IDC_METER_NUMBER5               1039
@@ -68,9 +73,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        316
+#define _APS_NEXT_RESOURCE_VALUE        317
 #define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1033
+#define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

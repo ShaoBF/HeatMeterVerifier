@@ -2,6 +2,7 @@
 #include "afxcmn.h"
 #include "ComDataReciever.h"
 #include "MeterDataTable.h"
+#include "afxwin.h"
 
 // CMeterReadDlg 对话框
 
@@ -22,8 +23,19 @@ protected:
 	void CreateMeterDataTable();
 	void ProcessMeterData(UCHAR* data, DWORD bufferLen, CJ188Frame* frame, CJ188* cj188);
 	void UpdateMeterReadList();
-	CMutex* g_clsMutex;
 
+	CMutex* g_clsMutex;
+	bool selectAll;
+	bool testStarted=false;
+
+
+	void InitMeterSelectList();
+	void GetComList_256(CListBox * CCombox);
+	int GetSelectedMeter(LPINT rgIndex);
+	void ReadMetersAddress(MyVector<MeterInfo*>* meterInfoList);
+	void AddToMeterList(MeterInfo* meterInfo);
+
+	void InitUIs();
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -36,4 +48,21 @@ public:
 	// 读表结果列表
 	CListCtrl meterReadList;
 	MeterDataTable* meterDataTable;
+	afx_msg void OnBnClickedReread();
+	afx_msg void OnBnClickedReadAgain();
+	afx_msg void OnBnClickedSelectAll();
+	// 选择要读的表
+	CListBox meterChooserList;
+	// 标准表选择框
+	CComboBox refMeterChooserBox;
+	// 全选表
+	CButton selectAllMeterCheck;
+	// “检测完成”按键
+	CButton testFinishedButton;
+	// “检测开始”与“重新检测”按钮
+	CButton testStartButton;
+	afx_msg void OnLbnSelchangeMeterChooserList();
+	afx_msg void OnCbnSelchangeRefMeterChooserList();
+	afx_msg void OnHdnItemdblclickMetersList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkMetersList(NMHDR *pNMHDR, LRESULT *pResult);
 };

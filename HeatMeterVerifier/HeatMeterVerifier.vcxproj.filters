@@ -102,6 +102,12 @@
     <ClInclude Include="ComDataReciever.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DataFrameDisplayDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ColumnProperty.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HeatMeterVerifier.cpp">
@@ -177,6 +183,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="BinData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataFrameDisplayDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ColumnProperty.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

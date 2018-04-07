@@ -42,4 +42,6 @@ public:
 	afx_msg void OnBnClickedOk();
 	void OnFrameDataRecieved(UCHAR* data, DWORD bufferLen, CJ188Frame *frame, CJ188* cj188);
 	afx_msg void OnBnClickedCancel();
+	// Ñ¡²Î¿¼±í
+	CComboBox refMeterCombobox;
 };

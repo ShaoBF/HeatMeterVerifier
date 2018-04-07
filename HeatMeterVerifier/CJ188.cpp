@@ -355,7 +355,7 @@ void CJ188::OnDataRecieved(UCHAR* buf, DWORD bufferLen){
 				//3.1.1回调OnFrameDataRecieved带入数据帧与对应部分原始数据
 				size_t rawDataLen = frame->bufferEnd - frame->bufferStart;
 				UCHAR* rawData = new UCHAR[rawDataLen];
-				memcpy(rawData, &(buffer[frame->bufferStart]), rawDataLen);
+				memcpy(rawData, &(buffer->GetData()[frame->bufferStart]), rawDataLen);
 				if (cjReciever != nullptr){
 					meterInfo->SetActive(true);
 					cjReciever->OnFrameDataRecieved(rawData, rawDataLen, frame, this);

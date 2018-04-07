@@ -24,6 +24,7 @@ CSerialTestDlg::CSerialTestDlg(CWnd* pParent /*=NULL*/)
 
 CSerialTestDlg::~CSerialTestDlg()
 {
+	//遍历串口，关闭所有打开的
 }
 
 void CSerialTestDlg::DoDataExchange(CDataExchange* pDX)
@@ -60,6 +61,7 @@ BEGIN_MESSAGE_MAP(CSerialTestDlg, CDialogEx)
 	ON_COMMAND(ID_METER_SERIAL_SETTINGS, &CSerialTestDlg::OnMeterSerialSettings)
 	ON_UPDATE_COMMAND_UI(ID_METER_SERIAL_SETTINGS, &CSerialTestDlg::OnUpdateMeterSerialSettings)
 	ON_BN_CLICKED(IDOK, &CSerialTestDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDCANCEL, &CSerialTestDlg::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
 
@@ -510,4 +512,10 @@ void CSerialTestDlg::SaveConfig(){
 	comConfig.dataBits = dataBits;
 	comConfig.stopBits = stopBits;
 	comConfig.parityIndex = parityIndex;
+}
+
+void CSerialTestDlg::OnBnClickedCancel()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CDialogEx::OnCancel();
 }

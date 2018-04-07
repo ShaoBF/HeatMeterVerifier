@@ -116,4 +116,5 @@ public:
 	afx_msg void OnUpdateMeterSerialSettings(CCmdUI *pCmdUI);
 	afx_msg void OnBnClickedOk();
 	void SaveConfig();
+	afx_msg void OnBnClickedCancel();
 };

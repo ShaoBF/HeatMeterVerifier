@@ -99,6 +99,7 @@ enum CJ188DI{
 #define CJ188_BATTERY_STATUS_BIT		0x04
 
 #define CJ188_TIME_DATA_LENGTH			7
+#define CJ188_STATUS_LENGTH				2
 
 
 //00b
@@ -131,6 +132,19 @@ enum CJ188DI{
 #define LPH			0x32
 #define M3PH		0x35
 
+#define NAME_REFRENCE				"参考"
+#define NAME_METER_ADDRESS			"表号地址"
+#define NAME_BILLING_DAY_HEAT		"结算日热量"
+#define NAME_CURRENT_HEAT			"累计热量"
+#define NAME_HEAT_POWER				"热功率"
+#define NAME_FLOW_RATE				"流速"
+#define NAME_BILLING_DAY_CAPACITY	"累计流量"  
+#define NAME_TEMPERATURE_IN			"入口温度"
+#define NAME_TEMPERATURE_OUT		"出口温度"
+#define NAME_WORK_HOURS				"运行时间"
+#define NAME_CURRENT_TIME			"实际时间"
+#define NAME_STATUS					"状态字"
+#define NAME_RAW_DATA				"原数据帧"
 
 
 struct KeyValue{
