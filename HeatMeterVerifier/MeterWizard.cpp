@@ -66,7 +66,10 @@ void CMeterWizard::ReadMeters(){
 
 void CMeterWizard::GenerateReports(){
 	CMetersReportDlg dlg;
+	dlg.SetReports(GetMeterReports());
+
 	INT_PTR nResponse = dlg.DoModal();
+
 
 	if (nResponse == IDOK)
 	{
@@ -136,4 +139,36 @@ bool CMeterWizard::IsRefMeter(UCHAR* address){
 		}
 	}
 	return true;
+}
+
+MeterInfo* CMeterWizard::GetMeterInfo(UCHAR* address){
+	int i;
+	int j;
+	for (j = 0; j < meterInfoList.GetSize(); j++){
+		UCHAR* refAddress = meterInfoList[j]->address;
+		for (i = 0; i < CJ188_ADDRESS_LENGTH; i++){
+			if (address[i] != refAddress[i]){
+				break;
+			}
+		}
+		if (i == CJ188_ADDRESS_LENGTH){
+			return meterInfoList[j];
+		}
+	}
+	return nullptr;
+}
+
+MyVector<MeterReport*>* CMeterWizard::GetMeterReports(){
+	MyVector<MeterReport*>* reports = new MyVector<MeterReport*>();
+	for (int i = 0; i < meterInfoList.GetSize(); i++){
+		MeterDataInfo* info = (MeterDataInfo*)meterInfoList[i];
+		MeterReport* report = info->GetReport();
+		reports->Add(report);
+	}
+	return reports;
+}
+
+LPCTSTR CMeterWizard::GetConnectStr(){
+	//FIXME: would retrive form config file.
+	return _T("ODBC;DSN=HeatMeterDS32;UID=ShaoBF;PWD=shbofe");
 }

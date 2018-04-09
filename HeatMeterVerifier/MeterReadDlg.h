@@ -2,6 +2,7 @@
 #include "afxcmn.h"
 #include "ComDataReciever.h"
 #include "MeterDataTable.h"
+#include "MeterDataInfo.h"
 #include "afxwin.h"
 
 // CMeterReadDlg ¶Ô»°¿ò

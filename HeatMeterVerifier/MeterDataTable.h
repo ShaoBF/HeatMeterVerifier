@@ -17,6 +17,7 @@ public:
 	void AddData(DataFrame *dataFrame);
 	int GetRowCount();
 	DataFrame* GetDataFrame(int index);
+	DataFrame* GetMeterDataFrame(UCHAR* meterID, int startIndex);
 	DataFrame* RemoveDataFrame(int index);
 	bool ClearAllData();
 

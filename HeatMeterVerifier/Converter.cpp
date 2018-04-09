@@ -116,3 +116,41 @@ DWORD Converter::BcdToNumber(UCHAR* data, int length
 	return number;
 }
 
+tm Converter::BcdToTime(UCHAR* data, int length, bool highByteFirst){
+	tm t;
+	if (highByteFirst){
+		int current = 0;
+		t.tm_year = BcdToNumber(&(data[current]), 2, highByteFirst)-1900;
+		current += 2;
+		t.tm_mon = BcdToNumber(&(data[current++]), 1, highByteFirst)-1;
+		t.tm_mday = BcdToNumber(&(data[current++]), 1, highByteFirst);
+		t.tm_hour = BcdToNumber(&(data[current++]), 1, highByteFirst);
+		t.tm_min = BcdToNumber(&(data[current++]), 1, highByteFirst);
+		t.tm_sec = BcdToNumber(&(data[current++]), 1, highByteFirst);
+		t.tm_isdst = 0;
+	}
+	else{
+		int current = 6;
+		t.tm_year = BcdToNumber(&(data[current]), 2, highByteFirst) - 1900;
+		current -= 2;
+		t.tm_mon = BcdToNumber(&(data[current--]), 1, highByteFirst) - 1;
+		t.tm_mday = BcdToNumber(&(data[current--]), 1, highByteFirst);
+		t.tm_hour = BcdToNumber(&(data[current--]), 1, highByteFirst);
+		t.tm_min = BcdToNumber(&(data[current--]), 1, highByteFirst);
+		t.tm_sec = BcdToNumber(&(data[current--]), 1, highByteFirst);
+		t.tm_isdst = 0;
+	}
+	return t;
+}
+
+time_t Converter::BcdToTimeT(UCHAR* data, int length, bool highByteFirst){
+	tm t = BcdToTime(data, length, highByteFirst);
+	time_t t_of_day = mktime(&t);
+	return t_of_day;
+}
+CString Converter::BcdToDateTimeStr(UCHAR* data, int length, bool highByteFirst){
+	tm t = BcdToTime(data, length, highByteFirst);
+	CString str;
+	str.Format(L"%04d-%02d-%02d %02d:%02d:%02d", t.tm_year+1900, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
+	return str;
+}

@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // CMeterReportDlg 对话框
@@ -18,4 +19,15 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CEdit testUnit;
+	CEdit testMode;
+	CEdit meterID;
+	CEdit factoryID;
+	afx_msg void OnEnChangeMeterType();
+	CEdit meterType;
+	CEdit startTime;
+	CEdit endTime;
+	CEdit tester;
+	CEdit reviewer;
 };

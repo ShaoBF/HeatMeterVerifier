@@ -112,3 +112,10 @@ void DataItem::SetName(CString name){
 CString DataItem::GetName(){
 	return name;
 }
+
+void DataItem::SetData(UnionValue v, int dec, bool hasUnit, UCHAR unit){
+	this->hasUnit = hasUnit;
+	value = v;
+	this->unit = unit;
+	decimalPoint = dec;
+}

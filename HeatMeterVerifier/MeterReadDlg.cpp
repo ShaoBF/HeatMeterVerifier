@@ -175,6 +175,15 @@ void CMeterReadDlg::ProcessMeterData(UCHAR* data, DWORD bufferLen, CJ188Frame* f
 	DataFrame *dataFrame = new DataFrame(frame, data, bufferLen);
 	dataFrame->ParseData();
 	meterDataTable->AddData(dataFrame);
+	MeterDataInfo* meter = (MeterDataInfo*)wizard.GetMeterInfo(frame->address);
+	if (meter != nullptr){
+		if (testStarted){
+			meter->SetStartFrame(dataFrame);
+		}
+		else{
+			meter->SetEndFrame(dataFrame);
+		}
+	}
 
 	//CreateMeterDataTable();
 	UpdateMeterReadList();
@@ -223,8 +232,8 @@ void CMeterReadDlg::OnBnClickedReread()
 	meterReadList.DeleteAllItems();
 	meterDataTable->ClearAllData();
 	//重新读取所有数据并放入表格显示
-	ReadMeters();
 	testStarted = true;
+	ReadMeters();
 	if (testStarted){
 		testFinishedButton.EnableWindow(TRUE);
 		testStartButton.SetWindowTextW(L"重新检测");
@@ -235,8 +244,8 @@ void CMeterReadDlg::OnBnClickedReread()
 void CMeterReadDlg::OnBnClickedReadAgain()
 {
 	//重发读表指令，并将读数结果插入上一次读数之下。
-	ReadMeters();
 	testStarted = false;
+	ReadMeters();
 	if (!testStarted){
 		testFinishedButton.EnableWindow(FALSE);
 		testStartButton.SetWindowTextW(L"开始检测");
@@ -294,7 +303,7 @@ void CMeterReadDlg::GetComList_256(CListBox * list)//获取可用com口支持到256个
 		else
 		{
 			//将表、串口对应信息放入MeterCodeCom列表中
-			wizard.AddMeterAddressCom(new MeterInfo(strCom, nullptr));
+			wizard.AddMeterAddressCom(new MeterDataInfo(strCom, nullptr));
 			count++;
 		}
 		CloseHandle(hCom);

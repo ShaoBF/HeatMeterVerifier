@@ -57,10 +57,12 @@
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
       <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>C:\Program Files\MySQL\MySQL Server 5.7\lib\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -85,12 +87,14 @@
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
       <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>C:\Program Files\MySQL\MySQL Server 5.7\lib\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -125,9 +129,11 @@
     <ClInclude Include="HeatMeterVerifierView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MeterChooserDlg.h" />
+    <ClInclude Include="MeterDataInfo.h" />
     <ClInclude Include="MeterDataTable.h" />
     <ClInclude Include="MeterInfo.h" />
     <ClInclude Include="MeterReadDlg.h" />
+    <ClInclude Include="MeterReport.h" />
     <ClInclude Include="MeterReportDlg.h" />
     <ClInclude Include="MetersReportDlg.h" />
     <ClInclude Include="MeterUtil.h" />
@@ -156,9 +162,11 @@
     <ClCompile Include="HeatMeterVerifierView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MeterChooserDlg.cpp" />
+    <ClCompile Include="MeterDataInfo.cpp" />
     <ClCompile Include="MeterDataTable.cpp" />
     <ClCompile Include="MeterInfo.cpp" />
     <ClCompile Include="MeterReadDlg.cpp" />
+    <ClCompile Include="MeterReport.cpp" />
     <ClCompile Include="MeterReportDlg.cpp" />
     <ClCompile Include="MetersReportDlg.cpp" />
     <ClCompile Include="MeterUtil.cpp" />

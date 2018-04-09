@@ -112,3 +112,18 @@ bool MeterDataTable::ClearAllData(){
 		return false;
 	}
 }
+
+DataFrame* MeterDataTable::GetMeterDataFrame(UCHAR* meterID, int startIndex){
+	int i, j;
+	for (i = startIndex; i < frames->GetSize(); i++){
+		for (j = 0; j < CJ188_ADDRESS_LENGTH; j++){
+			if ((*frames)[i]->frame->address[j]!=meterID[j]){
+				break;
+			}
+		}
+		if (j = CJ188_ADDRESS_LENGTH){
+			return (*frames)[i];
+		}
+	}
+	return nullptr;
+}

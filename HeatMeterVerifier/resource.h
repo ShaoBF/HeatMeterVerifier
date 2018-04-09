@@ -50,16 +50,27 @@
 #define IDC_METERID                     1032
 #define IDC_METER_NUMBER2               1033
 #define IDC_VERIFY_DATE                 1034
+#define IDC_TEST_START_TIME             1034
 #define IDC_METER_NUMBER3               1035
-#define IDC_EDIT1                       1035
 #define IDC_RAW_FRAME                   1035
 #define IDC_MANUFATORY                  1036
 #define IDC_DATA_ITEM_LIST              1036
 #define IDC_METER_NUMBER4               1037
 #define IDC_TEST_MEMBER                 1038
+#define IDC_TESTER                      1038
 #define IDC_METER_NUMBER5               1039
 #define IDC_TEST_MODE                   1040
 #define IDC_COM_BOX                     1041
+#define IDC_METER_NUMBER6               1041
+#define IDC_TEST_UNIT                   1042
+#define IDC_METER_NUMBER7               1043
+#define IDC_TEST_END_TIME               1044
+#define IDC_METER_NUMBER8               1045
+#define IDC_REVIEWER                    1046
+#define IDC_METER_NUMBER9               1047
+#define IDC_METER_TYPE                  1048
+#define IDC_BUTTON_SEND                 1049
+#define IDC_SAVE                        1050
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_32771                        32771
 #define ID_32772                        32771
@@ -75,7 +86,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        317
 #define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1037
+#define _APS_NEXT_CONTROL_VALUE         1051
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

@@ -19,8 +19,7 @@ public:
 	UCHAR* rawData;
 	DWORD rawDataLength;
 
-	//double billingDayHeat;			//结算日热量
-	//UCHAR billingDayHeatUnit;		//结算日热量单位
+	//结算日热量
 	DataItem billingDayHeat;
 	//double currentHeat;				//当前热量
 	//UCHAR currentHeatUnit;			//当前热量单位
