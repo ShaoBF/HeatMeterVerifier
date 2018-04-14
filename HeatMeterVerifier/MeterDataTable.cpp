@@ -2,7 +2,9 @@
 #include "MeterDataTable.h"
 #include "MyVector.cpp"
 
+
 #define DATA_ITEM_WIDTH 100
+#define TIME_ITEM_WIDTH 150
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +50,7 @@ MeterDataTable::MeterDataTable()
 	columnPropertyList[current++] = column;
 	column = new ColumnProperty(L"运行时间（h）", LVCFMT_RIGHT, DATA_ITEM_WIDTH);
 	columnPropertyList[current++] = column;
-	column = new ColumnProperty(L"实际时间", LVCFMT_RIGHT, DATA_ITEM_WIDTH);
+	column = new ColumnProperty(L"实际时间", LVCFMT_RIGHT, TIME_ITEM_WIDTH);
 	columnPropertyList[current++] = column;
 	column = new ColumnProperty(L"状态字", LVCFMT_RIGHT, DATA_ITEM_WIDTH);
 	columnPropertyList[current++] = column;

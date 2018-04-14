@@ -2,7 +2,6 @@
 #include "DataFrame.h"
 #include "Converter.h"
 
-#define CELSIUS "¡æ"
 
 
 DataFrame::DataFrame()
@@ -210,9 +209,14 @@ CString DataFrame::GetWorkHoursStr(){
 }
 
 CString DataFrame::GetCurrentTimeStr(){
-	return Converter::HexToString(currentTime.value.puc, CJ188_TIME_DATA_LENGTH, 0);
+	bool highByteFirst = CJ188::LookUpByteOrder(frame->meterType, &(frame->address[5]));
+	return Converter::BcdToDateTimeStr(currentTime.value.puc, CJ188_TIME_DATA_LENGTH, highByteFirst);
 }
 
 CString DataFrame::GetStatusStr(){
 	return Converter::HexToString(statusData.value.puc, CJ188_STATUS_LENGTH, ' ');
+}
+
+CString DataFrame::GetRawDataStr(){
+	return Converter::HexToString(rawData, rawDataLength);
 }

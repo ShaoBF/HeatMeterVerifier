@@ -63,7 +63,7 @@ public:
 	int readingDate;
 public:
 	void ParseData();
-	CString GetUnit(UCHAR code);
+	//CString GetUnit(UCHAR code);
 	CString GetAddressStr();
 	CString GetBillingDayHeatStr();
 	CString GetCurrentHeatStr();
@@ -75,5 +75,6 @@ public:
 	CString GetWorkHoursStr();
 	CString GetCurrentTimeStr();
 	CString GetStatusStr();
+	CString GetRawDataStr();
 };
 

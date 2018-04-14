@@ -40,7 +40,7 @@ CString Converter::HexToString(UCHAR* buf, DWORD bufferLen, char seperator){
 	hexStr[j] = '\0';
 	return CString(hexStr);
 }
-char* Converter::StringToHex(CString dataStr){
+char* Converter::StringToHex(CString dataStr, char seperator){
 	size_t len = dataStr.GetLength();
 	int dataLen = ((len + 1) / 3) + 1;
 	char* data = new char[dataLen];
@@ -49,38 +49,43 @@ char* Converter::StringToHex(CString dataStr){
 	data[0] = 0;
 	for (int i = 0; i < len; i++){
 		char c = dataStr.GetAt(i);
-		switch (c){
-		case '0':
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			data[j] = data[j] * 16 + c - '0';
-			break;
-		case 'a':
-		case 'b':
-		case 'c':
-		case 'd':
-		case 'e':
-		case 'f':
-			data[j] = data[j] * 16 + c - 'a' + 10;
-			break;
-		case 'A':
-		case 'B':
-		case 'C':
-		case 'D':
-		case 'E':
-		case 'F':
-			data[j] = data[j] * 16 + c - 'A' + 10;
-			break;
-		case ' ':
+		if (c == seperator){
 			data[++j] = 0;
-			break;
+		}
+		else{
+			switch (c){
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				data[j] = data[j] * 16 + c - '0';
+				break;
+			case 'a':
+			case 'b':
+			case 'c':
+			case 'd':
+			case 'e':
+			case 'f':
+				data[j] = data[j] * 16 + c - 'a' + 10;
+				break;
+			case 'A':
+			case 'B':
+			case 'C':
+			case 'D':
+			case 'E':
+			case 'F':
+				data[j] = data[j] * 16 + c - 'A' + 10;
+				break;
+			case ' ':
+				data[++j] = 0;
+				break;
+			}
 		}
 	}
 	data[++j] = 0;

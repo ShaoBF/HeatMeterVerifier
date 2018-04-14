@@ -9,6 +9,11 @@ public:
 	MeterReport(DataFrame* startFrame, DataFrame* endFrame);
 	virtual ~MeterReport();
 
+	bool highByteFirst = true;
+
+	MeterInfo* meter;
+	//报告ID
+	UINT64 id;
 	//表号
 	UCHAR address[7];
 	//规定时间内总热量
@@ -29,7 +34,22 @@ public:
 	DataItem endTime;
 	//持续时间
 	DataItem duration;
+	bool isQualified;
 
 	void Calculate(DataFrame* startFrame,DataFrame* endFrame);
+	void CalculateQualified(MeterReport* refData);
+
+	CString GetAddressStr();
+	CString GetHeatStr();
+	CString GetHeatPowerStr();
+	CString GetCapacityStr();
+	CString GetFlowRateStr();
+	CString GetTemperatureInStr();
+	CString GetTemperatureOutStr();
+	CString GetStartTimeStr();
+	CString GetEndTimeStr();
+	CString GetDurationStr();
+	CString GetQualifiedStr();
+
 };
 

@@ -2,6 +2,8 @@
 #include "afxcmn.h"
 #include "MeterReport.h"
 #include "MyVector.h"
+#include "ColumnProperty.h"
+#include "MeterReportTable.h"
 #include <afxdb.h>
 
 // CMetersReportDlg 对话框
@@ -13,9 +15,13 @@ class CMetersReportDlg : public CDialogEx
 public:
 	CMetersReportDlg(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CMetersReportDlg();
+	BOOL OnInitDialog();
+	void InitUIs();
+	void CreateMeterReportTable();
 
-	void SetReports(MyVector<MeterReport*>* reports);
-	
+	//void SetMeterReportList(MyVector<MeterReport*>* reportList);
+	void SetMeterInfoList(MyVector<MeterInfo*>* dataInfoList);
+
 
 // 对话框数据
 	enum { IDD = IDD_METERS_REPORT };
@@ -27,7 +33,20 @@ protected:
 	void SaveReport(CDatabase* db, MeterReport* report);
 	void SaveReport(MeterReport* report);
 
-	MyVector<MeterReport*>* reports;
+	void SaveMeterDataList(MyVector<MeterInfo*>* meterList);
+	void SaveMeterData(CDatabase* db, MeterDataInfo* meterData);
+
+	void SaveTestData(DataFrame* data, UINT64 testID);
+	void SaveTestData(CDatabase* db, DataFrame* data, UINT64 testID);
+
+	void UpdateMeterReportList();
+	UINT64 GetReportID(CDatabase* database, MeterReport* report);
+
+	CMutex* g_clsMutex;
+
+	//ColumnProperty** columns;
+	//MyVector<MeterReport*>* reports;
+	MeterReportTable* reportTable;
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -36,4 +55,6 @@ public:
 	CListCtrl meterReportList;
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedSave();
+	afx_msg void OnHdnItemdblclickReportList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkReportList(NMHDR *pNMHDR, LRESULT *pResult);
 };

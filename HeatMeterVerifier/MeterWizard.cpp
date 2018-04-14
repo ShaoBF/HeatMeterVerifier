@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MeterWizard.h"
-
+#include "MyVector.cpp"
 
 CMeterWizard::CMeterWizard()
 {
@@ -66,7 +66,7 @@ void CMeterWizard::ReadMeters(){
 
 void CMeterWizard::GenerateReports(){
 	CMetersReportDlg dlg;
-	dlg.SetReports(GetMeterReports());
+	dlg.SetMeterInfoList(GetMeterInfoList());
 
 	INT_PTR nResponse = dlg.DoModal();
 
@@ -131,6 +131,10 @@ void CMeterWizard::setRefMeter(int index){
 	refMeterIndex = index;
 }
 
+MeterInfo* CMeterWizard::GetRefMeterInfo(){
+	return GetMeterInfo(refMeterIndex);
+}
+
 bool CMeterWizard::IsRefMeter(UCHAR* address){
 	UCHAR* refAddress = meterInfoList[refMeterIndex]->address;
 	for (int i = 0; i < CJ188_ADDRESS_LENGTH; i++){
@@ -160,15 +164,24 @@ MeterInfo* CMeterWizard::GetMeterInfo(UCHAR* address){
 
 MyVector<MeterReport*>* CMeterWizard::GetMeterReports(){
 	MyVector<MeterReport*>* reports = new MyVector<MeterReport*>();
+	MeterDataInfo* refMeter = (MeterDataInfo*)meterInfoList[refMeterIndex];
+	//refMeter->CalculateReport(refMeter->GetReport());
 	for (int i = 0; i < meterInfoList.GetSize(); i++){
 		MeterDataInfo* info = (MeterDataInfo*)meterInfoList[i];
-		MeterReport* report = info->GetReport();
+		MeterReport* report = info->CalculateReport(refMeter->GetReport());
 		reports->Add(report);
 	}
 	return reports;
 }
-
+/*
+MyVector<MeterInfo*>* CMeterWizard::GetMeterInfoList(){
+	return &meterInfoList;
+}
+*/
 LPCTSTR CMeterWizard::GetConnectStr(){
 	//FIXME: would retrive form config file.
 	return _T("ODBC;DSN=HeatMeterDS32;UID=ShaoBF;PWD=shbofe");
+}
+double CMeterWizard::GetVerifyRate(){
+	return config.GetVerifyRate();
 }

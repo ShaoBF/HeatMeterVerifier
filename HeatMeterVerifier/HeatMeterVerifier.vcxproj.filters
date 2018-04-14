@@ -114,6 +114,18 @@
     <ClInclude Include="MeterDataInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MeterReportTable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TestUnitInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TableDataDefines.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VerifyConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HeatMeterVerifier.cpp">
@@ -201,6 +213,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MeterDataInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeterReportTable.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUnitInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VerifyConfig.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

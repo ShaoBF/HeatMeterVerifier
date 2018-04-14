@@ -68,6 +68,28 @@ void DataItem::Parse(bool highByteFirst){
 }
 
 CString DataItem::ToString(){
+	CString str = GetValueStr();
+	if (hasUnit)
+		return(str + " " + CJ188::GetUnit(unit));
+	else
+		return str;
+}
+
+void DataItem::SetName(CString name){
+	this->name = name;
+}
+CString DataItem::GetName(){
+	return name;
+}
+
+void DataItem::SetData(UnionValue v, int dec, bool hasUnit, UCHAR unit){
+	this->hasUnit = hasUnit;
+	value = v;
+	this->unit = unit;
+	decimalPoint = dec;
+}
+
+CString DataItem::GetValueStr(){
 	CString str;
 	if (decimalPoint >= 0){
 		switch (decimalPoint){
@@ -100,22 +122,55 @@ CString DataItem::ToString(){
 	else{
 		str = Converter::HexToString(value.puc, -decimalPoint);
 	}
-	if (hasUnit)
-		return(str + " " + CJ188::GetUnit(unit));
-	else
-		return str;
+	return str;
+
 }
 
-void DataItem::SetName(CString name){
-	this->name = name;
+double DataItem::GetUpperBound(double rate){
+	double value = GetValue();
+	double upper = value*(1.0 + rate);
+	return upper;
 }
-CString DataItem::GetName(){
-	return name;
+double DataItem::GetLowerBound(double rate){
+	double value = GetValue();
+	double lower = value*(1.0 - rate);
+	return lower;
 }
 
-void DataItem::SetData(UnionValue v, int dec, bool hasUnit, UCHAR unit){
-	this->hasUnit = hasUnit;
-	value = v;
-	this->unit = unit;
-	decimalPoint = dec;
+//返回double[2],其中[0]为参考下界，[1]为参考上界。
+double* DataItem::GetBounds(double rate){
+	double value = GetValue();
+	double* bounds = new double[2];
+	bounds[0] = GetLowerBound(rate);
+	bounds[1] = GetUpperBound(rate);
+	return bounds;
+}
+CString DataItem::GetItemRangeStr(double rate){
+	double* bounds = GetBounds(rate);
+	CString str;
+	str.Format(L"%.2f~%.2f", bounds[0], bounds[1]);
+	delete []bounds;
+	return str;
+}
+double DataItem::GetValue(){
+	if (decimalPoint > 0){
+		return value.dv;
+	}
+	else{
+		return value.dwv;
+	}
+}
+
+//与给定参考量refItem对比，rate为浮动率，返回1(过高)，0(合格)，-1(过低)，左开右闭区间
+int DataItem::VerifyWith(DataItem* refItem, double rate){
+	double value = GetValue();
+	double upper = refItem->GetUpperBound(rate);
+	double lower = refItem->GetLowerBound(rate);
+	if (value > upper){
+		return 1;
+	}
+	if (value < lower){
+		return -1;
+	}
+	return 0;
 }

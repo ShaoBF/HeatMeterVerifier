@@ -15,7 +15,7 @@ public:
 	static char HexToChar(char hex);
 
 	static CString HexToString(UCHAR* buf, DWORD bufferLen, char seperator = ' ');
-	static char* StringToHex(CString dataStr);
+	static char* StringToHex(CString dataStr, char seperator = ' ');
 
 	//将BCD码转换为整数
 	//data：待转换BCD码

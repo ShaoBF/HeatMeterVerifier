@@ -17,10 +17,25 @@ public:
 	DataFrame* GetStartFrame();
 	DataFrame* GetEndFrame();
 	MeterReport* GetReport();
+	MeterReport* CalculateReport(MeterReport* refData);
+
+	CString GetAddressStr();
+	CString GetHeatStr();
+	CString GetHeatPowerStr();
+	CString GetCapacityStr();
+	CString GetFlowRateStr();
+	CString GetTemperatureInStr();
+	CString GetTemperatureOutStr();
+	CString GetStartTimeStr();
+	CString GetEndTimeStr();
+	CString GetDurationStr();
+	CString GetMeterTypeStr();
+
 
 protected:
 	MeterReport* report;
 	DataFrame* startFrame;
 	DataFrame* endFrame;
+
 };
 

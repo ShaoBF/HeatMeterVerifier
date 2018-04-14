@@ -5,7 +5,9 @@
 #include "MeterReportDlg.h"
 #include "MeterInfo.h"
 #include "MyVector.h"
-#include "MyVector.cpp"
+//#include "MyVector.cpp"
+#include "MeterReportDlg.h"
+#include "VerifyConfig.h"
 
 using namespace std;
 class CMeterWizard
@@ -24,11 +26,15 @@ public:
 		return &meterInfoList;
 	};
 	MyVector<MeterReport*>* GetMeterReports();
+	//MyVector<MeterDataInfo*>* GetMeterInfoList();
 	void CloseAllCom();
 	MeterInfo* GetMeterInfo(int index);
 	MeterInfo* GetMeterInfo(UCHAR* address);
 	void setRefMeter(int index);
 	bool IsRefMeter(UCHAR* address);
+	MeterInfo* GetRefMeterInfo();
+
+	double GetVerifyRate();
 
 	LPCTSTR GetConnectStr();
 	//void RemoveReport(int index);
@@ -40,6 +46,7 @@ public:
 	MeterInfo* refMeter;
 	int refMeterIndex;
 	//MyVector<MeterReport*> meterReports;
+	VerifyConfig config;
 
 protected:
 	LPINT selectedMeterIndex;

@@ -135,6 +135,7 @@
     <ClInclude Include="MeterReadDlg.h" />
     <ClInclude Include="MeterReport.h" />
     <ClInclude Include="MeterReportDlg.h" />
+    <ClInclude Include="MeterReportTable.h" />
     <ClInclude Include="MetersReportDlg.h" />
     <ClInclude Include="MeterUtil.h" />
     <ClInclude Include="MeterWizard.h" />
@@ -142,7 +143,10 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SerialTestDlg.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TableDataDefines.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestUnitInfo.h" />
+    <ClInclude Include="VerifyConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinData.cpp" />
@@ -168,6 +172,7 @@
     <ClCompile Include="MeterReadDlg.cpp" />
     <ClCompile Include="MeterReport.cpp" />
     <ClCompile Include="MeterReportDlg.cpp" />
+    <ClCompile Include="MeterReportTable.cpp" />
     <ClCompile Include="MetersReportDlg.cpp" />
     <ClCompile Include="MeterUtil.cpp" />
     <ClCompile Include="MeterWizard.cpp" />
@@ -177,6 +182,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestUnitInfo.cpp" />
+    <ClCompile Include="VerifyConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HeatMeterVerifier.reg" />

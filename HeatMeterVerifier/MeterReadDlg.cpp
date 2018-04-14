@@ -382,8 +382,7 @@ void CMeterReadDlg::OnHdnItemdblclickMetersList(NMHDR *pNMHDR, LRESULT *pResult)
 void CMeterReadDlg::OnNMDblclkMetersList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	// TODO:  在此添加控件通知处理程序代码
-	*pResult = 0;
+
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	int col = 0;
 	int row = 0;
@@ -414,4 +413,6 @@ void CMeterReadDlg::OnNMDblclkMetersList(NMHDR *pNMHDR, LRESULT *pResult)
 		TRACE(traceAppMsg, 0, "警告: 对话框创建失败，应用程序将意外终止。\n");
 		TRACE(traceAppMsg, 0, "警告: 如果您在对话框上使用 MFC 控件，则无法 #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS。\n");
 	}
+
+	*pResult = 0;
 }

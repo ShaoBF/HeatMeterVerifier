@@ -10,6 +10,7 @@ enum MeterType {
 	ReclaimedWater,
 	HeatMeter = 0x20,
 	CoolMeter,
+	HeatColdMeter = 0x27,
 	GasMeter = 0x30,
 	MiscMeters = 0x40
 };
@@ -146,6 +147,7 @@ enum CJ188DI{
 #define NAME_STATUS					"×´Ì¬×Ö"
 #define NAME_RAW_DATA				"Ô­Êý¾ÝÖ¡"
 
+#define CELSIUS "¡æ"
 
 struct KeyValue{
 	char* value;
