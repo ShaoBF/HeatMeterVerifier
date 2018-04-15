@@ -19,7 +19,8 @@
 
 IMPLEMENT_DYNAMIC(CMetersReportDlg, CDialogEx)
 
-extern CMeterWizard wizard;
+extern CMeterWizard wizard; 
+
 
 CMetersReportDlg::CMetersReportDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CMetersReportDlg::IDD, pParent)
@@ -35,7 +36,7 @@ CMetersReportDlg::~CMetersReportDlg()
 	if (g_clsMutex){
 		delete g_clsMutex;
 	}
-
+	wizard.CloseAllCom();
 }
 
 
@@ -124,7 +125,6 @@ void CMetersReportDlg::CreateMeterReportTable(){
 
 // CMetersReportDlg 消息处理程序
 
-extern CMeterWizard wizard;
 void CMetersReportDlg::OnBnClickedPrevious()
 {
 	this->EndDialog(1);

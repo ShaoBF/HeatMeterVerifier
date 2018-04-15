@@ -33,6 +33,9 @@ protected:
 	void DisplayReport();
 	void CreateReportList();
 	void InsertData(int row, DataItem* item, DataItem* refItem, CString unit, double rate);
+	CBitmap* ScreenShot(CRect rect, int left, int top, char *name);//截取窗口的大小，位置，名字（保存在默认路径下)
+	void PrintScreen(CRect rect, int left, int top);
+	HANDLE GetPrinterHandle(LPTSTR lpszPrinterName);
 
 	MeterReport* report;
 	MeterDataInfo* refData;
@@ -49,12 +52,14 @@ public:
 	CEdit endTime;
 	CEdit tester;
 	CEdit reviewer;
+	// 当前表检测结论（合格/不合格）
+	CEdit meterResult;
 	// 表计检测结果报告列表
 	CListCtrl resultList;
 	afx_msg void OnEnChangeMeterType();
 	afx_msg void OnBnClickedPrint();
 	afx_msg void OnPaint();
 
-	void testPrint();
+	void testPrint(CBitmap* image);
 };
 

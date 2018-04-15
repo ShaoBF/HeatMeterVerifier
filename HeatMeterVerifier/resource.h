@@ -71,6 +71,7 @@
 #define IDC_METER_TYPE                  1048
 #define IDC_BUTTON_SEND                 1049
 #define IDC_SAVE                        1050
+#define IDC_RESULT                      1051
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_32771                        32771
 #define ID_32772                        32771

@@ -139,6 +139,7 @@
     <ClInclude Include="MetersReportDlg.h" />
     <ClInclude Include="MeterUtil.h" />
     <ClInclude Include="MeterWizard.h" />
+    <ClInclude Include="MyPrintWizard.h" />
     <ClInclude Include="MyVector.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SerialTestDlg.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="MetersReportDlg.cpp" />
     <ClCompile Include="MeterUtil.cpp" />
     <ClCompile Include="MeterWizard.cpp" />
+    <ClCompile Include="MyPrintWizard.cpp" />
     <ClCompile Include="MyVector.cpp" />
     <ClCompile Include="SerialTestDlg.cpp" />
     <ClCompile Include="stdafx.cpp">

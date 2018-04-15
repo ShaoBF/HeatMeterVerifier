@@ -32,6 +32,7 @@ CMeterReadDlg::~CMeterReadDlg()
 	if (g_clsMutex){
 		delete g_clsMutex;
 	}
+	//wizard.CloseAllCom();
 }
 
 void CMeterReadDlg::DoDataExchange(CDataExchange* pDX)

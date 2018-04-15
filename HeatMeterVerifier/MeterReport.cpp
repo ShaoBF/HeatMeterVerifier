@@ -156,9 +156,9 @@ CString MeterReport::GetDurationStr(){
 
 CString MeterReport::GetQualifiedStr(){
 	if (isQualified){
-		return L"√";
+		return L"合格";
 	}
 	else{
-		return L"×";
+		return L"不合格";
 	}
 }

@@ -126,6 +126,9 @@
     <ClInclude Include="VerifyConfig.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MyPrintWizard.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HeatMeterVerifier.cpp">
@@ -222,6 +225,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="VerifyConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPrintWizard.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
