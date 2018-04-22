@@ -201,10 +201,6 @@ void CSerialTestDlg::UpdateDisplay(){
 }
 void CSerialTestDlg::InitComBox(){
 	comBox.ResetContent();
-//	comBox.AddString(_T("COM1:"));
-//	comBox.AddString(_T("COM2:"));
-//	comBox.AddString(_T("COM3:"));
-//	comBox.AddString(_T("COM4:"));
 	GetComList_256(&comBox);
 }
 void CSerialTestDlg::InitBaudRateBox(){
@@ -239,7 +235,7 @@ void CSerialTestDlg::InitDataBitsBox(){
 		LPCTSTR pStr = LPCTSTR(str);
 		dataBitsBox.AddString(pStr);
 	}
-	int index = comConfig.GetStopBitsIndex();
+	int index = comConfig.GetDataBitsIndex();
 	dataBitsBox.SetCurSel(index);
 	dataBits = comConfig.dataBits;
 }
@@ -512,6 +508,10 @@ void CSerialTestDlg::SaveConfig(){
 	comConfig.dataBits = dataBits;
 	comConfig.stopBits = stopBits;
 	comConfig.parityIndex = parityIndex;
+	//TODO：在这里储存串口配置信息到ini文件
+	if (comConfig.SaveConfig()){
+		AfxMessageBox(L"串口配置信息已保存。");
+	}
 }
 
 void CSerialTestDlg::OnBnClickedCancel()

@@ -185,3 +185,18 @@ LPCTSTR CMeterWizard::GetConnectStr(){
 double CMeterWizard::GetVerifyRate(){
 	return config.GetVerifyRate();
 }
+
+void CMeterWizard::setLowByteFirst(bool lowFirst){
+	lowByteFirst = lowFirst;
+}
+void CMeterWizard::setPaddingDigit(UCHAR digit){
+	paddingDigit = digit;
+}
+
+bool CMeterWizard::isLowByteFirst(){
+	return lowByteFirst;
+}
+UCHAR CMeterWizard::getPaddingDigit(){
+	return paddingDigit;
+}
+

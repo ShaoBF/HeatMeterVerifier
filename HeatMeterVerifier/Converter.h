@@ -16,6 +16,8 @@ public:
 
 	static CString HexToString(UCHAR* buf, DWORD bufferLen, char seperator = ' ');
 	static char* StringToHex(CString dataStr, char seperator = ' ');
+	static int StringToNumber(CString dataStr);
+	static UCHAR* ChangeByteOrder(UCHAR* data, int length);
 
 	//将BCD码转换为整数
 	//data：待转换BCD码

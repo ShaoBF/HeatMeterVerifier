@@ -102,6 +102,8 @@ enum CJ188DI{
 #define CJ188_TIME_DATA_LENGTH			7
 #define CJ188_STATUS_LENGTH				2
 
+#define PURE_METER_ADDRESS_LENGTH		5
+#define PURE_FACTORY_ID_LENGTH			2
 
 //00b
 #define CJ188_STATUS_VALVE_OPENED		0 
@@ -168,6 +170,8 @@ struct CJ188Frame{
 	UCHAR* data;		// 数据域，包括数据标识、序列号和数据，随控制码变化
 	UCHAR cs;			// 校验码，一字节，值为从帧起始字节到校验码之前所有字节相加，取结果低八位
 	UCHAR end;			// 结束字节，一般为16H
+
+	bool highFirst;
 };
 
 struct CJ188FrameInBuffer :public CJ188Frame {

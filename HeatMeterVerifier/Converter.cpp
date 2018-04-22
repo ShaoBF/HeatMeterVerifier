@@ -159,3 +159,30 @@ CString Converter::BcdToDateTimeStr(UCHAR* data, int length, bool highByteFirst)
 	str.Format(L"%04d-%02d-%02d %02d:%02d:%02d", t.tm_year+1900, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec);
 	return str;
 }
+
+int Converter::StringToNumber(CString dataStr){
+	size_t len = dataStr.GetLength();
+	bool isNegative = false;
+	int number = 0;
+	//将发送区内容转换为十六进制指令/数据
+	int i = 0;
+	int j = 0;
+	char c = dataStr.GetAt(i++);
+	while (c == '-'){
+		isNegative = !isNegative;
+		c = dataStr.GetAt(i++);
+	}
+	for (; i < len; i++){
+		char c = dataStr.GetAt(i);
+		number = number * 10 + c - '0';
+	}
+	return number;
+}
+
+UCHAR* Converter::ChangeByteOrder(UCHAR* data, int length){
+	UCHAR* result = new UCHAR[length];
+	for (int i = 0; i < length; i++){
+		result[i] = data[length-1-i];
+	}
+	return result;
+}

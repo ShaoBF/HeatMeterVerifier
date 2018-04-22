@@ -76,5 +76,8 @@ public:
 	CString GetCurrentTimeStr();
 	CString GetStatusStr();
 	CString GetRawDataStr();
+
+	CString GetPureAddressStr(bool highFirst, UCHAR padding);
+	CString GetFactoryIdStr(bool highFirst);
 };
 

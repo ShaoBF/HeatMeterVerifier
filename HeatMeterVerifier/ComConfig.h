@@ -1,10 +1,14 @@
 #pragma once
+#include "MainFrm.h"
 
 #define BAUD_RATE_BASE 300
+#define FULL_FILE_PATH L"D:\\ShaoBF\\IniTest\\ComConfig.ini"
+#define LP_APPNAME L"ComConfig"
 
 class ComConfig
 {
 public:
+	ComConfig(CMainFrame* main);
 	ComConfig();
 	virtual ~ComConfig();
 
@@ -17,5 +21,8 @@ public:
 	int GetDataBitsIndex();
 	int GetStopBitsIndex();
 	int GetParityIndex();
+
+	BOOL SaveConfig();
+	BOOL ReadConfig();
 };
 

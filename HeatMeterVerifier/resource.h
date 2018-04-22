@@ -72,6 +72,9 @@
 #define IDC_BUTTON_SEND                 1049
 #define IDC_SAVE                        1050
 #define IDC_RESULT                      1051
+#define IDC_LOW_BYTE_FIRST_CHECK        1052
+#define IDC_COMBO2                      1054
+#define IDC_PADDING_DIGIT               1054
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_32771                        32771
 #define ID_32772                        32771
@@ -85,9 +88,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        317
+#define _APS_NEXT_RESOURCE_VALUE        318
 #define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1051
+#define _APS_NEXT_CONTROL_VALUE         1055
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

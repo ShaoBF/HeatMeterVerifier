@@ -44,6 +44,8 @@ void CMeterReadDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SELECT_ALL, selectAllMeterCheck);
 	DDX_Control(pDX, IDC_READ_AGAIN, testFinishedButton);
 	DDX_Control(pDX, IDC_REREAD, testStartButton);
+	DDX_Control(pDX, IDC_LOW_BYTE_FIRST_CHECK, lowByteFirstCheck);
+	DDX_Control(pDX, IDC_PADDING_DIGIT, paddingDigitBox);
 }
 
 
@@ -86,6 +88,14 @@ void CMeterReadDlg::InitUIs(){
 	//设置“结束检测”无效
 	testFinishedButton.EnableWindow(FALSE);
 	meterReadList.SetExtendedStyle(LVS_EX_FULLROWSELECT);
+	lowByteFirstCheck.SetCheck(wizard.isLowByteFirst());
+	UCHAR padding = wizard.getPaddingDigit();
+	if (padding == 0){
+		paddingDigitBox.SetCurSel(0);
+	}
+	else{
+		paddingDigitBox.SetCurSel(1);
+	}
 }
 
 
@@ -143,7 +153,7 @@ void CMeterReadDlg::OnFrameDataRecieved(UCHAR* data, DWORD bufferLen, CJ188Frame
 	//解析数据（异步）并显示
 	MeterInfo *meterInfo = cj188->meterInfo;
 	switch (frame->controlCode){
-	case CJ188ReadData | CJ188_RESPONSE_BIT://是读地址操作的响应
+	case CJ188ReadData | CJ188_RESPONSE_BIT://是读数据操作的响应
 		ProcessMeterData(data, bufferLen, frame, cj188);
 		break;
 	case CJ188ReadAddress | CJ188_RESPONSE_BIT://是读地址操作的响应
@@ -174,7 +184,15 @@ void CMeterReadDlg::CreateMeterDataTable(){
 void CMeterReadDlg::ProcessMeterData(UCHAR* data, DWORD bufferLen, CJ188Frame* frame, CJ188* cj188){
 	//填入数据
 	DataFrame *dataFrame = new DataFrame(frame, data, bufferLen);
+	dataFrame->frame->highFirst = !wizard.isLowByteFirst();
 	dataFrame->ParseData();
+
+	//调整表号、厂家号部分顺序
+	if (wizard.isLowByteFirst()){
+
+	}
+	//移除填充位（F置0）
+
 	meterDataTable->AddData(dataFrame);
 	MeterDataInfo* meter = (MeterDataInfo*)wizard.GetMeterInfo(frame->address);
 	if (meter != nullptr){
@@ -229,15 +247,31 @@ void CMeterReadDlg::UpdateMeterReadList(){
 //按下“开始测试”/“重新测试”按键
 void CMeterReadDlg::OnBnClickedReread()
 {
+	//设置是否低字节在前
+	wizard.setLowByteFirst(lowByteFirstCheck.GetCheck());
+	wizard.setPaddingDigit(GetPaddingDigit());
+	//设置地址补充位
+	UCHAR padding = GetPaddingDigit();
 	//清理所有已读数据
 	meterReadList.DeleteAllItems();
 	meterDataTable->ClearAllData();
 	//重新读取所有数据并放入表格显示
 	testStarted = true;
+
 	ReadMeters();
 	if (testStarted){
 		testFinishedButton.EnableWindow(TRUE);
 		testStartButton.SetWindowTextW(L"重新检测");
+	}
+}
+
+UCHAR CMeterReadDlg::GetPaddingDigit(){
+	int current = paddingDigitBox.GetCurSel();
+	if (current == 0){
+		return 0;
+	}
+	else{
+		return 0xf;
 	}
 }
 

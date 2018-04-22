@@ -15,7 +15,7 @@ public:
 	CString MeterToString();
 	void SetActive(bool tf);
 	bool IsActive();
-	CString GetAddressString();
+	virtual CString GetAddressString();
 	UCHAR* GetAddress();
 	CString GetCom();
 	void SetAddress(UCHAR* code);

@@ -368,18 +368,6 @@ void CJ188::OnDataRecieved(UCHAR* buf, DWORD bufferLen){
 		//3.3.若仍有剩余数据，则
 		//		3.3.1返回2继续解析帧数据
 	} while ((!buffer->IsEmpty())&&hasFrame);
-	/*
-	//等待起始字节0x68开始拼接
-	//到结束字节是0x16为止
-	frame = RawDataToFrame(buf, bufferLen);
-	//回调CJ188DataReciever的OnDataRecieved
-	if (cjReciever != nullptr){
-		meterInfo->SetActive(true);
-		if (frame != nullptr){
-			cjReciever->OnFrameDataRecieved(buf, bufferLen, frame, this);
-		}
-	}
-	*/
 }
 
 CJ188Frame* CJ188::RawDataToFrame(UCHAR* buf, DWORD bufLen){
@@ -399,6 +387,8 @@ CJ188Frame* CJ188::RawDataToFrame(UCHAR* buf, DWORD bufLen){
 	}
 
 	memcpy(frame, &(buf[cur]), CJ188_FRAME_LENGTH_BEFORE_DATA);
+
+
 	cur += CJ188_FRAME_LENGTH_BEFORE_DATA;
 	//总长度不到帧所需长度，无效帧
 	if ((cur + frame->dataLength + CJ188_FRAME_LENGTH_AFTER_DATA) > bufLen){

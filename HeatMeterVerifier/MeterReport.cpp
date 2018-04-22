@@ -12,7 +12,8 @@ MeterReport::~MeterReport()
 {
 }
 MeterReport::MeterReport(DataFrame* startFrame, DataFrame* endFrame){
-	
+	this->startFrame = startFrame;
+	this->endFrame = endFrame;
 	Calculate(startFrame, endFrame);
 }
 
@@ -113,7 +114,7 @@ void MeterReport::CalculateQualified(MeterReport* refData){
 }
 
 CString MeterReport::GetAddressStr(){
-	return Converter::HexToString(address, 7, 0);
+	return startFrame->GetAddressStr();
 }
 
 CString MeterReport::GetHeatStr(){

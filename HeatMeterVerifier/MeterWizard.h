@@ -34,6 +34,12 @@ public:
 	bool IsRefMeter(UCHAR* address);
 	MeterInfo* GetRefMeterInfo();
 
+	void setLowByteFirst(bool lowFirst);
+	void setPaddingDigit(UCHAR digit);
+
+	bool isLowByteFirst();
+	UCHAR getPaddingDigit();
+
 	double GetVerifyRate();
 
 	LPCTSTR GetConnectStr();
@@ -47,6 +53,8 @@ public:
 	int refMeterIndex;
 	//MyVector<MeterReport*> meterReports;
 	VerifyConfig config;
+	bool lowByteFirst = false;
+	UCHAR paddingDigit = 0xf;
 
 protected:
 	LPINT selectedMeterIndex;

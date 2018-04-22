@@ -64,7 +64,7 @@ MeterReport* MeterDataInfo::CalculateReport(MeterReport* refData){
 }
 
 CString MeterDataInfo::GetAddressStr(){
-	return Converter::HexToString(address, 7, 0);
+	return report->GetAddressStr();
 }
 
 CString MeterDataInfo::GetHeatStr(){

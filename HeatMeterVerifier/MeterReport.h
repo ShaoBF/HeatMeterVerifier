@@ -11,6 +11,8 @@ public:
 
 	bool highByteFirst = true;
 
+	DataFrame* startFrame, *endFrame;
+
 	MeterInfo* meter;
 	//±®∏ÊID
 	UINT64 id;

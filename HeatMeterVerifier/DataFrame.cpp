@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "DataFrame.h"
 #include "Converter.h"
+#include "MeterWizard.h"
 
-
+extern CMeterWizard wizard;
 
 DataFrame::DataFrame()
 {
@@ -43,7 +44,7 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 	UCHAR meterType = frame->meterType;
 	UCHAR* vandorID;
 	vandorID = &(frame->address[5]);
-	bool highByteFirst = CJ188::LookUpByteOrder(meterType,vandorID);
+	bool highByteFirst = frame->highFirst;//!wizard.isLowByteFirst();//CJ188::LookUpByteOrder(meterType,vandorID);
 
 	//前三字节为响应指令部分
 	/*UCHAR* refDI=CJ188::GetDI(refFrame);
@@ -173,7 +174,68 @@ void DataFrame::ParseData(){//解析数据，以汇中热能表为基准的原型程序
 
 
 CString DataFrame::GetAddressStr(){
-	return Converter::HexToString(frame->address, 7, 0);
+	bool highFirst = frame->highFirst;
+	UCHAR padding = wizard.getPaddingDigit();
+	return GetPureAddressStr(highFirst, padding) + GetFactoryIdStr(highFirst);
+
+	//根据设置改变显示顺序
+
+	//前置补位f变为0
+}
+
+
+CString DataFrame::GetPureAddressStr(bool highFirst, UCHAR padding){
+	UCHAR* pureAddress;
+	//根据设置改变显示顺序
+	if (!highFirst){
+		pureAddress = Converter::ChangeByteOrder(frame->address, PURE_METER_ADDRESS_LENGTH);
+	}
+	else{
+		pureAddress = new UCHAR[PURE_METER_ADDRESS_LENGTH];
+		memcpy(pureAddress, frame->address, PURE_METER_ADDRESS_LENGTH);
+	}
+	//前置补位f变为0
+	if (padding == 0xF){
+		for (int i = 0; i < PURE_METER_ADDRESS_LENGTH; i++){
+			//取出1字节处理
+			UCHAR uc = pureAddress[i];
+			//若高四位为F
+			if (uc & 0xF0 == 0xF0){
+				//高四位置0
+				pureAddress[i] &= 0x0F;
+				//若低四位为F
+				if (uc & 0x0F == 0x0F){
+					//低四位置0
+					pureAddress[i] &= 0x0;
+				}
+				else{//否则结束处理
+					break;
+				}
+			}
+			else{//否则结束处理
+				break;
+			}
+
+		}
+	}
+	CString result = Converter::HexToString(pureAddress, PURE_METER_ADDRESS_LENGTH, 0);
+	delete pureAddress;
+	return result;
+}
+
+CString DataFrame::GetFactoryIdStr(bool highFirst){
+	//根据设置改变显示顺序
+	UCHAR* pureID;
+	if (highFirst){
+		pureID = new UCHAR[PURE_FACTORY_ID_LENGTH];
+		memcpy(pureID, &(frame->address[PURE_METER_ADDRESS_LENGTH]), PURE_FACTORY_ID_LENGTH);
+	}
+	else{
+		pureID = Converter::ChangeByteOrder(&(frame->address[PURE_METER_ADDRESS_LENGTH]), PURE_FACTORY_ID_LENGTH);
+	}
+	CString result = Converter::HexToString(pureID, PURE_FACTORY_ID_LENGTH, 0);
+	delete pureID;
+	return result;
 }
 
 CString DataFrame::GetBillingDayHeatStr(){
@@ -209,7 +271,7 @@ CString DataFrame::GetWorkHoursStr(){
 }
 
 CString DataFrame::GetCurrentTimeStr(){
-	bool highByteFirst = CJ188::LookUpByteOrder(frame->meterType, &(frame->address[5]));
+	bool highByteFirst = !wizard.isLowByteFirst();//CJ188::LookUpByteOrder(frame->meterType, &(frame->address[5]));
 	return Converter::BcdToDateTimeStr(currentTime.value.puc, CJ188_TIME_DATA_LENGTH, highByteFirst);
 }
 

@@ -29,6 +29,7 @@ protected:
 	bool selectAll;
 	bool testStarted=false;
 
+	UCHAR GetPaddingDigit();
 
 	void InitMeterSelectList();
 	void GetComList_256(CListBox * CCombox);
@@ -66,4 +67,8 @@ public:
 	afx_msg void OnCbnSelchangeRefMeterChooserList();
 	afx_msg void OnHdnItemdblclickMetersList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkMetersList(NMHDR *pNMHDR, LRESULT *pResult);
+	// 低字节在前选择框
+	CButton lowByteFirstCheck;
+	// 地址补充码（0或F）
+	CComboBox paddingDigitBox;
 };
