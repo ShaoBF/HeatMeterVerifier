@@ -6,9 +6,13 @@
 #include "afxdialogex.h"
 #include "Converter.h"
 #include "ComConfig.h"
+#include "MeterWizard.h"
+
+#define FULL_FILE_PATH L"D:\\ShaoBF\\IniTest\\Config.ini"
 
 extern KeyValue CJ188ControlList[];
 extern KeyValue CJ188DIList[];
+extern CMeterWizard wizard;
 
 // CSerialTestDlg 对话框
 
@@ -508,11 +512,13 @@ void CSerialTestDlg::SaveConfig(){
 	comConfig.dataBits = dataBits;
 	comConfig.stopBits = stopBits;
 	comConfig.parityIndex = parityIndex;
+	CString configPath = wizard.GetConfigPath();
 	//TODO：在这里储存串口配置信息到ini文件
-	if (comConfig.SaveConfig()){
+	if (comConfig.SaveConfig(configPath)){
 		AfxMessageBox(L"串口配置信息已保存。");
 	}
 }
+
 
 void CSerialTestDlg::OnBnClickedCancel()
 {

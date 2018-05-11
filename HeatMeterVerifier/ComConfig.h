@@ -2,14 +2,13 @@
 #include "MainFrm.h"
 
 #define BAUD_RATE_BASE 300
-#define FULL_FILE_PATH L"D:\\ShaoBF\\IniTest\\ComConfig.ini"
 #define LP_APPNAME L"ComConfig"
 
 class ComConfig
 {
 public:
-	ComConfig(CMainFrame* main);
-	ComConfig();
+	ComConfig(CMainFrame* main,CString configPath);
+	ComConfig(CString configPath);
 	virtual ~ComConfig();
 
 	int parityIndex = EVENPARITY;
@@ -22,7 +21,7 @@ public:
 	int GetStopBitsIndex();
 	int GetParityIndex();
 
-	BOOL SaveConfig();
-	BOOL ReadConfig();
+	BOOL SaveConfig(CString configPath);
+	BOOL ReadConfig(CString configPath);
 };
 

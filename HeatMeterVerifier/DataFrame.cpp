@@ -200,11 +200,11 @@ CString DataFrame::GetPureAddressStr(bool highFirst, UCHAR padding){
 			//取出1字节处理
 			UCHAR uc = pureAddress[i];
 			//若高四位为F
-			if (uc & 0xF0 == 0xF0){
+			if ((uc & 0xF0) == 0xF0){
 				//高四位置0
 				pureAddress[i] &= 0x0F;
 				//若低四位为F
-				if (uc & 0x0F == 0x0F){
+				if ((uc & 0x0F) == 0x0F){
 					//低四位置0
 					pureAddress[i] &= 0x0;
 				}

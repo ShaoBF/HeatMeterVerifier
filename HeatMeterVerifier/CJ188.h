@@ -205,11 +205,7 @@ public:
 	//CJ188FrameInBuffer *frameIB;
 	static UCHAR ser;
 	ComBuffer* buffer;
-	//UCHAR* buffer;
-	//DWORD bufferCurrent;
 	CJ188DataReciever* cjReciever;
-	ComDataReciever* cdReciever;
 	MeterInfo* meterInfo;
-	CJ188Frame* requestFrame;
 };
 

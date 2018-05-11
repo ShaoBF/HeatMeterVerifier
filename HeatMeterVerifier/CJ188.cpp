@@ -262,7 +262,7 @@ void CJ188::ReadMeterData(MeterInfo* meterInfo, CJ188DataReciever* reciever){
 	UCHAR* di = (UCHAR*)(&kvlist[index].key);
 
 	//生成指令帧
-	requestFrame = CreateRequestFrame(addr, ctrl, di);
+	CJ188Frame *requestFrame = CreateRequestFrame(addr, ctrl, di);
 	//发送指令帧
 	SendFrame(requestFrame);
 
@@ -285,11 +285,11 @@ void CJ188::SendFrame(CJ188Frame* frame){
 	int iLen = strText.GetLength();
 	comID = new TCHAR[iLen];
 	lstrcpy(comID, strText.GetBuffer(iLen));
-	cdReciever = this;
+	//cdReciever = this;
 	bool serialAvailable = true;
 	if (!serial->IsOpened()){
 		//打开串口后，自动接收数据
-		serialAvailable = serial->OpenSerialPort(comID, comConfig.baudRate, comConfig.dataBits, comConfig.stopBits, comConfig.parityIndex, cdReciever);
+		serialAvailable = serial->OpenSerialPort(comID, comConfig.baudRate, comConfig.dataBits, comConfig.stopBits, comConfig.parityIndex, this);
 	}
 	if (serialAvailable)
 		serial->SendData(data, length);

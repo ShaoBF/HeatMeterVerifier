@@ -44,6 +44,10 @@ public:
 
 	LPCTSTR GetConnectStr();
 	//void RemoveReport(int index);
+	CString GetConfigPath(){
+		return L"D:\\ShaoBF\\IniTest\\Config.ini";
+	}
+
 
 public:
 //	MeterInfo** meterInfoList;
@@ -55,6 +59,7 @@ public:
 	VerifyConfig config;
 	bool lowByteFirst = false;
 	UCHAR paddingDigit = 0xf;
+
 
 protected:
 	LPINT selectedMeterIndex;

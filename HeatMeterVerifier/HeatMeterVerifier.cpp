@@ -12,11 +12,13 @@
 #include "HeatMeterVerifierDoc.h"
 #include "HeatMeterVerifierView.h"
 #include "ComConfig.h"
+#include "MeterWizard.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+extern CMeterWizard wizard;
 
 // CHeatMeterVerifierApp
 
@@ -70,6 +72,9 @@ BOOL CHeatMeterVerifierApp::InitInstance()
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
 
+	AfxInitRichEdit();
+	AfxInitRichEdit2();
+
 	CWinApp::InitInstance();
 
 
@@ -111,7 +116,7 @@ BOOL CHeatMeterVerifierApp::InitInstance()
 	AddDocTemplate(pDocTemplate);
 	try{ 
 		//ComConfig config;
-		comConfig.ReadConfig();
+		comConfig.ReadConfig(wizard.GetConfigPath());
 	}catch(int e){
 		return FALSE;
 	}

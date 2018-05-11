@@ -32,7 +32,7 @@ static UINT indicators[] =
 	ID_INDICATOR_SCRL,
 };
 CMeterWizard wizard;
-ComConfig comConfig;
+ComConfig comConfig(wizard.GetConfigPath());
 // CMainFrame ¹¹Ôì/Îö¹¹
 
 CMainFrame::CMainFrame()
