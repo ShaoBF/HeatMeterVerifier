@@ -4,11 +4,12 @@
 #include "MeterDataInfo.h"
 #include "MyVector.h"
 #include "ColumnProperty.h"
+#include "ReportDlg.h"
 
 
 // CMeterReportDlg 对话框
 
-class CMeterReportDlg : public CDialogEx
+class CMeterReportDlg : public CReportDlg
 {
 	DECLARE_DYNAMIC(CMeterReportDlg)
 
@@ -16,8 +17,8 @@ public:
 	CMeterReportDlg(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CMeterReportDlg();
 
-	void SetMeterReport(MeterReport* report);
-	void SetRefMeterData(MeterDataInfo* data);
+	//void SetMeterReport(MeterReport* report);
+	//void SetRefMeterData(MeterDataInfo* data);
 	BOOL OnInitDialog();
 
 // 对话框数据
@@ -30,15 +31,15 @@ protected:
 	//初始化所有UI控件
 	void InitUIs();
 	//绘制数据项展示表格
-	void DisplayReport();
+	void DisplayReport(CalibrationReport* report);
 	void CreateReportList();
 	void InsertData(int row, DataItem* item, DataItem* refItem, CString unit, double rate);
 	CBitmap* ScreenShot(CRect rect, int left, int top, char *name);//截取窗口的大小，位置，名字（保存在默认路径下)
 	void PrintScreen(CRect rect, int left, int top);
 	HANDLE GetPrinterHandle(LPTSTR lpszPrinterName);
 
-	MeterReport* report;
-	MeterDataInfo* refData;
+	//MeterReport* report;
+	//MeterDataInfo* refData;
 	MyVector<ColumnProperty*> columnPropertyList;
 
 	DECLARE_MESSAGE_MAP()
@@ -61,5 +62,7 @@ public:
 	afx_msg void OnPaint();
 
 	void testPrint(CBitmap* image);
+	CString GetReportTemplate();
+	//CalibrationReport* GenerateReport();
 };
 

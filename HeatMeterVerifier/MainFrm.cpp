@@ -7,6 +7,7 @@
 #include "HeatMeterVerifier.h"
 #include "MeterWizard.h"
 #include "ComConfig.h"
+#include "DBConfig.h"
 
 #include "MainFrm.h"
 
@@ -32,7 +33,8 @@ static UINT indicators[] =
 	ID_INDICATOR_SCRL,
 };
 CMeterWizard wizard;
-ComConfig comConfig(wizard.GetConfigPath());
+ComConfig comConfig(wizard.GetConfigFilePath());
+CDBConfig dbConfig(wizard.GetConfigFilePath());
 // CMainFrame ¹¹Ôì/Îö¹¹
 
 CMainFrame::CMainFrame()

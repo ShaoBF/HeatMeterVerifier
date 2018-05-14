@@ -512,7 +512,7 @@ void CSerialTestDlg::SaveConfig(){
 	comConfig.dataBits = dataBits;
 	comConfig.stopBits = stopBits;
 	comConfig.parityIndex = parityIndex;
-	CString configPath = wizard.GetConfigPath();
+	CString configPath = wizard.GetConfigFilePath();
 	//TODO：在这里储存串口配置信息到ini文件
 	if (comConfig.SaveConfig(configPath)){
 		AfxMessageBox(L"串口配置信息已保存。");

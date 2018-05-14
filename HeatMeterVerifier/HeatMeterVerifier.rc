@@ -168,16 +168,11 @@ BEGIN
     BEGIN
         MENUITEM "工具栏(&T)",                     ID_VIEW_TOOLBAR
         MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
-        MENUITEM "RichEditTest",                ID_RICH_EDIT_ITEM
-    END
-    POPUP "设置"
-    BEGIN
-        MENUITEM "串口设置(&S)",                    ID_METER_SERIAL_SETTINGS
-        MENUITEM "监测站信息",                       ID_32776
-        MENUITEM "数据库管理",                       ID_32777
+        MENUITEM "HTMLtest",                    ID_HTML_TEST
     END
     POPUP "读表(&M)"
     BEGIN
+        MENUITEM "串口设置(&S)",                    ID_METER_SERIAL_SETTINGS
         MENUITEM "开始读表(&R)",                    ID_START_METER_READ
     END
     POPUP "窗口(&W)"
@@ -406,15 +401,14 @@ BEGIN
     CONTROL         "",IDC_DATA_ITEM_LIST,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,31,88,238,132
 END
 
-IDD_TEST_RICH_EDIT_DIALOG DIALOGEX 0, 0, 605, 293
+IDD_TEST_HTML DIALOGEX 0, 0, 665, 369
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "RichTest"
+CAPTION "Dialog"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "确定",IDOK,487,272,50,14
-    PUSHBUTTON      "取消",IDCANCEL,548,272,50,14
-    CONTROL         "",IDC_RICH_TEST,"RichEdit20W",ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP,108,118,142,114
-    LTEXT           "Static",IDC_STATIC_FOR_HTML,313,41,197,183
+    DEFPUSHBUTTON   "确定",IDOK,546,348,50,14
+    PUSHBUTTON      "取消",IDCANCEL,608,348,50,14
+    LTEXT           "Static",IDC_STATIC_FOR_HTML,23,14,626,327
 END
 
 
@@ -517,12 +511,12 @@ BEGIN
         BOTTOMMARGIN, 253
     END
 
-    IDD_TEST_RICH_EDIT_DIALOG, DIALOG
+    IDD_TEST_HTML, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 598
+        RIGHTMARGIN, 658
         TOPMARGIN, 7
-        BOTTOMMARGIN, 286
+        BOTTOMMARGIN, 362
     END
 END
 #endif    // APSTUDIO_INVOKED

@@ -27,5 +27,7 @@ public:
 	static tm BcdToTime(UCHAR* data, int length, bool highByteFirst = true);
 	static time_t BcdToTimeT(UCHAR* data, int length, bool highByteFirst = true);
 	static CString BcdToDateTimeStr(UCHAR* data, int length, bool highByteFirst = true);
+	static LPCTSTR pcharToWchar(char* buffer);
+	static WCHAR* Utf8ToAnsi(CString utf8Content);
 };
 

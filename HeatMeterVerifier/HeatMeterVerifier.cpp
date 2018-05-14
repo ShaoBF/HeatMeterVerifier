@@ -13,6 +13,7 @@
 #include "HeatMeterVerifierView.h"
 #include "ComConfig.h"
 #include "MeterWizard.h"
+#include "DBConfig.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -60,6 +61,8 @@ CHeatMeterVerifierApp theApp;
 
 // CHeatMeterVerifierApp 初始化
 extern ComConfig comConfig;
+extern CDBConfig dbConfig;
+
 BOOL CHeatMeterVerifierApp::InitInstance()
 {
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
@@ -114,12 +117,9 @@ BOOL CHeatMeterVerifierApp::InitInstance()
 		return FALSE;
 	pDocTemplate->SetContainerInfo(IDR_HeatMeterDataTYPE_CNTR_IP);
 	AddDocTemplate(pDocTemplate);
-	try{ 
-		//ComConfig config;
-		comConfig.ReadConfig(wizard.GetConfigPath());
-	}catch(int e){
+	
+	if(!wizard.LoadConfig())
 		return FALSE;
-	}
 
 	// 创建主 MDI 框架窗口
 	CMainFrame* pMainFrame = new CMainFrame;

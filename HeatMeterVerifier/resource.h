@@ -15,7 +15,7 @@
 #define IDD_METERS_REPORT               314
 #define IDD_METER_REPORT                315
 #define IDD_DATA_FRAME_DISPLAY          316
-#define IDD_TEST_RICH_EDIT_DIALOG       318
+#define IDD_TEST_HTML                   317
 #define IDC_COM_LIST                    1000
 #define IDC_DATA_TO_SEND                1001
 #define IDC_SEND_DATA                   1002
@@ -75,9 +75,7 @@
 #define IDC_RESULT                      1051
 #define IDC_LOW_BYTE_FIRST_CHECK        1052
 #define IDC_PADDING_DIGIT               1054
-#define IDC_TEST_RICH_EDIT              1056
-#define IDC_RICH_TEST                   1057
-#define IDC_STATIC_FOR_HTML             1058
+#define IDC_STATIC_FOR_HTML             1056
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_32771                        32771
 #define ID_32772                        32771
@@ -87,17 +85,15 @@
 #define ID_                             32774
 #define ID_START_METER_READ             32775
 #define ID_32776                        32776
-#define ID_32777                        32777
-#define ID_32778                        32778
-#define ID_RICH_EDIT_ITEM               32779
+#define ID_HTML_TEST                    32777
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        319
-#define _APS_NEXT_COMMAND_VALUE         32780
-#define _APS_NEXT_CONTROL_VALUE         1059
+#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_CONTROL_VALUE         1057
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

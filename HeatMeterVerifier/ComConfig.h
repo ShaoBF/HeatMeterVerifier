@@ -1,10 +1,10 @@
 #pragma once
 #include "MainFrm.h"
+#include "CalibratorConfig.h"
 
 #define BAUD_RATE_BASE 300
-#define LP_APPNAME L"ComConfig"
 
-class ComConfig
+class ComConfig :public CalibratorConfig
 {
 public:
 	ComConfig(CMainFrame* main,CString configPath);
@@ -23,5 +23,8 @@ public:
 
 	BOOL SaveConfig(CString configPath);
 	BOOL ReadConfig(CString configPath);
+	BOOL SaveConfig();
+	BOOL ReadConfig();
+
 };
 

@@ -271,8 +271,9 @@ CString DataFrame::GetWorkHoursStr(){
 }
 
 CString DataFrame::GetCurrentTimeStr(){
-	bool highByteFirst = !wizard.isLowByteFirst();//CJ188::LookUpByteOrder(frame->meterType, &(frame->address[5]));
-	return Converter::BcdToDateTimeStr(currentTime.value.puc, CJ188_TIME_DATA_LENGTH, highByteFirst);
+	//bool highByteFirst = !wizard.isLowByteFirst();//CJ188::LookUpByteOrder(frame->meterType, &(frame->address[5]));
+	//解析数据时已将字节顺序调整，所以这里不作处理。
+	return Converter::BcdToDateTimeStr(currentTime.value.puc, CJ188_TIME_DATA_LENGTH, true);
 }
 
 CString DataFrame::GetStatusStr(){

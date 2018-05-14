@@ -38,4 +38,5 @@ public:
 	afx_msg void OnUpdateMeterSerialSettings(CCmdUI *pCmdUI);
 	afx_msg void OnMeterSerialSettings();
 	afx_msg void OnStartMeterRead();
+	afx_msg void OnHtmlTest();
 };

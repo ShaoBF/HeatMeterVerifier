@@ -1,10 +1,17 @@
 #include "stdafx.h"
 #include "MeterWizard.h"
 #include "MyVector.cpp"
+#include "DBConfig.h"
+#include "ComConfig.h"
+
+#define INI_PARAGRAPH_TEMPLATE L"ReportTemplate"
+#define INI_KEY_TEMPLATE L"template"
+
 
 CMeterWizard::CMeterWizard()
 {
 	//meterInfoList = new MeterInfo*[128];
+	templateConfig = new TemplateConfig(GetConfigFilePath());
 }
 
 
@@ -19,6 +26,9 @@ CMeterWizard::~CMeterWizard()
 		delete meterInfoList[i];
 	}
 	meterInfoList.Clear();
+	if (templateConfig){
+		delete templateConfig;
+	}
 }
 
 void CMeterWizard::ChooseMeters(){
@@ -178,9 +188,10 @@ MyVector<MeterInfo*>* CMeterWizard::GetMeterInfoList(){
 	return &meterInfoList;
 }
 */
+extern CDBConfig dbConfig;
 LPCTSTR CMeterWizard::GetConnectStr(){
 	//FIXME: would retrive form config file.
-	return _T("ODBC;DSN=HeatMeterDS32;UID=ShaoBF;PWD=shbofe");
+	return dbConfig.ToString();
 }
 double CMeterWizard::GetVerifyRate(){
 	return config.GetVerifyRate();
@@ -200,3 +211,79 @@ UCHAR CMeterWizard::getPaddingDigit(){
 	return paddingDigit;
 }
 
+CString CMeterWizard::GetConfigFilePath(){
+	//获取程序安装路径
+	CString installPath = GetInstallPath();
+	//添加配置文件相对路径
+	CString configFilePath = L"\\conf\\Config.ini";
+	//返回完整路径
+	//return L"D:\\ShaoBF\\IniTest\\Config.ini";
+	return installPath + configFilePath;
+}
+
+CString GetWorkDir()
+{
+	//char pFileName[MAX_PATH];
+	LPWSTR pFileName = new WCHAR[MAX_PATH];
+	int nPos = GetCurrentDirectory(MAX_PATH, pFileName);
+
+	CString csFullPath(pFileName);
+	if (nPos < 0)
+		return CString("");
+	else
+		return csFullPath;
+}
+CString CMeterWizard::GetInstallPath(){
+	return GetWorkDir();
+}
+
+CString CMeterWizard::GetTemplatePath(){
+	//获取程序安装路径
+	CString installPath = GetInstallPath();
+	//添加配置文件相对路径
+	CString templatePath = L"\\template\\";
+	//返回完整路径
+	//return L"D:\\ShaoBF\\IniTest\\Config.ini";
+	return installPath + templatePath;
+}
+
+CString CMeterWizard::GetTemplateFilePath(){
+	//获取程序安装路径
+	CString path = GetTemplatePath();
+	//返回完整路径
+	CString filePath;//= path + templateFile;
+	filePath.Format(L"%ws%ws", path, templateConfig->fileName);
+	return filePath;
+}
+extern ComConfig comConfig;
+extern CDBConfig dbConfig;
+
+
+BOOL CMeterWizard::LoadConfig(){
+	try{
+		//ComConfig config;
+		comConfig.ReadConfig();
+		dbConfig.ReadConfig();
+		//ReadReportTemplateConfig(GetConfigFilePath());
+		templateConfig->ReadConfig();
+	}
+	catch (int e){
+		return FALSE;
+	}
+	return TRUE;
+}
+/*BOOL CMeterWizard::ReadReportTemplateConfig(CString configPath){
+	int error;
+	int strLength;
+
+	strLength = ::GetPrivateProfileString(L"ReportTemplate", L"template", NULL, templateConfig.fileName.GetBuffer(128), 128, configPath);
+	error = ::GetLastError();
+	if (error == 0x02){
+		throw error;
+	}
+	if (strLength == 0){
+		throw (-1);
+	}
+
+	return TRUE;
+}*/

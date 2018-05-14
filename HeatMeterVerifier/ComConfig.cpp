@@ -1,39 +1,17 @@
 #include "stdafx.h"
+
 #include "ComConfig.h"
 #include "Converter.h"
 
-ComConfig::ComConfig(CMainFrame* main, CString configPath)
+#define LP_APPNAME L"ComConfig"
+
+ComConfig::ComConfig(CMainFrame* main, CString configPath) :CalibratorConfig(main,configPath)
 {
-	//TODO：从ini文件读取串口信息
-	try{
-		ReadConfig(configPath);
-	}
-	catch(int e){//若未读取成功，直接报错退出程序
-		if (e == 0x02){
-			AfxMessageBox(L"配置文件ComConfig.ini缺失或损坏，无法正常工作。");
-			main->CloseWindow();
-		}
-		if (e == -1){
-			AfxMessageBox(L"配置文件ComConfig.ini损坏，无法正常工作。");
-		}
-		//写入日志文件
-	}
+
 }
 
-ComConfig::ComConfig(CString configPath){
+ComConfig::ComConfig(CString configPath):CalibratorConfig(configPath){
 	//TODO：从ini文件读取串口信息
-	try{
-		ReadConfig(configPath);
-	}
-	catch (int e){//若未读取成功，直接报错退出程序
-		if (e == 0x02){
-			AfxMessageBox(L"配置文件ComConfig.ini缺失或损坏，无法正常工作。");
-		}
-		if (e == -1){
-			AfxMessageBox(L"配置文件ComConfig.ini损坏，无法正常工作。");
-		}
-		//写入日志文件
-	}
 }
 ComConfig::~ComConfig()
 {
@@ -134,3 +112,10 @@ BOOL ComConfig::ReadConfig(CString configPath){
 	}
 	return TRUE;
 }
+BOOL ComConfig::SaveConfig(){
+	return CalibratorConfig::SaveConfig();
+}
+BOOL ComConfig::ReadConfig(){
+	return CalibratorConfig::ReadConfig();
+}
+

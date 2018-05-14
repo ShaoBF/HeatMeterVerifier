@@ -1,0 +1,30 @@
+#pragma once
+
+#include "afxwin.h"
+
+#include "HtmlCtrl.h"
+
+
+// CTestHtmlDlg 对话框
+
+class CMeterReportDlg : public CDialogEx
+{
+	DECLARE_DYNAMIC(CTestHtmlDlg)
+
+public:
+	CTestHtmlDlg(CWnd* pParent = NULL);   // 标准构造函数
+	virtual ~CTestHtmlDlg();
+	void InitTestHtml2();
+
+// 对话框数据
+	enum { IDD = IDD_TEST_HTML };
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+
+	DECLARE_MESSAGE_MAP()
+public:
+	//CStatic staticForHtml;
+	CHtmlCtrl m_html;
+	virtual BOOL OnInitDialog();
+};

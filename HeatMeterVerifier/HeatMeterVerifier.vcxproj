@@ -112,6 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinData.h" />
+    <ClInclude Include="CalibrationReport.h" />
+    <ClInclude Include="CalibratorConfig.h" />
+    <ClInclude Include="CalibratorInfo.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="CJ188.h" />
     <ClInclude Include="CntrItem.h" />
@@ -124,9 +127,11 @@
     <ClInclude Include="DataFrame.h" />
     <ClInclude Include="DataFrameDisplayDlg.h" />
     <ClInclude Include="DataItem.h" />
+    <ClInclude Include="DBConfig.h" />
     <ClInclude Include="HeatMeterVerifier.h" />
     <ClInclude Include="HeatMeterVerifierDoc.h" />
     <ClInclude Include="HeatMeterVerifierView.h" />
+    <ClInclude Include="HtmlCtrl.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MeterChooserDlg.h" />
     <ClInclude Include="MeterDataInfo.h" />
@@ -141,16 +146,22 @@
     <ClInclude Include="MeterWizard.h" />
     <ClInclude Include="MyPrintWizard.h" />
     <ClInclude Include="MyVector.h" />
+    <ClInclude Include="ReportDlg.h" />
+    <ClInclude Include="ReportGenerator.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SerialTestDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TableDataDefines.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TestUnitInfo.h" />
+    <ClInclude Include="TemplateConfig.h" />
+    <ClInclude Include="TestHtmlDlg.h" />
     <ClInclude Include="VerifyConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinData.cpp" />
+    <ClCompile Include="CalibrationReport.cpp" />
+    <ClCompile Include="CalibratorConfig.cpp" />
+    <ClCompile Include="CalibratorInfo.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="CJ188.cpp" />
     <ClCompile Include="CntrItem.cpp" />
@@ -162,9 +173,11 @@
     <ClCompile Include="DataFrame.cpp" />
     <ClCompile Include="DataFrameDisplayDlg.cpp" />
     <ClCompile Include="DataItem.cpp" />
+    <ClCompile Include="DBConfig.cpp" />
     <ClCompile Include="HeatMeterVerifier.cpp" />
     <ClCompile Include="HeatMeterVerifierDoc.cpp" />
     <ClCompile Include="HeatMeterVerifierView.cpp" />
+    <ClCompile Include="HtmlCtrl.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MeterChooserDlg.cpp" />
     <ClCompile Include="MeterDataInfo.cpp" />
@@ -179,12 +192,15 @@
     <ClCompile Include="MeterWizard.cpp" />
     <ClCompile Include="MyPrintWizard.cpp" />
     <ClCompile Include="MyVector.cpp" />
+    <ClCompile Include="ReportDlg.cpp" />
+    <ClCompile Include="ReportGenerator.cpp" />
     <ClCompile Include="SerialTestDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestUnitInfo.cpp" />
+    <ClCompile Include="TemplateConfig.cpp" />
+    <ClCompile Include="TestHtmlDlg.cpp" />
     <ClCompile Include="VerifyConfig.cpp" />
   </ItemGroup>
   <ItemGroup>

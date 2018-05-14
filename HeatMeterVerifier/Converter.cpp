@@ -186,3 +186,29 @@ UCHAR* Converter::ChangeByteOrder(UCHAR* data, int length){
 	}
 	return result;
 }
+
+LPCTSTR Converter::pcharToWchar(char* buffer){
+	int num = MultiByteToWideChar(0, 0, buffer, -1, NULL, 0);
+	wchar_t *wide = new wchar_t[num];
+	MultiByteToWideChar(0, 0, buffer, -1, wide, num);
+	return wide;
+}
+
+WCHAR* Converter::Utf8ToAnsi(CString utf8Content){
+	//设置显示内容
+	LPWSTR str = (utf8Content.GetBuffer(utf8Content.GetLength()));
+	char* pStr = new char[utf8Content.GetLength()];
+	sprintf(pStr, "%ws", utf8Content);
+	int nLen = ::MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, pStr, -1, NULL, 0);
+	//返回需要的unicode长度     
+	WCHAR * wszANSI = new WCHAR[nLen + 1];
+	memset(wszANSI, 0, nLen * 2 + 2);
+	nLen = MultiByteToWideChar(CP_UTF8, 0, pStr, -1, wszANSI, nLen);    //把utf8转成unicode    
+	nLen = WideCharToMultiByte(CP_ACP, 0, wszANSI, -1, NULL, 0, NULL, NULL);        //得到要的ansi长度     
+	char *szANSI = new char[nLen + 1];
+	memset(szANSI, 0, nLen + 1);
+	WideCharToMultiByte(CP_ACP, 0, wszANSI, -1, szANSI, nLen, NULL, NULL);          //把unicode转成ansi     
+
+	delete szANSI;
+	return wszANSI;
+}

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "HeatMeterVerifier.h"
+#include "TestHtmlDlg.h"
 #include "MetersReportDlg.h"
 #include "MeterWizard.h"
 #include "MeterReportDlg.h"
@@ -306,12 +307,15 @@ void CMetersReportDlg::OnNMDblclkReportList(NMHDR *pNMHDR, LRESULT *pResult)
 	if (row < 0){
 		return;
 	}
-	CMeterReportDlg dlg;
+	//CMeterReportDlg dlg;
+	CHtmlReportDlg dlg;
 	//获取选中行的数据
 	MeterReport *data = reportTable->GetReport(row);
+	//获取选中行的数据
 	//设置数据到解析对话框
 	dlg.SetMeterReport(data);
 	dlg.SetRefMeterData((MeterDataInfo*)wizard.GetRefMeterInfo());
+
 	//显示对话框
 	INT_PTR nResponse = dlg.DoModal();
 
@@ -372,3 +376,4 @@ void CMetersReportDlg::SaveTestData(CDatabase* db, DataFrame* data, UINT64 testI
 	db->ExecuteSQL(str);
 
 }
+

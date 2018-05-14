@@ -18,12 +18,12 @@ using namespace Gdiplus;
 
 // CMeterReportDlg 对话框
 
-IMPLEMENT_DYNAMIC(CMeterReportDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CMeterReportDlg, CReportDlg)
 
 extern CMeterWizard wizard;
 
 CMeterReportDlg::CMeterReportDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CMeterReportDlg::IDD, pParent)
+	: CReportDlg(CMeterReportDlg::IDD, pParent)
 {
 	//设置表头
 	columnPropertyList.Add(new ColumnProperty(L"项目", LVCFMT_LEFT, DATA_ITEM_WIDTH));
@@ -66,13 +66,13 @@ END_MESSAGE_MAP()
 
 BOOL CMeterReportDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CReportDlg::OnInitDialog();
 
 	//初始化所有UI控件
-	InitUIs();
+	//InitUIs();
 
 	//显示检测报告数据项列表
-	DisplayReport();
+	//DisplayReport();
 
 	//详细信息列表形式显示读数
 
@@ -90,21 +90,21 @@ void CMeterReportDlg::OnEnChangeMeterType()
 	// TODO:  在此添加控件通知处理程序代码
 }
 
-void CMeterReportDlg::SetMeterReport(MeterReport* report){
+/*void CMeterReportDlg::SetMeterReport(MeterReport* report){
 	this->report = report;
 }
 void CMeterReportDlg::SetRefMeterData(MeterDataInfo* info){
 	this->refData = info;
-}
+}*/
 
 void CMeterReportDlg::InitUIs(){
 	//设置文本框信息
 	//SetDialogBkColor
 	//FIXME:以后改成可变的内容
 	testUnit.SetWindowTextW(L"北京市计量科学研究院");
-	meterID.SetWindowTextW(report->GetAddressStr());
-	factoryID.SetWindowTextW(Converter::HexToString(&(report->address[5]), 2, 0));
-	MeterDataInfo* meter = (MeterDataInfo*)report->meter;
+	meterID.SetWindowTextW(meterReport->GetAddressStr());
+	factoryID.SetWindowTextW(Converter::HexToString(&(meterReport->address[5]), 2, 0));
+	MeterDataInfo* meter = (MeterDataInfo*)meterReport->meter;
 	meterType.SetWindowTextW(meter->GetMeterTypeStr());
 	startTime.SetWindowTextW(meter->GetStartTimeStr());
 	endTime.SetWindowTextW(meter->GetEndTimeStr());
@@ -114,21 +114,21 @@ void CMeterReportDlg::InitUIs(){
 	CreateReportList();
 }
 
-void CMeterReportDlg::DisplayReport(){
+void CMeterReportDlg::DisplayReport(CalibrationReport* report){
 	int currentRow = 0;
 	MeterReport* refReport = refData->GetReport();
 
 	double rate = wizard.GetVerifyRate();
 	//热量
-	InsertData(currentRow++, &(report->heat), &(refReport->heat), L"", rate);
+	InsertData(currentRow++, &(meterReport->heat), &(refReport->heat), L"", rate);
 	//流量
-	InsertData(currentRow++, &(report->capacity), &(refReport->capacity), L"", rate);
+	InsertData(currentRow++, &(meterReport->capacity), &(refReport->capacity), L"", rate);
 	//进水温度
-	InsertData(currentRow++, &(report->temperatureIn), &(refReport->temperatureIn), L"℃", rate);
+	InsertData(currentRow++, &(meterReport->temperatureIn), &(refReport->temperatureIn), L"℃", rate);
 	//出水温度
-	InsertData(currentRow++, &(report->temperatureOut), &(refReport->temperatureOut), L"℃", rate);
+	InsertData(currentRow++, &(meterReport->temperatureOut), &(refReport->temperatureOut), L"℃", rate);
 	//持续时间
-	InsertData(currentRow++, &(report->duration), &(refReport->duration), L"sec", rate);
+	InsertData(currentRow++, &(meterReport->duration), &(refReport->duration), L"sec", rate);
 }
 
 void CMeterReportDlg::CreateReportList(){
@@ -577,4 +577,8 @@ CBitmap* CMeterReportDlg::ScreenShot(CRect rect, int left, int top, char *name){
 	memDC->SelectObject(oldmemBitmap);
 	//memDC->DeleteDC();
 	return memBitmap;
+}
+
+CString CMeterReportDlg::GetReportTemplate(){
+	return L"";
 }

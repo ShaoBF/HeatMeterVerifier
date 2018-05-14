@@ -8,6 +8,8 @@
 //#include "MyVector.cpp"
 #include "MeterReportDlg.h"
 #include "VerifyConfig.h"
+#include "TemplateConfig.h"
+
 
 using namespace std;
 class CMeterWizard
@@ -44,10 +46,12 @@ public:
 
 	LPCTSTR GetConnectStr();
 	//void RemoveReport(int index);
-	CString GetConfigPath(){
-		return L"D:\\ShaoBF\\IniTest\\Config.ini";
-	}
-
+	CString GetConfigFilePath();
+	CString GetTemplatePath();
+	CString GetTemplateFilePath();
+	CString GetInstallPath();
+	BOOL LoadConfig();
+	//BOOL CMeterWizard::ReadReportTemplateConfig(CString configPath);
 
 public:
 //	MeterInfo** meterInfoList;
@@ -59,7 +63,8 @@ public:
 	VerifyConfig config;
 	bool lowByteFirst = false;
 	UCHAR paddingDigit = 0xf;
-
+	//CString templateFile;
+	TemplateConfig* templateConfig;
 
 protected:
 	LPINT selectedMeterIndex;
