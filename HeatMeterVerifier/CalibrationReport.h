@@ -1,6 +1,7 @@
 #pragma once
 #include "MeterReport.h"
 #include "CalibratorInfo.h"
+#include "MeterDataInfo.h"
 
 class CalibrationReport
 {
@@ -10,14 +11,16 @@ public:
 	virtual ~CalibrationReport();
 
 	MeterReport* meterReport;
+	MeterDataInfo* refMeter;
 	CCalibratorInfo* calibratorInfo;
 	CString reportTemplate;
 
 	void SetMeterReport(MeterReport* meterReport);
 	void SetCalibratorInfo(CCalibratorInfo* calibratorInfo);
 	void SetReportTemplate(CString reportTemplate);
+	void SetRefMeter(MeterDataInfo* refMeterData);
 
-	CMap<WCHAR *, WCHAR *, CString, CString>* GetDataMap();
+	CMap<CString, LPCTSTR, CString, LPCTSTR>* GetDataMap();
 
 	CString GetContent();
 };

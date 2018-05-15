@@ -8,6 +8,7 @@ public:
 	CReportGenerator();
 	virtual ~CReportGenerator();
 
-	CString GenerateReport(CString templateContent, CMap<WCHAR *, WCHAR *, CString, CString>* dataMap);
+	//CString GenerateReport(CString templateContent, MeterReport* meterReport);
+	CString GenerateReport(CString templateContent, CMap<CString, LPCTSTR, CString, LPCTSTR>* dataMap);
 };
 

@@ -113,6 +113,8 @@ void CHtmlReportDlg::DisplayReport(CalibrationReport* report){
 	m_html.SetHideContextMenu(TRUE);
 	m_html.CreateFromStatic(IDC_STATIC_FOR_HTML, this);
 	m_html.Navigate(L"about:blank");  //这句话一定要写
+	
+	report->SetRefMeter(refData);
 	CString htmlStr = report->GetContent();
 
 	//设置显示内容

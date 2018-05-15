@@ -40,6 +40,7 @@ public:
 	double* GetBounds(double rate);//返回double[2],其中[0]为参考下界，[1]为参考上界。
 	CString GetItemRangeStr(double rate);
 	double GetValue();
-	int VerifyWith(DataItem* refItem, double rate);//与给定参考量refItem对比，rate为浮动率，返回1(过高)，0(合格)，-1(过低)，左开右闭区间
+	CString VerifyWith(DataItem* refItem, double rate);//与给定参考量refItem对比，rate为浮动率，返回1(过高)，0(合格)，-1(过低)，左开右闭区间
+	CString GetUnitStr();
 };
 

@@ -51,7 +51,6 @@ CalibrationReport* CReportDlg::GenerateReport(){
 	CalibrationReport* report = new CalibrationReport(reportTemplate);
 	report->SetCalibratorInfo(GetCalibratorInfo());
 	report->SetMeterReport(meterReport);
-	//CalibrationReport* reportContent = generator.GenerateReport(reportTemplate, dataMap);
 	return report;
 }
 

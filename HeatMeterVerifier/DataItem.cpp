@@ -70,7 +70,7 @@ void DataItem::Parse(bool highByteFirst){
 CString DataItem::ToString(){
 	CString str = GetValueStr();
 	if (hasUnit)
-		return(str + " " + CJ188::GetUnit(unit));
+		return(str + " " + GetUnitStr());
 	else
 		return str;
 }
@@ -162,15 +162,22 @@ double DataItem::GetValue(){
 }
 
 //与给定参考量refItem对比，rate为浮动率，返回1(过高)，0(合格)，-1(过低)，左开右闭区间
-int DataItem::VerifyWith(DataItem* refItem, double rate){
+CString DataItem::VerifyWith(DataItem* refItem, double rate){
 	double value = GetValue();
 	double upper = refItem->GetUpperBound(rate);
 	double lower = refItem->GetLowerBound(rate);
 	if (value > upper){
-		return 1;
+		//return 1;
+		return L"↑";
 	}
 	if (value < lower){
-		return -1;
+		//return -1;
+		return L"↓";
 	}
-	return 0;
+	//return 0;
+	return L"-";
+}
+
+CString DataItem::GetUnitStr(){
+	return CJ188::GetUnit(unit);
 }

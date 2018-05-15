@@ -18,8 +18,6 @@ public:
 	void DisplayReport(CalibrationReport* report);
 	void InitUIs();
 
-	//void SetMeterReport(MeterReport* report);
-	//void SetRefMeterData(MeterDataInfo* data);
 
 // 对话框数据
 	enum { IDD = IDD_TEST_HTML };

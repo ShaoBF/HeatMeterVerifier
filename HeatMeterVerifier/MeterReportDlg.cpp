@@ -158,8 +158,8 @@ void CMeterReportDlg::InsertData(int row, DataItem* item, DataItem* refItem, CSt
 	//标准值
 	resultList.SetItemText(row, currentColumn++, refItem->GetValueStr());
 	//结果（偏高/偏低）
-	CString verifyFlag;
-	switch (item->VerifyWith(refItem,rate)){
+	CString verifyFlag = item->VerifyWith(refItem, rate);
+	/*switch (item->VerifyWith(refItem,rate)){
 	case -1:
 		verifyFlag = "↓";
 		break;
@@ -169,7 +169,7 @@ void CMeterReportDlg::InsertData(int row, DataItem* item, DataItem* refItem, CSt
 	case 1:
 		verifyFlag = "↑";
 		break;
-	}
+	}*/
 	resultList.SetItemText(row, currentColumn++, verifyFlag);
 }
 
