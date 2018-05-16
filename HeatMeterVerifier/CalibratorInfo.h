@@ -5,7 +5,8 @@ public:
 	CCalibratorInfo();
 	virtual ~CCalibratorInfo();
 
-	CString unitName;
+	CString name;
+	CString calibrateMode;
 	//CString 
 };
 

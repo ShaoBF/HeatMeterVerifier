@@ -153,6 +153,9 @@
     <ClInclude Include="TemplateConfig.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TextReportGenerator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HeatMeterVerifier.cpp">
@@ -276,6 +279,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TemplateConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TextReportGenerator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

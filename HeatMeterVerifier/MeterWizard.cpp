@@ -12,6 +12,7 @@ CMeterWizard::CMeterWizard()
 {
 	//meterInfoList = new MeterInfo*[128];
 	templateConfig = new TemplateConfig(GetConfigFilePath());
+	calibratorInfo = new CCalibratorInfo();
 }
 
 
@@ -28,6 +29,9 @@ CMeterWizard::~CMeterWizard()
 	meterInfoList.Clear();
 	if (templateConfig){
 		delete templateConfig;
+	}
+	if (calibratorInfo){
+		delete calibratorInfo;
 	}
 }
 

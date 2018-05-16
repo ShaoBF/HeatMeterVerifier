@@ -1,10 +1,11 @@
+#pragma once
 #include "stdafx.h"
 #include "CalibrationReport.h"
-#include "ReportGenerator.h"
 #include "MeterDataInfo.h"
 #include "CJ188.h"
 #include "Converter.h"
 #include "MeterWizard.h"
+#include "TextReportGenerator.h"
 
 extern CMeterWizard wizard;
 
@@ -39,20 +40,21 @@ void CalibrationReport::SetRefMeter(MeterDataInfo* refMeterData){
 }
 
 
-CString CalibrationReport::GetContent(){
+CString* CalibrationReport::GetContent(){
 	if (reportTemplate.IsEmpty()){
-		return L"";
+		return new CString(L"");
 	}
-	CReportGenerator generator;
+	CReportGenerator* generator=new CTextReportGenerator();
 	CMap <CString, LPCTSTR, CString, LPCTSTR>* dataMap = GetDataMap();
-	CString content = generator.GenerateReport(reportTemplate, dataMap);
+	CString* content = (CString*)generator->GenerateReport(&reportTemplate, dataMap);
+	delete generator;
 
 	return content;
 }
 CMap<CString, LPCTSTR, CString, LPCTSTR>* CalibrationReport::GetDataMap(){
-	//CMap<int, CString, WCHAR *, WCHAR *>* dataMap = new CMap<int, CString, WCHAR *, WCHAR *>();
 	CMap<CString, LPCTSTR, CString, LPCTSTR>* dataMap = new CMap<CString, LPCTSTR, CString, LPCTSTR>();
-	//CMap<CString, CString, CString, CString>* dataMap = new CMap<CString, CString, CString, CString>();
+	//CMap<CString, LPCTSTR, void*, void*>* dataMap = new CMap<CString, LPCTSTR, void*, void*>();
+
 
 	MeterDataInfo* meter = (MeterDataInfo*)meterReport->meter;
 
@@ -60,12 +62,14 @@ CMap<CString, LPCTSTR, CString, LPCTSTR>* CalibrationReport::GetDataMap(){
 	//表信息
 	CString meterID = meterReport->GetAddressStr();
 	dataMap->SetAt(L"meterID", meterID);
-	CString value;
-	BOOL b = dataMap->Lookup(L"meterID", value);
+
+	//b = dataMap->Lookup(L"meterID", vv);
+
 	CString factoryID = meterID.Right(4);
 	dataMap->SetAt(L"factoryID", factoryID);
 	dataMap->SetAt(L"meterType", meter->GetMeterTypeStr());
-	dataMap->SetAt(L"calibrationMode", L" ");
+	//CString* calibMode = &wizard.calibratorInfo->calibrateMode;
+	dataMap->SetAt(L"calibrationMode", wizard.calibratorInfo->calibrateMode);
 	dataMap->SetAt(L"calibrationResult", meterReport->GetQualifiedStr());
 
 	//加入测试数据内容
@@ -84,8 +88,13 @@ CMap<CString, LPCTSTR, CString, LPCTSTR>* CalibrationReport::GetDataMap(){
 	dataMap->SetAt(L"heatresult", meterReport->heat.VerifyWith(&(refReport->heat),wizard.GetVerifyRate()));
 
 	//加入检测站内容
-	CString calibrationStation = L"北京市计量科学研究院";
-	dataMap->SetAt(L"calibrationStation", calibrationStation);
+	//CString* calibrationStation = &wizard.calibratorInfo->name;
+	dataMap->SetAt(L"calibrationStation", wizard.calibratorInfo->name);
+	//void* vv = new CString();
+	//BOOL b;
+	//CString keystr(L"calibrationStation");
+	//b = dataMap->Lookup(keystr.GetBuffer(), vv);
+	//CString* value = (CString*)vv;
 
 
 	return dataMap;

@@ -115,13 +115,13 @@ void CHtmlReportDlg::DisplayReport(CalibrationReport* report){
 	m_html.Navigate(L"about:blank");  //这句话一定要写
 	
 	report->SetRefMeter(refData);
-	CString htmlStr = report->GetContent();
+	CString* htmlStr = report->GetContent();
 
 	//设置显示内容
-	LPWSTR str = (htmlStr.GetBuffer(htmlStr.GetLength())); 
+	LPWSTR str = (htmlStr->GetBuffer(htmlStr->GetLength())); 
 
 	m_html.SetHTML(str);
-
+	delete htmlStr;
 
 }
 

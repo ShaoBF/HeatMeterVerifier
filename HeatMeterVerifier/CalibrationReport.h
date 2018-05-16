@@ -20,8 +20,9 @@ public:
 	void SetReportTemplate(CString reportTemplate);
 	void SetRefMeter(MeterDataInfo* refMeterData);
 
+	//CMap<CString, LPCTSTR, void*, void*>* GetDataMap();
 	CMap<CString, LPCTSTR, CString, LPCTSTR>* GetDataMap();
 
-	CString GetContent();
+	CString* GetContent();
 };
 

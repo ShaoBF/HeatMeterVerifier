@@ -9,7 +9,7 @@
 #include "MeterReportDlg.h"
 #include "VerifyConfig.h"
 #include "TemplateConfig.h"
-
+#include "CalibratorInfo.h"
 
 using namespace std;
 class CMeterWizard
@@ -65,6 +65,7 @@ public:
 	UCHAR paddingDigit = 0xf;
 	//CString templateFile;
 	TemplateConfig* templateConfig;
+	CCalibratorInfo* calibratorInfo;
 
 protected:
 	LPINT selectedMeterIndex;
