@@ -1,5 +1,7 @@
 #pragma once
 #include "DataAccess.h"
+
+
 class CMeterReportAccess :
 	public CDataAccess
 {

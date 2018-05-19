@@ -14,6 +14,7 @@
 #include "DataAccess.h"
 #include "DataAccessFactory.h"
 #include "MeterReportAccess.h"
+#include "MeterDataAccess.h"
 
 // CMetersReportDlg 对话框
 
@@ -168,10 +169,10 @@ void CMetersReportDlg::SaveReports(MyVector<MeterReport*>* reports){
 		}
 		//关闭数据源
 		dataAccess->Close();
-		MessageBox(L"保存成功！");
+		MessageBox(L"检测报告保存成功！");
 	}
-	catch (CDBException * e) {
-		MessageBox(e->m_strError);
+	catch (CException * e) {
+		//MessageBox(e->m_strError);
 	}
 
 
@@ -196,8 +197,8 @@ void CMetersReportDlg::SaveReports(MyVector<MeterReport*>* reports){
 	*/
 }
 
-
-void CMetersReportDlg::SaveReport(CDatabase* db, MeterReport* report){
+/*
+void CMetersReportDlg::SaveReport(CMeterReportAccess* db, MeterReport* report){
 	//保存检测报告数据
 	CString str;
 	str.Format(L"insert into meter_reports (is_reference, address, heat, heat_unit, heat_power, heat_power_unit, capacity, capacity_unit, flow_rate, flow_rate_unit, temperature_in, temperature_out, start_time, end_time, duration, is_qualified ) \
@@ -219,9 +220,32 @@ void CMetersReportDlg::SaveReport(CDatabase* db, MeterReport* report){
 	//str.Format(L"select id from meter_reports where address='%s' and start_time='%s'", report->GetAddressStr(), Converter::BcdToDateTimeStr(report->startTime.value.puc, 7, true));
 	//db->querySQL(str);
 }
-
+*/
 
 void CMetersReportDlg::SaveMeterDataList(MyVector<MeterInfo*>* meterList){
+	//确认CMeterDataAccess实例
+	CMeterDataAccess* dataAccess = CDataAccessFactory::GetMeterDataAccess("DataBase");
+	LPCTSTR dataSrc = wizard.GetDataSrcStr();
+	//打开数据源
+	try {
+		dataAccess->Open(dataSrc);
+		//调用CDataAccess实例Save函数
+		for (int i = 0; i < meterList->GetSize(); i++){
+			MeterInfo* data = (*meterList)[i];
+			SaveMeterData(dataAccess, (MeterDataInfo*)data);
+			//dataAccess->Save(data);
+		}
+		//关闭数据源
+		dataAccess->Close();
+		MessageBox(L"检测数据保存成功！");
+	}
+	catch (CException * e) {
+		//MessageBox(e->m_strError);
+	}
+
+
+
+	/*
 	//打开数据库
 	CDatabase db;
 	BOOL result = TRUE;
@@ -240,9 +264,9 @@ void CMetersReportDlg::SaveMeterDataList(MyVector<MeterInfo*>* meterList){
 	catch (CDBException * e) {
 		MessageBox(e->m_strError);
 	}
-
+	*/
 }
-void CMetersReportDlg::SaveMeterData(CDatabase* db, MeterDataInfo* meterData){
+void CMetersReportDlg::SaveMeterData(CMeterDataAccess* dataAccess, MeterDataInfo* meterData){
 	//存储报告
 	SaveReport(meterData->GetReport());
 	//从meter_reports中读取对应报告ID，
@@ -251,13 +275,15 @@ void CMetersReportDlg::SaveMeterData(CDatabase* db, MeterDataInfo* meterData){
 	DataFrame* startFrame = meterData->GetStartFrame();
 	DataFrame* endFrame = meterData->GetEndFrame();
 	//存入
-	SaveTestData(db, startFrame, meterData->GetReport()->id);
-	SaveTestData(db, endFrame, meterData->GetReport()->id);
+	SaveTestData(dataAccess, startFrame, meterData->GetReport()->id);
+	SaveTestData(dataAccess, endFrame, meterData->GetReport()->id);
 
 }
 
 
+/*
 UINT64 CMetersReportDlg::GetReportID(CDatabase* database, MeterReport* report){
+	//
 	CString query;
 	query.Format(L"select id from meter_reports where address='%s' and start_time='%s'", report->GetAddressStr(), Converter::BcdToDateTimeStr(report->startTime.value.puc, 7, true));
 	CRecordset recordset(database);
@@ -274,6 +300,7 @@ UINT64 CMetersReportDlg::GetReportID(CDatabase* database, MeterReport* report){
 	return reportId;
 
 }
+*/
 
 void CMetersReportDlg::SaveReport(MeterReport* report){
 
@@ -287,10 +314,10 @@ void CMetersReportDlg::SaveReport(MeterReport* report){
 		dataAccess->Save(report);
 		//关闭数据源
 		dataAccess->Close();
-		MessageBox(L"保存成功！");
+		//MessageBox(L"保存成功！");
 	}
-	catch (CDBException * e) {
-		MessageBox(e->m_strError);
+	catch (CException * e) {
+		//MessageBox(e->m_strError);
 	}
 
 
@@ -373,9 +400,30 @@ void CMetersReportDlg::OnNMDblclkReportList(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 void CMetersReportDlg::SaveTestData(DataFrame* data, UINT64 testID){
+	//确认CMeterDataAccess实例
+	CMeterDataAccess* dataAccess = CDataAccessFactory::GetMeterDataAccess("DataBase");
+	LPCTSTR dataSrc = wizard.GetDataSrcStr();
+	//打开数据源
+	try {
+		dataAccess->Open(dataSrc);
+		//调用CDataAccess实例Save函数
+		SaveTestData(dataAccess, data, testID);
+		//关闭数据源
+		dataAccess->Close();
+		MessageBox(L"保存成功！");
+	}
+	catch (CException * e) {
+		//MessageBox(e->m_strError);
+	}
+
+
+
+
+
+
+
 	//打开数据库
-	//关闭数据库
-	//打开数据库
+	/*
 	CDatabase db;
 	BOOL result = TRUE;
 	LPCTSTR lpszConnect = wizard.GetConnectStr();// _T("ODBC;DSN=HeatMeterDS32;UID=ShaoBF;PWD=shbofe");
@@ -391,10 +439,14 @@ void CMetersReportDlg::SaveTestData(DataFrame* data, UINT64 testID){
 	catch (CDBException * e) {
 		MessageBox(e->m_strError);
 	}
+	*/
 }
 
-void CMetersReportDlg::SaveTestData(CDatabase* db, DataFrame* data, UINT64 testID){
 	//保存检测报告数据
+void CMetersReportDlg::SaveTestData(CMeterDataAccess* dataAccess, DataFrame* data, UINT64 testID){
+	dataAccess->Save(data,testID);
+
+	/*
 	CString str;
 	str.Format(L"insert into meter_test_data (test_id, address, is_reference_meter, billing_day_heat, billing_day_heat_unit, current_heat, current_heat_unit,\
 				 heat_power, heat_power_unit, flow_rate, flow_rate_unit, current_capacity, current_capacity_unit,\
@@ -408,6 +460,6 @@ void CMetersReportDlg::SaveTestData(CDatabase* db, DataFrame* data, UINT64 testI
 					data->temperatureIn.value.dv, data->temperatureOut.value.dv, data->totalWorkHours.value.dwv, Converter::BcdToDateTimeStr(data->currentTime.value.puc, 7, true), 
 					(UINT16)data->statusData.value.dwv, data->GetRawDataStr());
 	db->ExecuteSQL(str);
-
+	*/
 }
 

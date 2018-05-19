@@ -1,5 +1,7 @@
 #pragma once
 #include "DataAccess.h"
+
+
 class CMeterDataAccess :
 	public CDataAccess
 {
@@ -8,9 +10,7 @@ public:
 	virtual ~CMeterDataAccess();
 
 	virtual BOOL Save(void* data) = 0;
+	virtual BOOL Save(void* data,UINT64 testID) = 0;
 	virtual BOOL Load(void* data) = 0;
-	virtual BOOL Open(LPCTSTR src) = 0;
-	virtual BOOL Close() = 0;
-
 };
 

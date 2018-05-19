@@ -2,17 +2,17 @@
 #include "MeterReportAccess.h"
 #include <afxdb.h>
 #include "MeterReport.h"
+#include "DataBaseAccess.h"
 
 class CMeterReportDBAccess :
-	public CMeterReportAccess
+	public CMeterReportAccess,public CDataBaseAccess
 {
 public:
 	CMeterReportDBAccess();
-	CMeterReportDBAccess(void* accessor);
 	virtual ~CMeterReportDBAccess();
 
-	CDatabase* db;
-	LPCTSTR lpszConnect;
+	//CDatabase* db;
+	//LPCTSTR lpszConnect;
 
 
 	BOOL Save(void* data);

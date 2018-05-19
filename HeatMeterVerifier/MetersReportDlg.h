@@ -4,7 +4,9 @@
 #include "MyVector.h"
 #include "ColumnProperty.h"
 #include "MeterReportTable.h"
-#include <afxdb.h>
+//#include <afxdb.h>
+#include "MeterReportAccess.h"
+#include "MeterDataAccess.h"
 
 // CMetersReportDlg 对话框
 
@@ -30,17 +32,17 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	void SaveReports(MyVector<MeterReport*>* reports);
-	void SaveReport(CDatabase* db, MeterReport* report);
+	//void SaveReport(CMeterReportAccess* db, MeterReport* report);
 	void SaveReport(MeterReport* report);
 
 	void SaveMeterDataList(MyVector<MeterInfo*>* meterList);
-	void SaveMeterData(CDatabase* db, MeterDataInfo* meterData);
+	void SaveMeterData(CMeterDataAccess* dataAccess, MeterDataInfo* meterData);
 
 	void SaveTestData(DataFrame* data, UINT64 testID);
-	void SaveTestData(CDatabase* db, DataFrame* data, UINT64 testID);
+	void SaveTestData(CMeterDataAccess* access, DataFrame* data, UINT64 testID);
 
 	void UpdateMeterReportList();
-	UINT64 GetReportID(CDatabase* database, MeterReport* report);
+	//UINT64 GetReportID(CDatabase* database, MeterReport* report);
 
 	CMutex* g_clsMutex;
 

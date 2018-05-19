@@ -126,6 +126,7 @@
     <ClInclude Include="CSerial.h" />
     <ClInclude Include="DataAccess.h" />
     <ClInclude Include="DataAccessFactory.h" />
+    <ClInclude Include="DataBaseAccess.h" />
     <ClInclude Include="DataFrame.h" />
     <ClInclude Include="DataFrameDisplayDlg.h" />
     <ClInclude Include="DataItem.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="CSerial.cpp" />
     <ClCompile Include="DataAccess.cpp" />
     <ClCompile Include="DataAccessFactory.cpp" />
+    <ClCompile Include="DataBaseAccess.cpp" />
     <ClCompile Include="DataFrame.cpp" />
     <ClCompile Include="DataFrameDisplayDlg.cpp" />
     <ClCompile Include="DataItem.cpp" />

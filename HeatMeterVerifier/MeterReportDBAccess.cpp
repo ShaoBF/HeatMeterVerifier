@@ -5,16 +5,17 @@
 
 CMeterReportDBAccess::CMeterReportDBAccess()
 {
-	db = new CDatabase();
+	//db = new CDatabase();
 }
 
 
 CMeterReportDBAccess::~CMeterReportDBAccess()
 {
+	/*
 	if (db){
 		delete db;
 	}
-	
+	*/
 }
 
 
@@ -46,16 +47,6 @@ BOOL CMeterReportDBAccess::Save(void* data){
 BOOL CMeterReportDBAccess::Load(void* data){
 	return TRUE;
 }
-BOOL CMeterReportDBAccess::Open(LPCTSTR src){
-	BOOL result = TRUE;
-	lpszConnect = src;
-	result = db->Open(NULL, FALSE, FALSE, lpszConnect);
-	return result;
-}
-BOOL CMeterReportDBAccess::Close(){
-	db->Close();
-	return TRUE;
-}
 UINT64 CMeterReportDBAccess::GetReportID(MeterReport* report){
 	CString query;
 	query.Format(L"select id from meter_reports where address='%s' and start_time='%s'", report->GetAddressStr(), Converter::BcdToDateTimeStr(report->startTime.value.puc, 7, true));
@@ -73,3 +64,11 @@ UINT64 CMeterReportDBAccess::GetReportID(MeterReport* report){
 	return reportId;
 
 }
+
+BOOL CMeterReportDBAccess::Open(LPCTSTR src){
+	return CDataBaseAccess::Open(src);
+}
+BOOL CMeterReportDBAccess::Close(){
+	return CDataBaseAccess::Close();
+}
+
