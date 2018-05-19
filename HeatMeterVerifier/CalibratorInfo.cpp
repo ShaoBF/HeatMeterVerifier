@@ -4,7 +4,7 @@
 
 CCalibratorInfo::CCalibratorInfo()
 {
-	calibrateMode = L" ";
+	calibrateMode = L"对比参考值";
 	name = L"北京市计量科学研究院";
 }
 

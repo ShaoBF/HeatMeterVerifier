@@ -12,24 +12,25 @@
 	<center>
 		<table>
 		<tr>
-			<td ALIGN="right">检测单位：</td><td><%= calibrationStation%></td><td ALIGN="right">检测模式：</td><td><%= calibrationMode%></td><td ALIGN="right">结论：</td><td><%=calibrationResult%></td>
+			<td ALIGN="right">检测单位：</td><td><U><%= calibrationStation%></U></td><td ALIGN="right">检测模式：</td><td><U><%= calibrationMode%></U></td><td ALIGN="right">结论：</td><td><U><%=calibrationResult%></U></td>
 		</tr>
 		<tr>
-			<td ALIGN="right">表号：</td><td><%=meterID%></td><td ALIGN="right">厂家：</td><td><%=factoryID%></td><td ALIGN="right">表类型：</td><td><%=meterType%></td>
+			<td ALIGN="right">表号：</td><td><U><%=meterID%></U></td><td ALIGN="right">厂家：</td><td><U><%=factoryID%></U></td><td ALIGN="right">表类型：</td><td><U><%=meterType%></U></td>
 		</tr>
 	</table>
 </center>
 	<!--检测单位：北京市计量科学研究院 检测模式：对比标准数据 结论：合格 <br>
 	表号：1234567890 厂家：1111 表类型：冷热水表<br>-->
-	
+	<hr>
+	<br>
 	<!--********* 检测数据项信息表 ********-->
 	<center>
 	<table border="1">
 		<tr>
-			<td>项目</td><td>数值</td><td>单位</td><td>参考区间</td><td>标准值</td><td>结论</td>
+			<td><B>项目</B></td><td><B>数值</B></td><td><B>单位</B></td><td><B>参考区间</B></td><td><B>标准值</B></td><td><B>结论</B></td>
 		</tr>
 		<tr>
-			<td><%=heatname%></td><td><%=heatvalue%></td><td><%=heatunit%></td><td><%=heatlowerbound%>~0.00</td><td>0.00</td><td>-</td>
+			<td><%=heatname%></td><td><%=heatvalue%></td><td><%=heatunit%></td><td><%=heatlowerbound%>~<%=heatupperbound%></td><td>0.00</td><td>-</td>
 		</tr>
 		<tr>
 			<td>总流量</td><td>0.00</td><td>m³</td><td>0.00~0.00</td><td>0.00</td><td>-</td>
@@ -45,11 +46,13 @@
 		</tr>
 	</table>
 </center>
+	<br>
+	<hr>
 	<!--********* 检测表底部信息 ********-->
 	<center>
 		<table>
 		<tr>
-			<td>开始时间：</td><td><%=startTime%></td><td>结束时间：</td><td><%=endTime%></td><td>检测者：</td><td><%=calibrator%></td><td>审核者：</td><td><%=reviewer%></td>
+			<td>开始时间：</td><td><U><%=startTime%></U></td><td>结束时间：</td><td><U><%=endTime%></U></td><td>检测者：</td><td><U><%=calibrator%></U></td><td>审核者：</td><td><U><%=reviewer%></U></td>
 		</tr>
 	</table>
 </center>

@@ -90,6 +90,10 @@ CMap<CString, LPCTSTR, CString, LPCTSTR>* CalibrationReport::GetDataMap(){
 	//加入检测站内容
 	//CString* calibrationStation = &wizard.calibratorInfo->name;
 	dataMap->SetAt(L"calibrationStation", wizard.calibratorInfo->name);
+	dataMap->SetAt(L"startTime", meterReport->GetStartTimeStr());
+	dataMap->SetAt(L"endTime", meterReport->GetEndTimeStr());
+	dataMap->SetAt(L"calibrator", L"张三");
+	dataMap->SetAt(L"reviewer", L"李四");
 	//void* vv = new CString();
 	//BOOL b;
 	//CString keystr(L"calibrationStation");

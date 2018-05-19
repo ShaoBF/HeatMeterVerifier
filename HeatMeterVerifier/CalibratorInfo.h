@@ -6,7 +6,7 @@ public:
 	virtual ~CCalibratorInfo();
 
 	CString name;
-	CString calibrateMode;
+	CString calibrateMode=L"对比参考值";
 	//CString 
 };
 
