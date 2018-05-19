@@ -51,6 +51,7 @@ public:
 	CString GetTemplateFilePath();
 	CString GetInstallPath();
 	BOOL LoadConfig();
+	LPCTSTR GetDataSrcStr();
 	//BOOL CMeterWizard::ReadReportTemplateConfig(CString configPath);
 
 public:

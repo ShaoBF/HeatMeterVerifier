@@ -156,6 +156,24 @@
     <ClInclude Include="TextReportGenerator.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DataAccess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataAccessFactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeterReportAccess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeterReportDBAccess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeterDataAccess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeterDataDBAccess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HeatMeterVerifier.cpp">
@@ -282,6 +300,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TextReportGenerator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataAccess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataAccessFactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeterReportAccess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeterReportDBAccess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeterDataAccess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeterDataDBAccess.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

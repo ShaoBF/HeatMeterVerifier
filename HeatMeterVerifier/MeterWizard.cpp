@@ -276,6 +276,11 @@ BOOL CMeterWizard::LoadConfig(){
 	}
 	return TRUE;
 }
+
+LPCTSTR CMeterWizard::GetDataSrcStr(){
+	return GetConnectStr();
+}
+
 /*BOOL CMeterWizard::ReadReportTemplateConfig(CString configPath){
 	int error;
 	int strLength;

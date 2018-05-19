@@ -8,13 +8,12 @@
 #include "MeterWizard.h"
 #include "MeterReportDlg.h"
 #include "afxdialogex.h"
-#include <afxdb.h>
+//#include <afxdb.h>
 #include "Converter.h"
 #include "MyVector.cpp"
-
-#include "mysql.h"
-#include <winsock.h>
-#pragma comment(lib,"libmySQL.lib") 
+#include "DataAccess.h"
+#include "DataAccessFactory.h"
+#include "MeterReportAccess.h"
 
 // CMetersReportDlg 对话框
 
@@ -154,6 +153,29 @@ void CMetersReportDlg::OnBnClickedSave()
 }
 
 void CMetersReportDlg::SaveReports(MyVector<MeterReport*>* reports){
+
+	//确认CMeterReportAccess实例
+	CMeterReportAccess* dataAccess = CDataAccessFactory::GetMeterReportAccess("DataBase");
+	LPCTSTR dataSrc = wizard.GetDataSrcStr();
+	//打开数据源
+	try {
+		dataAccess->Open(dataSrc);
+		//调用CDataAccess实例Save函数
+		for (int i = 0; i < reports->GetSize(); i++){
+			MeterReport* report = (*reports)[i];
+			//SaveReport(&db, report);
+			dataAccess->Save(report);
+		}
+		//关闭数据源
+		dataAccess->Close();
+		MessageBox(L"保存成功！");
+	}
+	catch (CDBException * e) {
+		MessageBox(e->m_strError);
+	}
+
+
+	/*
 	//打开数据库
 	CDatabase db;
 	BOOL result = TRUE;
@@ -171,7 +193,9 @@ void CMetersReportDlg::SaveReports(MyVector<MeterReport*>* reports){
 	} catch (CDBException * e) {
 		MessageBox(e->m_strError);
 	}
+	*/
 }
+
 
 void CMetersReportDlg::SaveReport(CDatabase* db, MeterReport* report){
 	//保存检测报告数据
@@ -196,6 +220,7 @@ void CMetersReportDlg::SaveReport(CDatabase* db, MeterReport* report){
 	//db->querySQL(str);
 }
 
+
 void CMetersReportDlg::SaveMeterDataList(MyVector<MeterInfo*>* meterList){
 	//打开数据库
 	CDatabase db;
@@ -219,7 +244,7 @@ void CMetersReportDlg::SaveMeterDataList(MyVector<MeterInfo*>* meterList){
 }
 void CMetersReportDlg::SaveMeterData(CDatabase* db, MeterDataInfo* meterData){
 	//存储报告
-	SaveReport(db, meterData->GetReport());
+	SaveReport(meterData->GetReport());
 	//从meter_reports中读取对应报告ID，
 	//保存读取数据
 	//获取对应开始帧结束帧
@@ -247,22 +272,30 @@ UINT64 CMetersReportDlg::GetReportID(CDatabase* database, MeterReport* report){
 		reportId = _wtoi64(lpsz);
 	}
 	return reportId;
-	/*
-	while (!recordset.IsEOF()){//is null
-		record = _T("");
-		register int len = recordset.GetODBCFieldCount();
-		for (register int i = 0; i < len; i++){
-			recordset.GetFieldValue(i, temp);
-			record += temp + _T("   |   ");
-		}
-		//list.AddString(record);
-		recordset.MoveNext();
-	}
-	*/
 
 }
 
 void CMetersReportDlg::SaveReport(MeterReport* report){
+
+	//确认CMeterReportAccess实例
+	CMeterReportAccess* dataAccess = CDataAccessFactory::GetMeterReportAccess("DataBase");
+	LPCTSTR dataSrc = wizard.GetDataSrcStr();
+	//打开数据源
+	try {
+		dataAccess->Open(dataSrc);
+		//调用CDataAccess实例Save函数
+		dataAccess->Save(report);
+		//关闭数据源
+		dataAccess->Close();
+		MessageBox(L"保存成功！");
+	}
+	catch (CDBException * e) {
+		MessageBox(e->m_strError);
+	}
+
+
+
+	/*
 	//打开数据库
 	CDatabase db;
 	BOOL result = TRUE;
@@ -278,6 +311,7 @@ void CMetersReportDlg::SaveReport(MeterReport* report){
 
 	//关闭数据库
 	db.Close();
+	*/
 
 }
 
