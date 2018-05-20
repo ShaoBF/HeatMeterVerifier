@@ -12,15 +12,13 @@
 	<center>
 		<table>
 		<tr>
-			<td ALIGN="right">检测单位：</td><td><U><%= calibrationStation%></U></td><td ALIGN="right">检测模式：</td><td><U><%= calibrationMode%></U></td><td ALIGN="right">结论：</td><td><U><%=calibrationResult%></U></td>
+			<td ALIGN="right">检测单位：</td><td ALIGN="left"><U><%= calibrationStation%></U></td><td ALIGN="right">&nbsp;&nbsp;检测模式：</td><td ALIGN="left"><U><%= calibrationMode%></U></td><td ALIGN="right">结论：</td><td ALIGN="left"><U><%=calibrationResult%></U></td>
 		</tr>
 		<tr>
-			<td ALIGN="right">表号：</td><td><U><%=meterID%></U></td><td ALIGN="right">厂家：</td><td><U><%=factoryID%></U></td><td ALIGN="right">表类型：</td><td><U><%=meterType%></U></td>
+			<td ALIGN="right">表号：</td><td ALIGN="left"><U><%=meterID%></U></td><td ALIGN="right">厂家：</td><td ALIGN="left"><U><%=factoryID%></U></td><td ALIGN="right">&nbsp;&nbsp;表类型：</td><td ALIGN="left"><U><%=meterType%></U></td>
 		</tr>
 	</table>
 </center>
-	<!--检测单位：北京市计量科学研究院 检测模式：对比标准数据 结论：合格 <br>
-	表号：1234567890 厂家：1111 表类型：冷热水表<br>-->
 	<hr>
 	<br>
 	<!--********* 检测数据项信息表 ********-->
@@ -30,19 +28,19 @@
 			<td><B>项目</B></td><td><B>数值</B></td><td><B>单位</B></td><td><B>参考区间</B></td><td><B>标准值</B></td><td><B>结论</B></td>
 		</tr>
 		<tr>
-			<td><%=heatname%></td><td><%=heatvalue%></td><td><%=heatunit%></td><td><%=heatlowerbound%>~<%=heatupperbound%></td><td>0.00</td><td>-</td>
+			<td><%=heatName%></td><td><%=heatValue%></td><td><%=heatUnit%></td><td><%=heatLowerbound%>~<%=heatUpperbound%></td><td><%=heatRefValue%></td><td><%= heatResult%></td>
 		</tr>
 		<tr>
-			<td>总流量</td><td>0.00</td><td>m³</td><td>0.00~0.00</td><td>0.00</td><td>-</td>
+			<td><%=capacityName%></td><td><%=capacityValue%></td><td><%=capacityUnit%></td><td><%=capacityLowerbound%>~<%=capacityUpperbound%></td><td><%=capacityRefValue%></td><td><%= capacityResult%></td>
 		</tr>
 		<tr>
-			<td>进水温度</td><td>22.31</td><td>℃</td><td>22.09~22.53</td><td>22.31</td><td>-</td>
+			<td><%=temperatureInName%></td><td><%=temperatureInValue%></td><td><%=temperatureInUnit%></td><td><%=temperatureInLowerbound%>~<%=temperatureInUpperbound%></td><td><%=temperatureInRefValue%></td><td><%= temperatureInResult%></td>
 		</tr>
 		<tr>
-			<td>出水温度</td><td>22.31</td><td>℃</td><td>22.09~22.53</td><td>22.31</td><td>-</td>
+			<td><%=temperatureOutName%></td><td><%=temperatureOutValue%></td><td><%=temperatureOutUnit%></td><td><%=temperatureOutLowerbound%>~<%=temperatureOutUpperbound%></td><td><%=temperatureOutRefValue%></td><td><%= temperatureOutResult%></td>
 		</tr>
 		<tr>
-			<td>持续时间</td><td>1</td><td>sec</td><td>0.99~1.01</td><td>1</td><td>-</td>
+			<td><%=durationName%></td><td><%=durationValue%></td><td><%=durationUnit%></td><td><%=durationLowerbound%>~<%=durationUpperbound%></td><td><%=durationRefValue%></td><td><%= durationResult%></td>
 		</tr>
 	</table>
 </center>
@@ -52,12 +50,10 @@
 	<center>
 		<table>
 		<tr>
-			<td>开始时间：</td><td><U><%=startTime%></U></td><td>结束时间：</td><td><U><%=endTime%></U></td><td>检测者：</td><td><U><%=calibrator%></U></td><td>审核者：</td><td><U><%=reviewer%></U></td>
+			<td>开始时间：</td><td><U><%=startTime%></U></td><td>&nbsp;&nbsp;结束时间：</td><td><U><%=endTime%></U></td><td>&nbsp;&nbsp;检测者：</td><td><U><%=calibrator%></U></td><td>&nbsp;&nbsp;审核者：</td><td><U><%=reviewer%></U></td>
 		</tr>
 	</table>
 </center>
-
-	<!--开始时间：2018-03-15 16:28:58 结束时间：2018-03-15 16:28:59 检测者：邵博丰 审核者：邵博丰<br>-->
 	
 </body>
 

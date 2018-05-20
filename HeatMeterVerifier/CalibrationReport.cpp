@@ -75,25 +75,85 @@ CMap<CString, LPCTSTR, CString, LPCTSTR>* CalibrationReport::GetDataMap(){
 	//加入测试数据内容
 	//<td>项目</td><td>数值</td><td>单位</td><td>参考区间</td><td>标准值</td><td>结论</td>
 	CString lowerbound, upperbound;
-
-	dataMap->SetAt(L"heatname", meterReport->heat.GetName());
-	dataMap->SetAt(L"heatvalue", meterReport->heat.GetValueStr());
-	dataMap->SetAt(L"heatunit", CJ188::GetUnit(meterReport->heat.unit));
 	MeterReport* refReport = refMeter->GetReport();
-	lowerbound.Format(L"%.2f", refReport->heat.GetValue() * 0.99);
-	upperbound.Format(L"%.2f", refReport->heat.GetValue() * 1.01);
-	dataMap->SetAt(L"heatlowerbound", lowerbound);
-	dataMap->SetAt(L"heatupperbound", upperbound);
-	dataMap->SetAt(L"heatrefvalue", refReport->heat.GetValueStr());
-	dataMap->SetAt(L"heatresult", meterReport->heat.VerifyWith(&(refReport->heat),wizard.GetVerifyRate()));
+	
+	CString itemName;
+	DataItem* item;
+	DataItem* refItem;
+
+	itemName = L"heat";
+	item = &meterReport->heat;
+	refItem = &refReport->heat;
+	dataMap->SetAt(itemName + L"Name", item->GetName());
+	dataMap->SetAt(itemName + L"Value", item->GetValueStr());
+	dataMap->SetAt(itemName + L"Unit", CJ188::GetUnit(item->unit));
+	lowerbound.Format(L"%.2f", refItem->GetValue() * 0.99);
+	upperbound.Format(L"%.2f", refItem->GetValue() * 1.01);
+	dataMap->SetAt(itemName + L"Lowerbound", lowerbound);
+	dataMap->SetAt(itemName + L"Upperbound", upperbound);
+	dataMap->SetAt(itemName + L"RefValue", refItem->GetValueStr());
+	dataMap->SetAt(itemName + L"Result", item->VerifyWith(refItem, wizard.GetVerifyRate()));
+
+	itemName = L"capacity";
+	item = &meterReport->capacity;
+	refItem = &refReport->capacity;
+	dataMap->SetAt(itemName + L"Name", item->GetName());
+	dataMap->SetAt(itemName + L"Value", item->GetValueStr());
+	dataMap->SetAt(itemName + L"Unit", CJ188::GetUnit(item->unit));
+	lowerbound.Format(L"%.2f", refItem->GetValue() * 0.99);
+	upperbound.Format(L"%.2f", refItem->GetValue() * 1.01);
+	dataMap->SetAt(itemName + L"Lowerbound", lowerbound);
+	dataMap->SetAt(itemName + L"Upperbound", upperbound);
+	dataMap->SetAt(itemName + L"RefValue", refItem->GetValueStr());
+	dataMap->SetAt(itemName + L"Result", item->VerifyWith(refItem, wizard.GetVerifyRate()));
+
+	itemName = L"temperatureIn";
+	item = &meterReport->temperatureIn;
+	refItem = &refReport->temperatureIn;
+	dataMap->SetAt(itemName + L"Name", item->GetName());
+	dataMap->SetAt(itemName + L"Value", item->GetValueStr());
+	dataMap->SetAt(itemName + L"Unit", L"℃");// CJ188::GetUnit(item->unit));
+	lowerbound.Format(L"%.2f", refItem->GetValue() * 0.99);
+	upperbound.Format(L"%.2f", refItem->GetValue() * 1.01);
+	dataMap->SetAt(itemName + L"Lowerbound", lowerbound);
+	dataMap->SetAt(itemName + L"Upperbound", upperbound);
+	dataMap->SetAt(itemName + L"RefValue", refItem->GetValueStr());
+	dataMap->SetAt(itemName + L"Result", item->VerifyWith(refItem, wizard.GetVerifyRate()));
+
+	itemName = L"temperatureOut";
+	item = &meterReport->temperatureOut;
+	refItem = &refReport->temperatureOut;
+	dataMap->SetAt(itemName + L"Name", item->GetName());
+	dataMap->SetAt(itemName + L"Value", item->GetValueStr());
+	dataMap->SetAt(itemName + L"Unit", L"℃"); //CJ188::GetUnit(item->unit));
+	lowerbound.Format(L"%.2f", refItem->GetValue() * 0.99);
+	upperbound.Format(L"%.2f", refItem->GetValue() * 1.01);
+	dataMap->SetAt(itemName + L"Lowerbound", lowerbound);
+	dataMap->SetAt(itemName + L"Upperbound", upperbound);
+	dataMap->SetAt(itemName + L"RefValue", refItem->GetValueStr());
+	dataMap->SetAt(itemName + L"Result", item->VerifyWith(refItem, wizard.GetVerifyRate()));
+
+	itemName = L"duration";
+	item = &meterReport->duration;
+	refItem = &refReport->duration;
+	dataMap->SetAt(itemName + L"Name", item->GetName());
+	dataMap->SetAt(itemName + L"Value", item->GetValueStr());
+	dataMap->SetAt(itemName + L"Unit", L"s");// CJ188::GetUnit(item->unit));
+	lowerbound.Format(L"%.2f", refItem->GetValue() * 0.99);
+	upperbound.Format(L"%.2f", refItem->GetValue() * 1.01);
+	dataMap->SetAt(itemName + L"Lowerbound", lowerbound);
+	dataMap->SetAt(itemName + L"Upperbound", upperbound);
+	dataMap->SetAt(itemName + L"RefValue", refItem->GetValueStr());
+	dataMap->SetAt(itemName + L"Result", item->VerifyWith(refItem, wizard.GetVerifyRate()));
+
 
 	//加入检测站内容
 	//CString* calibrationStation = &wizard.calibratorInfo->name;
 	dataMap->SetAt(L"calibrationStation", wizard.calibratorInfo->name);
 	dataMap->SetAt(L"startTime", meterReport->GetStartTimeStr());
 	dataMap->SetAt(L"endTime", meterReport->GetEndTimeStr());
-	dataMap->SetAt(L"calibrator", L"张三");
-	dataMap->SetAt(L"reviewer", L"李四");
+	dataMap->SetAt(L"calibrator", wizard.calibratorInfo->tester);
+	dataMap->SetAt(L"reviewer", wizard.calibratorInfo->reviewer);
 	//void* vv = new CString();
 	//BOOL b;
 	//CString keystr(L"calibrationStation");

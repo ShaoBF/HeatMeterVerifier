@@ -30,4 +30,6 @@ public:
 	//CStatic staticForHtml;
 	CHtmlCtrl m_html;
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedButtonPrint();
+	void PrintScreen(CRect rect, int left, int top);
 };

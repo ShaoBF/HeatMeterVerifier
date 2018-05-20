@@ -12,7 +12,7 @@ CMeterWizard::CMeterWizard()
 {
 	//meterInfoList = new MeterInfo*[128];
 	templateConfig = new TemplateConfig(GetConfigFilePath());
-	calibratorInfo = new CCalibratorInfo();
+	calibratorInfo = new CCalibratorInfo(GetConfigFilePath());
 }
 
 
@@ -270,6 +270,7 @@ BOOL CMeterWizard::LoadConfig(){
 		dbConfig.ReadConfig();
 		//ReadReportTemplateConfig(GetConfigFilePath());
 		templateConfig->ReadConfig();
+		calibratorInfo->ReadConfig();
 	}
 	catch (int e){
 		return FALSE;
