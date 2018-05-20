@@ -53,6 +53,19 @@ T MyVector<T>::Get(int index){
 }
 
 template<typename T>
+int MyVector<T>::Find(T obj){
+	//找到第一个obj
+	int index;
+	for (index = 0; index < current; index++){
+		if (obj == buffer[index]){
+			return index;
+		}
+	}
+	return -1;
+}
+
+
+template<typename T>
 T MyVector<T>::Remove(int index){
 	//取出第index个
 	T obj = buffer[index];
@@ -64,6 +77,20 @@ T MyVector<T>::Remove(int index){
 	//返回取出的
 	return obj;
 }
+
+template<typename T>
+T MyVector<T>::Remove(T obj){
+
+	//找到第一个obj
+	int index = Find(obj);
+	if (index != -1){
+		return Remove(index);
+	}
+	else{
+		return nullptr;
+	}
+}
+
 
 template<typename T>
 T MyVector<T>::operator[](int index){

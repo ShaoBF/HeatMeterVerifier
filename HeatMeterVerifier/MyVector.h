@@ -19,7 +19,9 @@ public:
 	void Add(T obj);
 	bool Insert(T obj, int index);
 	T Get(int index);
+	int Find(T obj);
 	T Remove(int index);
+	T Remove(T obj);
 	int GetSize();
 	void Clear();
 	T operator[](int index);

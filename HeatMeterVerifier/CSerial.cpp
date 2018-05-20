@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "CSerial.h"
 #include <process.h>
+#include "MyVector.cpp"
 
 typedef unsigned(__stdcall *PTHREAD_START) (void *);
 
@@ -8,12 +9,16 @@ CSerial::CSerial(void)
 {
 	m_hComm = INVALID_HANDLE_VALUE;
 	opened = false;
+	recievers = new MyVector<ComDataReciever*>();
 }
 
 CSerial::~CSerial(void)
 {
 	if (m_hComm != INVALID_HANDLE_VALUE) {
 		CloseHandle(m_hComm);
+	}
+	if (recievers){
+		delete recievers;
 	}
 }
 
@@ -37,9 +42,10 @@ DWORD WINAPI CommProc(LPVOID lpParam) {
 			//MessageBoxA(NULL, buf, "串口收到数据", MB_OK);
 			//if (pSerial->dataRecievedCallBack != nullptr)
 				//(*(pSerial->dataRecievedCallBack))(pSerial->reciever,buf,dwRead);
-			if (pSerial->reciever != nullptr){
+			pSerial->NotifyRecievers(buf, dwRead);
+			/*if (pSerial->reciever != nullptr){
 				pSerial->reciever->OnDataRecieved(buf, dwRead);
-			}
+			}*/
 		}
 	}
 	return 0;
@@ -61,7 +67,8 @@ BOOL CSerial::OpenSerialPort(TCHAR* port, UINT baud_rate, BYTE date_bits, BYTE s
 
 	TCHAR err[512];
 	//this->dataRecievedCallBack = dataRecievedCallBack;
-	this->reciever = reciever;
+	//this->reciever = reciever;
+	RegisterReciever(reciever);
 	if (m_hComm == INVALID_HANDLE_VALUE) {
 		_stprintf_s(err, _T("打开串口%s 失败，请查看该串口是否已被占用"), port);
 		MessageBox(NULL, err, _T("提示"), MB_OK);
@@ -170,4 +177,24 @@ BOOL CSerial::CloseSerialPort(){
 
 bool CSerial::IsOpened(){
 	return opened;
+}
+
+void CSerial::RegisterReciever(ComDataReciever* receiver){
+	if (recievers->Find(receiver) == -1){
+		//不允许重复注册
+		recievers->Add(receiver);
+	}
+}
+void CSerial::UnregisterReciever(ComDataReciever* receiver){
+	recievers->Remove(receiver);
+}
+void CSerial::NotifyRecievers(UCHAR* buf, DWORD bufferLen){
+	for (int i = 0; i < recievers->GetSize(); i++){
+		//通知所有Receiver
+		ComDataReciever* reciever = (*recievers)[i];
+		if (reciever != nullptr){
+			reciever->OnDataRecieved(buf, bufferLen);
+		}
+
+	}
 }

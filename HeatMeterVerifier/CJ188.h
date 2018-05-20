@@ -2,6 +2,7 @@
 #include "MeterInfo.h"
 #include "ComDataReciever.h"
 #include "ComBuffer.h"
+#include "MyVector.h"
 
 enum MeterType {
 	ColdWater = 0x10,
@@ -201,11 +202,17 @@ public:
 	static UCHAR* GetDI(CJ188Frame* frame);
 	static bool LookUpByteOrder(UCHAR meterType, UCHAR* vandorID);
 
+	//Observer Pattern
+	void RegisterReciever(CJ188DataReciever* receiver);
+	void UnregisterReciever(CJ188DataReciever* receiver);
+	void NotifyRecievers(UCHAR* rawData, DWORD rawDataLen, CJ188Frame *frame, CJ188* comReceiver);
+
 //protected:
 	//CJ188FrameInBuffer *frameIB;
 	static UCHAR ser;
 	ComBuffer* buffer;
-	CJ188DataReciever* cjReciever;
+	//CJ188DataReciever* cjReciever;
+	MyVector<CJ188DataReciever*>* cjRecievers;
 	MeterInfo* meterInfo;
 };
 

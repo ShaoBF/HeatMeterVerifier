@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CJ188.h"
 #include "ComConfig.h"
+#include "MyVector.cpp"
 
 UCHAR CJ188ControlCodeList[] = {
 	CJ188Reserved,				// = 0x00,
@@ -175,12 +176,17 @@ CJ188::CJ188(MeterInfo* info)
 	CJ188::ser = rand() % 256;
 	this->meterInfo = info;
 	buffer = new ComBuffer();
+	cjRecievers = new MyVector<CJ188DataReciever*>();
 }
 
 
 CJ188::~CJ188()
 {
 	//delete meterInfo;
+	if (cjRecievers){
+		delete cjRecievers;
+	}
+
 }
 
 UCHAR CJ188::CreateCS(CJ188Frame &frame){
@@ -220,7 +226,8 @@ extern ComConfig comConfig;
 
 
 void CJ188::ReadAddress(MeterInfo* meterInfo, CJ188DataReciever* reciever){
-	this->cjReciever = reciever;
+	//this->cjReciever = reciever;
+	RegisterReciever(reciever);
 	//生成广播地址0xAAAAAAAAAAAAAA
 	UCHAR* addr = new UCHAR[CJ188_ADDRESS_LENGTH];
 	for (int i = 0; i < CJ188_ADDRESS_LENGTH; i++){
@@ -247,7 +254,8 @@ void CJ188::ReadAddress(MeterInfo* meterInfo, CJ188DataReciever* reciever){
 }
 
 void CJ188::ReadMeterData(MeterInfo* meterInfo, CJ188DataReciever* reciever){
-	this->cjReciever = reciever;
+	//this->cjReciever = reciever;
+	RegisterReciever(reciever);
 	//获取要读的表的地址
 	UCHAR* addr = meterInfo->address;
 	//得到控制字0x03
@@ -356,10 +364,11 @@ void CJ188::OnDataRecieved(UCHAR* buf, DWORD bufferLen){
 				size_t rawDataLen = frame->bufferEnd - frame->bufferStart;
 				UCHAR* rawData = new UCHAR[rawDataLen];
 				memcpy(rawData, &(buffer->GetData()[frame->bufferStart]), rawDataLen);
-				if (cjReciever != nullptr){
+				NotifyRecievers(rawData, rawDataLen, frame, this);
+				/*if (cjReciever != nullptr){
 					meterInfo->SetActive(true);
 					cjReciever->OnFrameDataRecieved(rawData, rawDataLen, frame, this);
-				}
+				}*/
 			}
 			//3.2.清空对应buffer部分
 			buffer->Clean(((CJ188FrameInBuffer*)frame)->bufferEnd);
@@ -487,4 +496,25 @@ bool CJ188::LookUpByteOrder(UCHAR meterType, UCHAR* vandorID){
 		return false;
 	}
 	return true;
+}
+
+void CJ188::RegisterReciever(CJ188DataReciever* receiver){
+	if (cjRecievers->Find(receiver) == -1){
+		//不允许重复注册
+		cjRecievers->Add(receiver);
+	}
+}
+void CJ188::UnregisterReciever(CJ188DataReciever* receiver){
+	cjRecievers->Remove(receiver);
+}
+void CJ188::NotifyRecievers(UCHAR* rawData, DWORD rawDataLen, CJ188Frame *frame, CJ188* comReceiver){
+	for (int i = 0; i < cjRecievers->GetSize(); i++){
+		//通知所有Receiver
+		CJ188DataReciever* reciever = (*cjRecievers)[i];
+		if (reciever != nullptr){
+			meterInfo->SetActive(true);
+			reciever->OnFrameDataRecieved(rawData, rawDataLen, frame, comReceiver);
+		}
+
+	}
 }
