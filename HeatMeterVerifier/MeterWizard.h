@@ -10,6 +10,7 @@
 #include "VerifyConfig.h"
 #include "TemplateConfig.h"
 #include "CalibratorInfo.h"
+#include "DBConfig.h"
 
 using namespace std;
 class CMeterWizard
@@ -67,6 +68,7 @@ public:
 	//CString templateFile;
 	TemplateConfig* templateConfig;
 	CCalibratorInfo* calibratorInfo;
+	CDBConfig* dbConfig;
 
 protected:
 	LPINT selectedMeterIndex;

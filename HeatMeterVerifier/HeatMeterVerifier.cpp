@@ -61,7 +61,7 @@ CHeatMeterVerifierApp theApp;
 
 // CHeatMeterVerifierApp ≥ı ºªØ
 extern ComConfig comConfig;
-extern CDBConfig dbConfig;
+//extern CDBConfig dbConfig;
 
 BOOL CHeatMeterVerifierApp::InitInstance()
 {

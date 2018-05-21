@@ -8,6 +8,7 @@
 #include "SerialTestDlg.h"
 #include "MeterChooserDlg.h"
 #include "MeterWizard.h"
+#include "OtherSettingsDlg.h"
 
 #include "ChildFrm.h"
 
@@ -24,6 +25,7 @@ BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWnd)
 	ON_COMMAND(ID_METER_SERIAL_SETTINGS, &CChildFrame::OnMeterSerialSettings)
 	ON_COMMAND(ID_START_METER_READ, &CChildFrame::OnStartMeterRead)
 	ON_COMMAND(ID_HTML_TEST, &CChildFrame::OnHtmlTest)
+	ON_COMMAND(ID_OTHER_SETTINGS, &CChildFrame::OnOtherSettings)
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
@@ -114,6 +116,32 @@ void CChildFrame::OnStartMeterRead()
 void CChildFrame::OnHtmlTest()
 {
 	CHtmlReportDlg dlg;
+	//dlg.Init();
+	INT_PTR nResponse = dlg.DoModal();
+
+	if (nResponse == IDOK)
+	{
+		// TODO:  在此放置处理何时用
+		//  “确定”来关闭对话框的代码
+	}
+	else if (nResponse == IDCANCEL)
+	{
+		// TODO:  在此放置处理何时用
+		//  “取消”来关闭对话框的代码
+	}
+	else if (nResponse == -1)
+	{
+		TRACE(traceAppMsg, 0, "警告: 对话框创建失败，应用程序将意外终止。\n");
+		TRACE(traceAppMsg, 0, "警告: 如果您在对话框上使用 MFC 控件，则无法 #define _AFX_NO_MFC_CONTROLS_IN_DIALOGS。\n");
+	}
+
+}
+
+
+void CChildFrame::OnOtherSettings()
+{
+	// TODO:  在此添加命令处理程序代码
+	COtherSettingsDlg dlg;
 	//dlg.Init();
 	INT_PTR nResponse = dlg.DoModal();
 

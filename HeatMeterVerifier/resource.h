@@ -16,6 +16,7 @@
 #define IDD_METER_REPORT                315
 #define IDD_DATA_FRAME_DISPLAY          316
 #define IDD_TEST_HTML                   317
+#define IDD_OTHER_SETTINGS              319
 #define IDC_COM_LIST                    1000
 #define IDC_DATA_TO_SEND                1001
 #define IDC_SEND_DATA                   1002
@@ -77,6 +78,21 @@
 #define IDC_PADDING_DIGIT               1054
 #define IDC_STATIC_FOR_HTML             1056
 #define IDC_BUTTON_PRINT                1057
+#define IDC_DATA_BASE_SETTINGS          1058
+#define IDC_DB_TYPE                     1059
+#define IDC_DB_DSN                      1060
+#define IDC_DB_UID                      1061
+#define IDC_DB_PWD                      1062
+#define IDC_CALI_STATION                1063
+#define IDC_CALI_TYPE                   1064
+#define IDC_CALI_TESTER                 1065
+#define IDC_CALI_REVIEWER               1066
+#define IDC_REPORT_TEMPLATE             1067
+#define IDC_REPORT_ENCODE               1068
+#define IDC_REPORT_FORMAT               1069
+#define IDC_BUTTON_APPLY                1070
+#define IDC_TEST_DB_CONNECTION          1071
+#define IDC_CHECK_SHOW_PWD              1072
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_32771                        32771
 #define ID_32772                        32771
@@ -87,14 +103,17 @@
 #define ID_START_METER_READ             32775
 #define ID_32776                        32776
 #define ID_HTML_TEST                    32777
+#define ID_32778                        32778
+#define ID_OTHER_SETTINGS               32779
+#define ID_32780                        32780
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        319
-#define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         1058
+#define _APS_NEXT_RESOURCE_VALUE        320
+#define _APS_NEXT_COMMAND_VALUE         32781
+#define _APS_NEXT_CONTROL_VALUE         1073
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

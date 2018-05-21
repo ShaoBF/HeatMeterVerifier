@@ -34,7 +34,7 @@ static UINT indicators[] =
 };
 CMeterWizard wizard;
 ComConfig comConfig(wizard.GetConfigFilePath());
-CDBConfig dbConfig(wizard.GetConfigFilePath());
+//CDBConfig dbConfig(wizard.GetConfigFilePath());
 // CMainFrame ¹¹Ôì/Îö¹¹
 
 CMainFrame::CMainFrame()

@@ -13,6 +13,7 @@ CMeterWizard::CMeterWizard()
 	//meterInfoList = new MeterInfo*[128];
 	templateConfig = new TemplateConfig(GetConfigFilePath());
 	calibratorInfo = new CCalibratorInfo(GetConfigFilePath());
+	dbConfig = new CDBConfig(GetConfigFilePath());
 }
 
 
@@ -192,10 +193,10 @@ MyVector<MeterInfo*>* CMeterWizard::GetMeterInfoList(){
 	return &meterInfoList;
 }
 */
-extern CDBConfig dbConfig;
+//extern CDBConfig dbConfig;
 LPCTSTR CMeterWizard::GetConnectStr(){
 	//FIXME: would retrive form config file.
-	return dbConfig.ToString();
+	return dbConfig->ToString();
 }
 double CMeterWizard::GetVerifyRate(){
 	return config.GetVerifyRate();
@@ -260,14 +261,13 @@ CString CMeterWizard::GetTemplateFilePath(){
 	return filePath;
 }
 extern ComConfig comConfig;
-extern CDBConfig dbConfig;
 
 
 BOOL CMeterWizard::LoadConfig(){
 	try{
 		//ComConfig config;
 		comConfig.ReadConfig();
-		dbConfig.ReadConfig();
+		dbConfig->ReadConfig();
 		//ReadReportTemplateConfig(GetConfigFilePath());
 		templateConfig->ReadConfig();
 		calibratorInfo->ReadConfig();

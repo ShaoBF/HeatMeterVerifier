@@ -177,6 +177,9 @@
     <ClInclude Include="DataBaseAccess.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="OtherSettingsDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HeatMeterVerifier.cpp">
@@ -324,6 +327,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DataBaseAccess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OtherSettingsDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

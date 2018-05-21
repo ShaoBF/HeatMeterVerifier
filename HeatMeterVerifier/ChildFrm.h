@@ -39,4 +39,5 @@ public:
 	afx_msg void OnMeterSerialSettings();
 	afx_msg void OnStartMeterRead();
 	afx_msg void OnHtmlTest();
+	afx_msg void OnOtherSettings();
 };

@@ -153,6 +153,7 @@
     <ClInclude Include="MeterWizard.h" />
     <ClInclude Include="MyPrintWizard.h" />
     <ClInclude Include="MyVector.h" />
+    <ClInclude Include="OtherSettingsDlg.h" />
     <ClInclude Include="ReportDlg.h" />
     <ClInclude Include="ReportGenerator.h" />
     <ClInclude Include="Resource.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="MeterWizard.cpp" />
     <ClCompile Include="MyPrintWizard.cpp" />
     <ClCompile Include="MyVector.cpp" />
+    <ClCompile Include="OtherSettingsDlg.cpp" />
     <ClCompile Include="ReportDlg.cpp" />
     <ClCompile Include="ReportGenerator.cpp" />
     <ClCompile Include="SerialTestDlg.cpp" />
